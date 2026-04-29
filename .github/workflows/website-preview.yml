@@ -1,0 +1,128 @@
+name: Website Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    name: Deploy preview
+    runs-on: ${{ fromJSON(vars.RUNNER_LABELS_LINUX || '["ubuntu-latest"]') }}
+    environment:
+      name: website-preview
+      url: ${{ steps.vars.outputs.preview_url }}
+    outputs:
+      preview_url: ${{ steps.vars.outputs.preview_url }}
+      preview_branch: ${{ steps.vars.outputs.preview_branch }}
+    steps:
+      - name: Resolve preview settings
+        id: vars
+        shell: bash
+        run: |
+          set -euo pipefail
+          preview_branch="pr-${{ github.event.pull_request.number }}"
+          preview_url="https://${preview_branch}.${{ vars.AMPLIFY_APP_ID }}.amplifyapp.com/"
+          echo "preview_branch=${preview_branch}" >> "$GITHUB_OUTPUT"
+          echo "preview_url=${preview_url}" >> "$GITHUB_OUTPUT"
+
+      - name: Check out website
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Check out riddim-release
+        uses: actions/checkout@v4
+        with:
+          repository: RiddimSoftware/riddim-release
+          ref: ${{ vars.RIDDIM_RELEASE_REF || 'v1' }}
+          token: ${{ secrets.RIDDIM_RELEASE_TOKEN }}
+          path: .riddim-release
+
+      - name: Package website
+        shell: bash
+        env:
+          SOURCE_REF: ${{ github.event.pull_request.head.ref }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          python3 .riddim-release/scripts/website/package_static_site.py \
+            --source-dir . \
+            --output site.zip \
+            --manifest website-preview-manifest.json \
+            --preview-branch "${{ steps.vars.outputs.preview_branch }}" \
+            --preview-url "${{ steps.vars.outputs.preview_url }}" \
+            --production-branch main \
+            --pr-number "${{ github.event.pull_request.number }}" \
+            --source-ref "$SOURCE_REF" \
+            --source-sha "$SOURCE_SHA"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_WEBSITE_PREVIEW_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+
+      - name: Deploy Amplify preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .riddim-release/scripts/website/amplify_deploy.py \
+            --app-id "${{ vars.AMPLIFY_APP_ID }}" \
+            --branch "${{ steps.vars.outputs.preview_branch }}" \
+            --artifact site.zip \
+            --stage DEVELOPMENT \
+            --create-branch
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-preview-pr-${{ github.event.pull_request.number }}
+          path: |
+            site.zip
+            website-preview-manifest.json
+          retention-days: 30
+
+      - name: Comment preview URL
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIEW_URL: ${{ steps.vars.outputs.preview_url }}
+          PREVIEW_BRANCH: ${{ steps.vars.outputs.preview_branch }}
+        run: |
+          set -euo pipefail
+          marker="<!-- riddim-website-preview:${{ github.event.pull_request.number }} -->"
+          body="${marker}
+          Website preview is ready:
+          ${PREVIEW_URL}
+
+          Amplify branch: \`${PREVIEW_BRANCH}\`
+          Commit: \`${{ github.event.pull_request.head.sha }}\`"
+
+          existing="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${{ github.event.pull_request.number }}/comments" \
+            --jq ".[] | select(.body | contains(\"${marker}\")) | .id" | head -1)"
+
+          if [[ -n "$existing" ]]; then
+            gh api "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" \
+              --method PATCH \
+              -f body="$body" >/dev/null
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body "$body"
+          fi
+
+      - name: Preview summary
+        shell: bash
+        run: |
+          {
+            echo "## Website preview"
+            echo ""
+            echo "- URL: ${{ steps.vars.outputs.preview_url }}"
+            echo "- Branch: ${{ steps.vars.outputs.preview_branch }}"
+            echo "- Commit: ${{ github.event.pull_request.head.sha }}"
+          } >> "$GITHUB_STEP_SUMMARY"
