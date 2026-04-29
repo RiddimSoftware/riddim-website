@@ -1,0 +1,15 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - rm -rf dist
+        - mkdir -p dist
+        - find . -maxdepth 1 ! -name . ! -name .git ! -name dist ! -name .DS_Store ! -name .gitignore ! -name amplify.yml ! -name customHttp.yml -exec cp -R {} dist/ \;
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+      - '.well-known/*'
+  cache:
+    paths: []
