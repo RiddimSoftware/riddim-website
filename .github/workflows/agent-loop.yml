@@ -46,6 +46,7 @@ permissions:
   pull-requests: write
   statuses: write
   checks: write
+  issues: write
 
 jobs:
   # ── Pre-flight: verify a matching branch exists in this repo ──────────────
