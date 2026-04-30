@@ -1,0 +1,21 @@
+customHeaders:
+  - pattern: '/.well-known/apple-app-site-association'
+    headers:
+      - key: 'Content-Type'
+        value: 'application/json'
+      - key: 'Cache-Control'
+        value: 'public, max-age=300'
+  - pattern: '/apple-app-site-association.json'
+    headers:
+      - key: 'Content-Type'
+        value: 'application/json'
+      - key: 'Cache-Control'
+        value: 'public, max-age=300'
+  - pattern: '/robots.txt'
+    headers:
+      - key: 'Content-Type'
+        value: 'text/plain; charset=utf-8'
+  - pattern: '/sitemap.xml'
+    headers:
+      - key: 'Content-Type'
+        value: 'application/xml; charset=utf-8'
