@@ -4,7 +4,7 @@ customHeaders:
       - key: 'Content-Type'
         value: 'application/json'
       - key: 'Cache-Control'
-        value: 'public, max-age=300'
+        value: 'max-age=3600'
   - pattern: '/apple-app-site-association.json'
     headers:
       - key: 'Content-Type'
