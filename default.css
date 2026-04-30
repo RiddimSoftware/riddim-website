@@ -127,5 +127,75 @@ div.app_store_app > a:visited {
   color: #fff;
 }
 
-
+/* Product pages */
+.back-link {
+  display: block;
+  padding: 12px 20px;
+  background-color: #f4f4f4;
+  color: #004d97;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.back-link:hover {
+  text-decoration: underline;
+}
+.product-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+}
+.product-hero img.product-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 23%;
+}
+.product-hero h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+.product-tagline {
+  font-size: 1.1rem;
+  max-width: 480px;
+  margin: 0;
+  line-height: 1.5;
+}
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: #004d97;
+  color: #fff;
+}
+.btn-primary:visited {
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #003870;
+}
+.btn-secondary {
+  background-color: transparent;
+  color: #004d97;
+  border: 2px solid #004d97;
+}
+.btn-secondary:visited {
+  color: #004d97;
+}
+.btn-secondary:hover {
+  background-color: #e8f0fb;
+}
 
