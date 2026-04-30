@@ -44,7 +44,7 @@ jobs:
 
           while IFS= read -r -d '' file; do
             case "$file" in
-              .github/*|.gitignore|amplify.yml|customHttp.yml)
+              .github/*|.gitignore|amplify.yml)
                 continue
                 ;;
             esac
