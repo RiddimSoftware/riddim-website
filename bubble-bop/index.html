@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <meta name="description" content="Bubble Bop is a gentle bubble and balloon game for young kids. No ads, no tracking, no purchases, and no accounts.">
+        <meta name="apple-itunes-app" content="app-id=1469251847, app-clip-bundle-id=net.dinglebox.bubblebop.Clip">
+        <title>Bubble Bop | Bubble and Balloon Popping for Kids</title>
+        <style>
+            :root {
+                --bg-a: #5bcfff;
+                --bg-b: #6dd0ff;
+                --text-main: #f6fbff;
+                --text-soft: #eaf5ff;
+                --muted: #d6ecff;
+                --button: #ffa500;
+                --button-text: #2f1f00;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                background: linear-gradient(160deg, var(--bg-a), var(--bg-b));
+                margin: 0;
+                min-height: 100vh;
+                text-align: center;
+                color: var(--text-main);
+                font-family: "Trebuchet MS", Arial, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+            .card {
+                max-width: 780px;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.10);
+                border: 1px solid rgba(255, 255, 255, 0.22);
+                border-radius: 24px;
+                padding: 28px;
+                box-shadow: 0 18px 40px rgba(4, 38, 64, 0.22);
+            }
+            h1 {
+                margin: 0;
+                font-size: 58px;
+                font-weight: normal;
+                color: var(--text-main);
+                letter-spacing: 0.6px;
+            }
+            h2 {
+                margin: 8px 0 18px;
+                font-size: 24px;
+                color: var(--text-soft);
+                font-weight: normal;
+            }
+            p {
+                margin: 0 auto 16px;
+                max-width: 560px;
+                color: var(--text-soft);
+                line-height: 1.5;
+                font-size: 18px;
+            }
+            .benefits {
+                margin: 10px auto 24px;
+                padding: 0;
+                list-style: none;
+            }
+            .benefits li {
+                margin: 8px 0;
+                font-size: 17px;
+            }
+            .store {
+                margin-top: 18px;
+            }
+            #appstore {
+                width: 230px;
+            }
+            #icon {
+                margin: 10px 0 4px;
+                width: 140px;
+            }
+            .contact {
+                margin-top: 22px;
+            }
+            a {
+                color: var(--muted);
+            }
+            .button {
+                margin-top: 10px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: var(--button);
+                color: var(--button-text);
+                text-decoration: none;
+                border-radius: 999px;
+                padding: 11px 18px;
+                font-weight: 600;
+            }
+            .contact a {
+                text-decoration: none;
+            }
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 44px;
+                }
+                h2 {
+                    font-size: 20px;
+                }
+                p,
+                .benefits li {
+                    font-size: 16px;
+                }
+                #icon {
+                    width: 120px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <img id="icon" src="/bubble-bop.png" alt="Bubble Bop icon">
+            <h1>Bubble Bop</h1>
+            <h2>A gentle bubble and balloon game for young kids</h2>
+            <p>
+                Keep little hands busy and parents calm. Bubble Bop is a simple full-screen play experience with bright visuals and easy one-tap controls.
+            </p>
+            <ul class="benefits">
+                <li>No ads</li>
+                <li>No tracking</li>
+                <li>No in-app purchases</li>
+                <li>No accounts</li>
+                <li>No internet required to play</li>
+            </ul>
+            <div class="store">
+                <a href="https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847">
+                    <img id="appstore" src="/app-store.svg" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
