@@ -32,17 +32,6 @@ header {
   text-align: center;
   padding: 25px 5%;
 }
-@media screen and (min-width: 1280px) {
-  a.app_store {
-    filter: grayscale();
-    opacity: 0.5;
-  }
-  a.app_store:hover {
-    filter: none;
-    cursor: pointer;
-    opacity: 1;
-  }
-}
 section {
   padding: 25px;
   text-align: center;
