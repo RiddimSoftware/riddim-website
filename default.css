@@ -50,6 +50,59 @@ footer {
   text-align: center;
   padding: 20px 0;
 }
+/* Wordmark */
+h1 {
+  margin: 0;
+  line-height: 0;
+}
+img.wordmark {
+  max-height: 256px;
+  height: 15svh;
+}
+
+/* Product grid */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 8px 0;
+}
+.product-card {
+  display: flex;
+}
+.product-card > a.app_store {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background-color 0.15s, opacity 0.15s;
+}
+.product-card > a.app_store:hover,
+.product-card > a.app_store:focus-visible {
+  background-color: rgba(255, 255, 255, 0.12);
+  opacity: 1;
+}
+.light_background .product-card > a.app_store:hover,
+.light_background .product-card > a.app_store:focus-visible {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.light_background .product-card > a.app_store {
+  color: #333;
+}
+.light_background .product-card > a.app_store:visited {
+  color: #333;
+}
+.dark_background .product-card > a.app_store {
+  color: #f4f4f4;
+}
+.dark_background .product-card > a.app_store:visited {
+  color: #f4f4f4;
+}
+
 img.app_store_icon {
   width: 96px;
   height: 96px;
@@ -61,35 +114,13 @@ img.app_store_icon {
   box-sizing: border-box;
   border: 1px solid #eee;
 }
-span.app_store_icon {
+.app_store_label {
   display: block;
+  font-size: 0.95rem;
 }
-div.app_store_app {
-  display: inline;
-  margin: 0 10px;
-}
-div.app_store_app_container {
-  vertical-align: top;
-  display: inline-block;
-  text-align: center;
-}
-div.app_store_app > a {
-  text-decoration: none;
-}
-div.app_store_app > a:visited {
-  text-decoration: none;
-}
-.light_background > div.app_store_app > a {
-  color: #333
-}
-.light_background > div.app_store_app > a:visited {
-  color: #333
-}
-.dark_background > div.app_store_app > a {
-  color: #f4f4f4
-}
-.dark_background > div.app_store_app > a:visited {
-  color: #f4f4f4
+.stars {
+  display: flex;
+  gap: 1px;
 }
 
 .new-indicator {
