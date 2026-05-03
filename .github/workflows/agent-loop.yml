@@ -1,144 +1,19 @@
-# Autonomous PR Loop — BAP consumer trigger wrapper
-#
-# Entry point: a Jira Automation rule POSTs a repository_dispatch of type
-# 'jira-ticket-ready' to BOTH bap and riddim-website when the 'agent:pr'
-# label is added to a BAP Jira ticket. The check-branch job silently skips
-# this repo when no matching branch exists here, so the rule can safely
-# target both repos on every ticket without producing false failures.
-#
-# Jira Automation rule (one-time manual config at https://riddim.atlassian.net):
-#   Trigger:  Issue updated → label added = "agent:pr", project = BAP
-#   Action 1: Send web request POST to:
-#               https://api.github.com/repos/RiddimSoftware/bap/dispatches
-#             Headers:  Authorization: Bearer <gh-pat-with-repo-scope>
-#                       Content-Type: application/json
-#             Body:
-#               {
-#                 "event_type": "jira-ticket-ready",
-#                 "client_payload": {
-#                   "jira_ticket": "{{issue.key}}",
-#                   "jira_summary": "{{issue.summary}}",
-#                   "jira_url": "{{issue.url}}"
-#                 }
-#               }
-#   Action 2: Same POST body to RiddimSoftware/riddim-website/dispatches
-#
-# Required org secrets (already granted to this repo):
-#   CLAUDE_CODE_OAUTH_TOKEN   — reviewer / developer-fixup
-#   DEV_BOT_APP_ID            — opens PRs as developer-bot
-#   DEV_BOT_PRIVATE_KEY       — opens PRs as developer-bot
-#   REVIEWER_BOT_APP_ID       — reviewer loop
-#   REVIEWER_BOT_PRIVATE_KEY  — reviewer loop
-
-name: Autonomous PR Loop
-
+# Agent Loop — riddim-website consumer shim
+# All routing logic lives in RiddimSoftware/agent-loop/.github/workflows/main.yml
+name: Agent Loop
 on:
-  repository_dispatch:
-    types: [jira-ticket-ready]
   pull_request:
-    types: [opened, synchronize, ready_for_review]
+    types: [labeled, opened, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    types: [closed]
   pull_request_review:
     types: [submitted]
   workflow_dispatch:
-
 permissions:
   contents: read
   pull-requests: write
-  statuses: write
-  checks: write
   issues: write
-
 jobs:
-  # ── Pre-flight: verify a matching branch exists in this repo ──────────────
-  # The Jira Automation dispatches to both bap and riddim-website because BAP
-  # tickets can target either repo. This job prevents a failed run in the repo
-  # that simply does not have the branch.
-  check-branch:
-    name: Check branch exists in this repo
-    if: github.event_name == 'repository_dispatch' && github.event.action == 'jira-ticket-ready'
-    runs-on: ubuntu-latest
-    outputs:
-      found: ${{ steps.check.outputs.found }}
-    steps:
-      - name: Look for branch containing Jira ticket key
-        id: check
-        env:
-          GH_TOKEN: ${{ github.token }}
-          JIRA_TICKET: ${{ github.event.client_payload.jira_ticket }}
-          BRANCH_INPUT: ${{ github.event.client_payload.branch || '' }}
-        run: |
-          set -euo pipefail
-          if [[ -n "$BRANCH_INPUT" ]]; then
-            if gh api "repos/${GITHUB_REPOSITORY}/git/refs/heads/${BRANCH_INPUT}" &>/dev/null; then
-              echo "found=true" >> "$GITHUB_OUTPUT"
-              echo "Branch '${BRANCH_INPUT}' found in ${GITHUB_REPOSITORY}."
-            else
-              echo "found=false" >> "$GITHUB_OUTPUT"
-              echo "Branch '${BRANCH_INPUT}' not found in ${GITHUB_REPOSITORY} — skipping."
-            fi
-          else
-            key="$(echo "$JIRA_TICKET" | tr '[:upper:]' '[:lower:]')"
-            branch="$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/heads" \
-              --paginate \
-              --jq ".[] | select(.ref | ascii_downcase | contains(\"${key}\")) | .ref" \
-              | head -1)"
-            if [[ -n "$branch" ]]; then
-              echo "found=true" >> "$GITHUB_OUTPUT"
-              echo "Branch '${branch}' found in ${GITHUB_REPOSITORY}."
-            else
-              echo "found=false" >> "$GITHUB_OUTPUT"
-              echo "No branch containing '${JIRA_TICKET}' found in ${GITHUB_REPOSITORY} — skipping."
-            fi
-          fi
-
-  # ── Entry point: Jira ticket tagged agent:pr ──────────────────────────────
-  create-pr-from-jira:
-    name: Create PR from Jira ticket
-    needs: check-branch
-    if: needs.check-branch.outputs.found == 'true'
-    uses: RiddimSoftware/riddim-release/.github/workflows/create-pr.yml@main
-    with:
-      jira_ticket: ${{ github.event.client_payload.jira_ticket }}
-      jira_summary: ${{ github.event.client_payload.jira_summary }}
-      branch: ${{ github.event.client_payload.branch || '' }}
-      jira_url: ${{ github.event.client_payload.jira_url || '' }}
-    secrets:
-      dev_bot_app_id: ${{ secrets.DEV_BOT_APP_ID }}
-      dev_bot_private_key: ${{ secrets.DEV_BOT_PRIVATE_KEY }}
-
-  # ── Fix-up: reviewer requested changes ────────────────────────────────────
-  developer-fixup:
-    name: Developer agent from reviewer changes requested
-    if: >-
-      github.event_name == 'pull_request_review' &&
-      github.event.review.state == 'changes_requested' &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:pause') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:needs-human')
-    uses: RiddimSoftware/riddim-release/.github/workflows/developer.yml@main
-    with:
-      trigger_type: changes_requested
-      issue_number: ${{ github.event.pull_request.number }}
-      pr_number: ${{ github.event.pull_request.number }}
-      review_comments: ${{ github.event.review.body || '' }}
-    secrets:
-      claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      DEV_BOT_APP_ID: ${{ secrets.DEV_BOT_APP_ID }}
-      DEV_BOT_PRIVATE_KEY: ${{ secrets.DEV_BOT_PRIVATE_KEY }}
-
-  # ── Reviewer: runs when developer-bot opens or updates a PR ───────────────
-  reviewer:
-    name: Reviewer agent for developer PR
-    if: >-
-      github.event_name == 'pull_request' &&
-      (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'ready_for_review') &&
-      contains(github.event.pull_request.user.login, 'riddim-developer-bot') &&
-      !contains(github.event.sender.login, 'riddim-reviewer-bot') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:pause') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:needs-human')
-    uses: RiddimSoftware/riddim-release/.github/workflows/reviewer.yml@main
-    with:
-      pr_number: ${{ github.event.pull_request.number }}
-    secrets:
-      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      REVIEWER_BOT_APP_ID: ${{ secrets.REVIEWER_BOT_APP_ID }}
-      REVIEWER_BOT_PRIVATE_KEY: ${{ secrets.REVIEWER_BOT_PRIVATE_KEY }}
+  agent-loop:
+    uses: RiddimSoftware/agent-loop/.github/workflows/main.yml@main
+    secrets: inherit
