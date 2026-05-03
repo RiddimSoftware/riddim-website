@@ -112,7 +112,6 @@ jobs:
     if: >-
       github.event_name == 'pull_request_review' &&
       github.event.review.state == 'changes_requested' &&
-      contains(github.event.review.user.login, 'riddim-reviewer-bot') &&
       !contains(github.event.pull_request.labels.*.name, 'agent:pause') &&
       !contains(github.event.pull_request.labels.*.name, 'agent:needs-human')
     uses: RiddimSoftware/riddim-release/.github/workflows/developer.yml@main
