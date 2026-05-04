@@ -1,4 +1,4 @@
-# Developer Fix — consumer shim
+# Developer Fix — riddim-website consumer shim
 # Handles pull_request_review events so agent-fix routing stays in a
 # dedicated file rather than main.yml (avoids cross-event startup_failure).
 # All fix logic lives in RiddimSoftware/agent-loop/.github/workflows/agent-fix.yml
