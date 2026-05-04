@@ -1,0 +1,6 @@
+platform         = "web"
+evidence_dir     = "docs/evidence"
+web_url          = "http://localhost:8765"
+web_viewports    = ["desktop-1440", "mobile-390"]
+web_full_page    = true
+web_wait_until   = "networkidle"

@@ -1,0 +1,26 @@
+name: Capture web evidence on PR
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start HTTP server
+        run: |
+          python3 -m http.server 8765 &
+          sleep 2
+
+      - uses: RiddimSoftware/evidence@v0
+        with:
+          subcommand: capture-web
+          platform: web
+          comment-on-pr: 'true'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
