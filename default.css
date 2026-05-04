@@ -231,3 +231,71 @@ img.app_store_icon {
   background-color: #e8f0fb;
 }
 
+/* Factory page */
+.factory-intro {
+  padding: 48px 5%;
+}
+.factory-intro h1 {
+  margin: 0 0 12px;
+  line-height: 1.2;
+  font-size: 2rem;
+}
+.factory-lead {
+  font-size: 1.15rem;
+  margin: 0;
+  max-width: 640px;
+}
+.factory-section {
+  padding: 40px 5%;
+  text-align: left;
+}
+.factory-section h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+.factory-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.factory-loop-steps {
+  padding-left: 1.4rem;
+  line-height: 1.7;
+}
+.factory-loop-steps li {
+  margin-bottom: 0.75rem;
+}
+.factory-pr-list {
+  padding-left: 1.4rem;
+  line-height: 1.8;
+}
+.factory-pr-list li {
+  margin-bottom: 0.25rem;
+}
+.factory-link {
+  color: inherit;
+}
+.factory-link:visited {
+  color: inherit;
+}
+.factory-link:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+.footer-home-link {
+  color: #aaa;
+}
+.footer-home-link:visited {
+  color: #aaa;
+}
+.footer-home-link:hover {
+  color: #fff;
+}
+@media (max-width: 480px) {
+  .factory-intro h1 {
+    font-size: 1.5rem;
+  }
+  .factory-section h2 {
+    font-size: 1.2rem;
+  }
+}
+

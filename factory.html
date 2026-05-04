@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Riddim ships software through an autonomous delivery loop. This page describes how the loop works.">
+  <link rel="canonical" href="https://riddimsoftware.com/factory">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Riddim Software">
+  <meta property="og:title" content="The Riddim Software Factory">
+  <meta property="og:description"
+    content="Riddim ships software through an autonomous delivery loop. This page describes how the loop works.">
+  <meta property="og:url" content="https://riddimsoftware.com/factory">
+  <meta property="og:image" content="https://riddimsoftware.com/wordmark.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Riddim Software Factory">
+  <meta name="twitter:description"
+    content="Riddim ships software through an autonomous delivery loop. This page describes how the loop works.">
+  <meta name="twitter:image" content="https://riddimsoftware.com/wordmark.png">
+  <title>The Riddim Software Factory</title>
+  <link rel="stylesheet" href="default.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <header>
+    <a href="/"><img class="wordmark" src="wordmark.png" alt="Riddim Software" /></a>
+    <p class="org-tagline">Practical apps, games, and tools for iOS and the web.</p>
+  </header>
+
+  <main>
+    <section class="factory-intro light_background">
+      <div class="factory-content">
+        <h1>The Riddim Software Factory</h1>
+        <p class="factory-lead">
+          Riddim ships software through an autonomous delivery loop — this page describes how.
+        </p>
+      </div>
+    </section>
+
+    <section class="factory-section dark_background">
+      <div class="factory-content">
+        <h2>What "software factory" means</h2>
+        <p>
+          The term "software factory" is 57 years old. Hitachi coined it in 1969 to describe a production-line
+          approach to writing code — standardised processes, repeatable outcomes, measurable throughput. It is
+          documented on
+          <a href="https://en.wikipedia.org/wiki/Software_factory" class="factory-link">Wikipedia</a>
+          and revisited in a 2026 essay by Mager:
+          <a href="https://www.mager.co/blog/2026-03-19-software-factory/" class="factory-link">The Software Factory</a>.
+          What is new now is that autonomous agents can play specific, repeatable roles in that production line —
+          writing code, opening pull requests, reviewing diffs, and merging — without a human in the merge path.
+          Riddim is running one such loop in production.
+        </p>
+      </div>
+    </section>
+
+    <section class="factory-section light_background">
+      <div class="factory-content">
+        <h2>How the loop works</h2>
+        <p>
+          Every change that ships through Riddim follows the same ordered sequence:
+        </p>
+        <ol class="factory-loop-steps">
+          <li>
+            <strong>Intake.</strong> Work is filed as a Jira ticket by the Backlog Team agent. Tickets include
+            acceptance criteria, inputs, risks, and a definition of done before any code is written.
+          </li>
+          <li>
+            <strong>Orchestration.</strong> The Sprint Planning and Scope Orchestrator agents pick eligible tickets,
+            assign them to the next available slot, and spawn a developer session for each one.
+          </li>
+          <li>
+            <strong><code>riddim-developer-bot[bot]</code> opens a pull request.</strong> A Claude-powered developer
+            agent checks out the ticket, implements the change in a git worktree, and opens a pull request labeled
+            <code>autonomous</code>. The branch name and PR title carry the Jira ticket key.
+          </li>
+          <li>
+            <strong><code>riddim-reviewer-bot[bot]</code> reviews and merges.</strong> A separate Claude-powered
+            reviewer agent reads the diff and the ticket's acceptance criteria, makes any needed fixup commits,
+            approves, and squash-merges. The two-bot identity contract prevents self-approval: developer-bot opens,
+            reviewer-bot closes.
+          </li>
+          <li>
+            <strong>Jira reconciliation.</strong> The orchestrator reads PR state on each cycle and transitions
+            Jira tickets to Done when the corresponding PR is merged. The board stays in sync with the merge log
+            without manual updates.
+          </li>
+        </ol>
+        <p>
+          No human approves or merges the pull request. Humans file issues, set priorities, and review the board.
+          The loop handles the rest.
+        </p>
+      </div>
+    </section>
+
+    <section class="factory-section dark_background">
+      <div class="factory-content">
+        <h2>Built on</h2>
+        <p>
+          Riddim's loop runs on two open infrastructure components it did not build.
+        </p>
+        <p>
+          <a href="https://gascity.com" class="factory-link"><strong>Gas City</strong></a> is the agent coordination
+          layer. It manages work queues, agent lifecycles, and inter-agent messaging. Riddim is a production user of
+          Gas City, not its author.
+        </p>
+        <p>
+          <strong><a href="https://github.com/gastownhall" class="factory-link">Beads</a></strong> is the issue tracker
+          used internally by the loop. It stores work items, tracks state, and provides the command-line interface
+          agents use to claim and close tasks. Again, Riddim is a user, not the originator of the software factory
+          concept or of Beads.
+        </p>
+        <p>
+          The claim this page makes is narrower: Riddim is running this loop in production and has the PR history
+          to show for it.
+        </p>
+      </div>
+    </section>
+
+    <section class="factory-section light_background">
+      <div class="factory-content">
+        <h2>Evidence</h2>
+        <p>
+          The pull requests below were opened by <code>riddim-developer-bot[bot]</code> and merged by
+          <code>riddim-reviewer-bot[bot]</code> without human intervention in the merge path.
+        </p>
+        <ul class="factory-pr-list">
+          <li>
+            <a href="https://github.com/RiddimSoftware/bap/pull/78" class="factory-link">
+              bap #78 — chore: remove set-automerge smoke breadcrumbs
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/RiddimSoftware/bap/pull/74" class="factory-link">
+              bap #74 — chore: smoke test set-automerge.yml fix
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/RiddimSoftware/bap/pull/70" class="factory-link">
+              bap #70 — [RIDDIM-507]: add pull_request_review trigger to agent-loop shim
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/RiddimSoftware/bap/pull/69" class="factory-link">
+              bap #69 — feat: enable auto-merge on every new PR
+            </a>
+          </li>
+        </ul>
+        <p>
+          All PRs across <code>RiddimSoftware/*</code> by the developer bot are
+          <a href="https://github.com/search?q=org%3ARiddimSoftware+author%3Aapp%2Friddim-developer-bot&type=pullrequests"
+            class="factory-link">searchable on GitHub</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="factory-section dark_background">
+      <div class="factory-content">
+        <h2>Contact</h2>
+        <p>
+          Questions or feedback:
+          <a href="mailto:sunny@riddimsoftware.com" class="factory-link">sunny@riddimsoftware.com</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Riddim Software. <a href="/" class="footer-home-link">Home</a></p>
+  </footer>
+</body>
+
+</html>
