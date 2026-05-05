@@ -28,7 +28,6 @@ module.exports = function (eleventyConfig) {
     "mac-app-store.svg": "mac-app-store.svg",
     "monogram.svg": "monogram.svg",
     "portal-door-demo.svg": "portal-door-demo.svg",
-    "portal-door-icon.jpeg": "portal-door-icon.jpeg",
     "portal-door.png": "portal-door.png",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
