@@ -42,13 +42,13 @@
     "screenshotsIntro": "Two screens from the Blindfold app: the guess moment and the reveal.",
     "screenshots": [
       {
-        "src": "screenshots/blindfold/1.png",
+        "src": "screenshots/blindfold/1.webp",
         "alt": "Blindfold app — guess screen showing the cannabis trial in progress",
         "width": 546,
         "height": 1042
       },
       {
-        "src": "screenshots/blindfold/2.png",
+        "src": "screenshots/blindfold/2.webp",
         "alt": "Blindfold app — reveal screen showing the trial result",
         "width": 546,
         "height": 1042

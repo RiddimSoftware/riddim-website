@@ -32,7 +32,7 @@
     <a class="back-link" href="/">&larr; All products</a>
     <section class="light_background">
       <div class="product-hero">
-        <img class="product-icon" src="{{ product.icon | assetUrl }}" alt="{{ product.iconAlt }}" />
+        <img class="product-icon" src="{{ product.icon | assetUrl }}" alt="{{ product.iconAlt }}" width="120" height="120" />
         <h1>{{ product.name }}</h1>
         <p class="product-tagline">{{ product.tagline }}</p>
         <div class="cta-group">
@@ -44,7 +44,7 @@
           {%- if link.appStoreBadge %}
           <a class="app-store-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="app-store-badge" src="/app-store.svg" alt="{{ link.label }}"></a>
           {%- elif link.googlePlayBadge %}
-          <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}"></a>
+          <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}" width="646" height="250"></a>
           {%- else %}
           <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
           {%- endif %}
@@ -108,7 +108,7 @@
         {%- if link.appStoreBadge %}
         <a class="app-store-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="app-store-badge" src="/app-store.svg" alt="{{ link.label }}"></a>
         {%- elif link.googlePlayBadge %}
-        <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}"></a>
+        <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}" width="646" height="250"></a>
         {%- else %}
         <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
         {%- endif %}
