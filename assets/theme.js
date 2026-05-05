@@ -60,7 +60,6 @@
   const updateControls = (preference, theme) => {
     document.querySelectorAll('[data-theme-select]').forEach((control) => {
       control.value = preference;
-      control.setAttribute('aria-label', `Theme, current setting ${preference}`);
     });
 
     const statusText = preference === 'system'
