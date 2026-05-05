@@ -1,0 +1,67 @@
+name: Deploy Validation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-validation
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  ARTIFACT_PREFIX: riddim-website
+  ARTIFACT_BUCKET: ${{ vars.ARTIFACT_BUCKET }}
+  VALIDATION_BUCKET: ${{ vars.VALIDATION_BUCKET }}
+  VALIDATION_DISTRIBUTION_ID: ${{ vars.VALIDATION_DISTRIBUTION_ID }}
+  VALIDATION_BASE_URL: ${{ vars.VALIDATION_BASE_URL }}
+
+jobs:
+  deploy-validation:
+    name: Build artifact and deploy validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check deployment configuration
+        run: |
+          set -euo pipefail
+          required=(
+            ARTIFACT_BUCKET
+            AWS_ROLE_ARN
+            VALIDATION_BUCKET
+            VALIDATION_DISTRIBUTION_ID
+            VALIDATION_BASE_URL
+          )
+          for name in "${required[@]}"; do
+            if [[ -z "${!name}" ]]; then
+              echo "Missing GitHub Actions variable: ${name}" >&2
+              exit 1
+            fi
+          done
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+
+      - name: Static validation
+        run: python3 scripts/validate.py
+
+      - name: Build immutable artifact
+        run: scripts/build_artifact.sh "$GITHUB_SHA" "/tmp/${GITHUB_SHA}.tar.gz"
+
+      - name: Upload immutable artifact
+        run: scripts/upload_artifact.sh "$GITHUB_SHA" "/tmp/${GITHUB_SHA}.tar.gz"
+
+      - name: Deploy validation and smoke check
+        run: scripts/deploy_artifact.sh validation "$GITHUB_SHA"

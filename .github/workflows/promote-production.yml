@@ -1,0 +1,67 @@
+name: Promote Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_sha:
+        description: Commit SHA of an existing validation artifact to promote.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: promote-production
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  ARTIFACT_PREFIX: riddim-website
+  ARTIFACT_BUCKET: ${{ vars.ARTIFACT_BUCKET }}
+  PROMOTE_SHA: ${{ inputs.artifact_sha }}
+  PRODUCTION_BUCKET: ${{ vars.PRODUCTION_BUCKET }}
+  PRODUCTION_DISTRIBUTION_ID: ${{ vars.PRODUCTION_DISTRIBUTION_ID }}
+  PRODUCTION_BASE_URL: ${{ vars.PRODUCTION_BASE_URL }}
+
+jobs:
+  promote-production:
+    name: Promote existing artifact to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check deployment configuration
+        run: |
+          set -euo pipefail
+          required=(
+            ARTIFACT_BUCKET
+            AWS_ROLE_ARN
+            PRODUCTION_BUCKET
+            PRODUCTION_DISTRIBUTION_ID
+            PRODUCTION_BASE_URL
+          )
+          for name in "${required[@]}"; do
+            if [[ -z "${!name}" ]]; then
+              echo "Missing GitHub Actions variable: ${name}" >&2
+              exit 1
+            fi
+          done
+          if [[ ! "$PROMOTE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "artifact_sha must be the full 40-character commit SHA." >&2
+            exit 1
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+
+      - name: Promote artifact and smoke check
+        run: scripts/deploy_artifact.sh production "$PROMOTE_SHA"
