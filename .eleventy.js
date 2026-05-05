@@ -15,7 +15,6 @@ module.exports = function (eleventyConfig) {
     "nether.jpeg": "nether.jpeg",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
-    "sitemap.xml": "sitemap.xml",
     "sonnio-app-icon.jpg": "sonnio-app-icon.jpg",
     "sonnio-logo.jpg": "sonnio-logo.jpg",
     "star.svg": "star.svg",
