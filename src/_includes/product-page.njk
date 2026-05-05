@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.seo.title }}</title>
+  <meta name="description" content="{{ product.seo.description }}">
+  <link rel="stylesheet" href="/default.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="canonical" href="{{ product.seo.canonical }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Riddim Software">
+  <meta property="og:title" content="{{ product.seo.title }}">
+  <meta property="og:description" content="{{ product.seo.description }}">
+  <meta property="og:url" content="{{ product.seo.canonical }}">
+  <meta property="og:image" content="{{ product.seo.ogImage }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ product.seo.title }}">
+  <meta name="twitter:description" content="{{ product.seo.description }}">
+  <meta name="twitter:image" content="{{ product.seo.ogImage }}">
+</head>
+
+<body>
+  <header>
+    <a class="wordmark-link" href="/" aria-label="Riddim Software home">
+      <img class="wordmark product-wordmark" src="/wordmark.png" alt="Riddim Software" />
+    </a>
+  </header>
+  <main class="product-page">
+    <a class="back-link" href="/">&larr; All products</a>
+    <section class="light_background">
+      <div class="product-hero">
+        <img class="product-icon" src="{{ product.icon | assetUrl }}" alt="{{ product.iconAlt }}" />
+        <h1>{{ product.name }}</h1>
+        <p class="product-tagline">{{ product.tagline }}</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="{{ product.primaryCta.href }}"{% if product.primaryCta.external %} target="_blank" rel="noopener"{% endif %}>{% if product.primaryCta.appStoreIcon %}
+            <img class="button-icon" src="/app-store.svg" alt="" aria-hidden="true">{% endif %}{{ product.primaryCta.label }}</a>
+        </div>
+      </div>
+    </section>
+    <section class="product-story light_background">
+      <div class="product-section-inner">
+        <h2>Story</h2>
+        <p>{{ product.story }}</p>
+      </div>
+    </section>
+    <section class="product-screenshots light_background" aria-label="{{ product.name }} screenshots">
+      <div class="screenshot-strip">
+        {%- for screenshot in product.screenshots %}
+        <figure>
+          <img src="{{ screenshot.src | assetUrl }}" alt="{{ screenshot.alt }}">
+          {%- if screenshot.caption %}
+          <figcaption>{{ screenshot.caption }}</figcaption>
+          {%- endif %}
+        </figure>
+        {%- endfor %}
+      </div>
+    </section>
+    <section class="product-features light_background">
+      <div class="product-section-inner">
+        <h2>Features</h2>
+        <ul class="feature-list">
+          {%- for feature in product.features %}
+          <li>{{ feature }}</li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </section>
+    {%- if product.secondaryLinks and product.secondaryLinks.length %}
+    <section class="product-secondary-links light_background">
+      <div class="cta-group">
+        {%- for link in product.secondaryLinks %}
+        <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+  </main>
+  <footer class="light_background">
+    <p>&copy; Riddim Software</p>
+  </footer>
+</body>
+
+</html>

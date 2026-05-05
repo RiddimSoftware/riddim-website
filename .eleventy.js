@@ -1,4 +1,16 @@
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addFilter("assetUrl", function (assetPath) {
+    if (!assetPath) {
+      return "";
+    }
+
+    if (/^(https?:|mailto:|\/)/.test(assetPath)) {
+      return assetPath;
+    }
+
+    return `/${assetPath}`;
+  });
+
   eleventyConfig.addPassthroughCopy({
     ".well-known": ".well-known",
     "app-store.svg": "app-store.svg",
