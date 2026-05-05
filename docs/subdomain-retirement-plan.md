@@ -1,7 +1,7 @@
 # Post-Launch Subdomain Retirement Plan
 
 **Status:** Active — legacy subdomains remain live until consolidation is deployed and verified.
-**Last updated:** 2026-05-01
+**Last updated:** 2026-05-05
 **Owner:** sunny@riddimsoftware.com
 
 ---
@@ -84,16 +84,19 @@ Before any Phase 1 action on a subdomain, confirm:
 
 ## Completed Retirements
 
-### doubledozenwebsite (Firebase Hosting) — retired prior to WEB-52
+### doubledozenwebsite (Firebase Hosting) — not publicly reachable as of 2026-05-05
 
 The standalone Double Dozen marketing page (`doubledozenwebsite/public/index.html`)
 was hosted via Firebase Hosting. Verified 2026-05-05:
 
 - Firebase Hosting URLs (`doubledozenwebsite.web.app`, `doubledozen.web.app`,
   `double-dozen.web.app`) all return 404 — the Firebase project is no longer active.
-- The source repository does not exist locally or on GitHub; no local copy was found.
-- The site was already retired before this ticket; no deployment or URL-fix action
-  was required.
+- No local `/Users/sunny/code/doubledozenwebsite` checkout was present in this
+  workspace, and no public GitHub repository was found under the obvious
+  `RiddimSoftware/doubledozenwebsite`, `RiddimSoftware/double-dozen-website`,
+  or `RiddimSoftware/double-dozen` names.
+- Based on the public checks above, no live legacy deployment was verifiable from
+  this repo, so no deployment or URL-fix action was taken here.
 - The canonical Double Dozen page at `riddimsoftware.com/products/double-dozen.html`
   is live and links to the correct App Store listing
   (`https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786`).
