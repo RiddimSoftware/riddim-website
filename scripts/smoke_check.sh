@@ -19,7 +19,28 @@ curl_flags=(--silent --show-error --fail --location --max-time 20)
 curl "${curl_flags[@]}" "${base_url}/" -o "$tmp_dir/index.html"
 curl "${curl_flags[@]}" "${base_url}/version.json" -o "$tmp_dir/version.json"
 curl "${curl_flags[@]}" "${base_url}/.well-known/apple-app-site-association" -o "$tmp_dir/aasa.json"
-curl "${curl_flags[@]}" "${base_url}/__riddim_smoke_missing_route_${expected_sha}" -o "$tmp_dir/fallback.html"
+
+product_routes=(
+  "/blindfold/"
+  "/epac/"
+  "/bubble-bop/"
+  "/reach/"
+  "/portal-door/"
+  "/sonnio/"
+  "/double-dozen/"
+)
+
+for route in "${product_routes[@]}"; do
+  curl "${curl_flags[@]}" "${base_url}${route}" -o /dev/null
+done
+
+missing_route="__riddim_smoke_missing_route_${expected_sha}"
+missing_status="$(curl --silent --show-error --location --output "$tmp_dir/fallback.html" \
+  --write-out "%{http_code}" --max-time 20 "${base_url}/${missing_route}")"
+if [[ "$missing_status" != "404" ]]; then
+  echo "Expected unknown routes to return HTTP 404, got ${missing_status}." >&2
+  exit 1
+fi
 
 python3 - "$tmp_dir/version.json" "$expected_sha" "$expected_env" <<'PY'
 import json
@@ -49,8 +70,8 @@ if [[ "${aasa_content_type,,}" != *"json"* ]]; then
   exit 1
 fi
 
-if ! grep -qi "<html" "$tmp_dir/fallback.html"; then
-  echo "Expected unknown routes to fall back to index.html content." >&2
+if ! grep -q "That page doesn’t exist." "$tmp_dir/fallback.html"; then
+  echo "Expected unknown routes to render the dedicated 404 page." >&2
   exit 1
 fi
 
