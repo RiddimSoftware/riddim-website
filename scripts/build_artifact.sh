@@ -6,9 +6,9 @@ usage() {
 Usage:
   scripts/build_artifact.sh <commit-sha> <artifact-path>
 
-Builds an immutable tar.gz artifact from the static website files. Generated
-deployment-only files are added under a temporary staging directory; the source
-tree is not modified.
+Builds the 11ty static site and packages an immutable tar.gz artifact.
+Generated deployment-only files are added under a temporary staging directory;
+the source tree is not modified.
 USAGE
 }
 
@@ -26,17 +26,13 @@ trap 'rm -rf "$tmp_dir"' EXIT
 dist_dir="$tmp_dir/site"
 mkdir -p "$dist_dir/.well-known"
 
-rsync -a --delete \
-  --exclude ".git" \
-  --exclude ".git/" \
-  --exclude ".gitignore" \
-  --exclude ".github/" \
-  --exclude "docs/" \
-  --exclude "infrastructure/" \
-  --exclude "scripts/" \
-  --exclude "customHttp.yml" \
-  --exclude "CLAUDE.md" \
-  "$repo_root/" "$dist_dir/"
+(
+  cd "$repo_root"
+  npm install --package-lock=false
+  npm run build
+)
+
+rsync -a --delete "$repo_root/_site/" "$dist_dir/"
 
 if [[ -f "$repo_root/apple-app-site-association.json" ]]; then
   cp -f "$repo_root/apple-app-site-association.json" \

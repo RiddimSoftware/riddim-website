@@ -16,7 +16,10 @@ import os
 import re
 import subprocess
 
-SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE_ROOT = os.environ.get("VALIDATE_SITE_ROOT", DEFAULT_SITE_ROOT)
+if not os.path.isabs(SITE_ROOT):
+    SITE_ROOT = os.path.join(DEFAULT_SITE_ROOT, SITE_ROOT)
 LIVE_BASE = "https://riddimsoftware.com"
 
 LIVE_PATHS = [
