@@ -59,11 +59,14 @@ As of **2026-05-05**, the production CloudFront distribution
 
 - Current retention target: **90 days**
 - Cookie logging: **disabled**
+- Bucket ownership mode: **BucketOwnerPreferred**
 - Purpose: directional request counts, top paths, referrers, and 4xx/5xx trend
   checks without client-side analytics
 
 This log bucket is currently managed outside the static-site CloudFormation
-stack because CloudFront standard logging still requires S3 ACL support.
+stack because CloudFront standard logging still requires S3 ACL support. Do
+not switch this bucket to `BucketOwnerEnforced`; standard log delivery would
+stop because CloudFront still writes with ACL semantics.
 
 To fetch a recent batch of logs locally (replace the profile name with any
 AWS profile that has read access to the log bucket):
