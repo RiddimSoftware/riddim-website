@@ -1,67 +1,19 @@
-# Autonomous PR Loop — riddim-website consumer trigger wrapper
-#
-# Entry point: any developer-bot-opened PR with the `autonomous` label engages
-# the loop. The Linear ↔ GitHub integration auto-links PRs to their Linear
-# issues when the issue identifier appears in the branch name, PR title, or
-# body, and auto-transitions on PR open / merge.
-#
-# Required org secrets (already granted to this repo):
-#   CLAUDE_CODE_OAUTH_TOKEN   — reviewer / developer-fixup
-#   DEV_BOT_APP_ID            — opens PRs as developer-bot
-#   DEV_BOT_PRIVATE_KEY       — opens PRs as developer-bot
-#   REVIEWER_BOT_APP_ID       — reviewer loop
-#   REVIEWER_BOT_PRIVATE_KEY  — reviewer loop
-
-name: Autonomous PR Loop
-
+# Agent Loop - riddim-website consumer shim
+# All routing logic lives in RiddimSoftware/agent-loop/.github/workflows/main.yml
+name: Agent Loop
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review]
+    types: [labeled, opened, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    types: [closed]
   pull_request_review:
     types: [submitted]
   workflow_dispatch:
-
 permissions:
   contents: read
   pull-requests: write
-  statuses: write
-  checks: write
   issues: write
-
 jobs:
-  # ── Fix-up: reviewer requested changes ────────────────────────────────────
-  developer-fixup:
-    name: Developer agent from reviewer changes requested
-    if: >-
-      github.event_name == 'pull_request_review' &&
-      github.event.review.state == 'changes_requested' &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:pause') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:needs-human')
-    uses: RiddimSoftware/riddim-release/.github/workflows/developer.yml@main
-    with:
-      trigger_type: changes_requested
-      issue_number: ${{ github.event.pull_request.number }}
-      pr_number: ${{ github.event.pull_request.number }}
-      review_comments: ${{ github.event.review.body || '' }}
-    secrets:
-      claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      DEV_BOT_APP_ID: ${{ secrets.DEV_BOT_APP_ID }}
-      DEV_BOT_PRIVATE_KEY: ${{ secrets.DEV_BOT_PRIVATE_KEY }}
-
-  # ── Reviewer: runs when developer-bot opens or updates a PR ───────────────
-  reviewer:
-    name: Reviewer agent for developer PR
-    if: >-
-      github.event_name == 'pull_request' &&
-      (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'ready_for_review') &&
-      contains(github.event.pull_request.user.login, 'riddim-developer-bot') &&
-      !contains(github.event.sender.login, 'riddim-reviewer-bot') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:pause') &&
-      !contains(github.event.pull_request.labels.*.name, 'agent:needs-human')
-    uses: RiddimSoftware/riddim-release/.github/workflows/reviewer.yml@main
-    with:
-      pr_number: ${{ github.event.pull_request.number }}
-    secrets:
-      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      REVIEWER_BOT_APP_ID: ${{ secrets.REVIEWER_BOT_APP_ID }}
-      REVIEWER_BOT_PRIVATE_KEY: ${{ secrets.REVIEWER_BOT_PRIVATE_KEY }}
+  agent-loop:
+    uses: RiddimSoftware/agent-loop/.github/workflows/main.yml@main
+    secrets: inherit
