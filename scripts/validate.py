@@ -299,11 +299,12 @@ def run_local_theme_checks():
             theme_toggle_template = handle.read()
 
         required_theme_toggle_snippets = [
-            '<option value="system">System</option>',
-            '<option value="light">Light</option>',
-            '<option value="dark">Dark</option>',
+            'data-theme-option="system"',
+            'data-theme-option="light"',
+            'data-theme-option="dark"',
+            'class="theme-toggle-group"',
+            'aria-pressed="false"',
             'aria-describedby="theme-status"',
-            'role="status"',
             'aria-live="polite"',
         ]
         for snippet in required_theme_toggle_snippets:
@@ -325,9 +326,10 @@ def run_local_theme_checks():
         '<meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)" data-theme-color="dark">',
         '<link rel="manifest" href="/manifest.json" data-manifest-light="/manifest.json" data-manifest-dark="/manifest-dark.json">',
         '<script src="/assets/theme.js" defer></script>',
-        'data-theme-select',
+        'data-theme-option="system"',
+        'data-theme-option="light"',
+        'data-theme-option="dark"',
         'data-theme-status',
-        'role="status"',
     ]
 
     for path in sorted(html_files):
