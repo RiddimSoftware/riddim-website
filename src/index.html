@@ -25,116 +25,75 @@
 </head>
 
 <body>
-  <header>
+  {% set featuredProductSlug = "epac" %}
+  {% set featuredProduct = null %}
+  {% for product in products %}
+    {% if product.slug == featuredProductSlug %}
+      {% set featuredProduct = product %}
+    {% endif %}
+  {% endfor %}
+  <header class="site-header">
     <h1><img class="wordmark" src="wordmark.png" alt="Riddim Software" /></h1>
-    <p class="org-tagline">Practical apps, games, and tools for iOS and the web.</p>
   </header>
-  <main>
-    <section class="dark_background" id="trending">
-      <h2>Apps</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <a href="/products/blindfold.html" class="app_store">
-            <img class="app_store_icon" src="blindfold.png" alt="Blindfold app icon" />
-            <span class="app_store_label">Blindfold</span>
-            <span class="product-desc">Audio games designed for the visually impaired.</span>
-            <span class="stars" aria-label="5 stars">
-              <img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" />
-            </span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/products/epac.html" class="app_store">
-            <img class="app_store_icon" src="epac.png" alt="epac app icon" />
-            <span class="app_store_label">epac</span>
-            <span class="product-desc">A clean, focused exercise log for serious athletes.</span>
-            <span class="updated-indicator">UPDATED</span>
-            <span class="stars" aria-label="5 stars">
-              <img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" />
-            </span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/bubble-bop" class="app_store">
-            <img class="app_store_icon" src="bubble-bop.png" alt="Bubble Bop app icon" />
-            <span class="app_store_label">Bubble Bop</span>
-            <span class="product-desc">A colorful balloon-popping game for kids.</span>
-            <span class="stars" aria-label="5 stars">
-              <img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" />
-            </span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/products/reach.html" class="app_store">
-            <img class="app_store_icon" src="reach.png" alt="Reach app icon" />
-            <span class="app_store_label">Reach</span>
-            <span class="product-desc">Track personal goals and build consistent habits.</span>
-            <span class="stars" aria-label="5 stars">
-              <img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" />
-            </span>
-          </a>
+  <main class="home">
+    <section class="home-hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Independent product studio</p>
+      <h2 id="hero-title">Practical apps, games, and tools for iOS and the web.</h2>
+      <p class="hero-copy">Riddim Software is a small studio building focused products that make everyday digital work feel calmer, clearer, and more useful.</p>
+    </section>
+    <section class="featured-product" aria-labelledby="featured-title">
+      <div class="featured-media">
+        <img src="{{ featuredProduct.icon }}" alt="{{ featuredProduct.iconAlt }}" />
+      </div>
+      <div class="featured-copy">
+        <p class="eyebrow">Featured product</p>
+        <h2 id="featured-title">{{ featuredProduct.name }}</h2>
+        <p>{{ featuredProduct.featuredPitch or featuredProduct.tagline }}</p>
+        <div class="cta-group align-start">
+          {% set primaryCta = featuredProduct.ctas[0] %}
+          <a class="btn btn-primary" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}>{% if primaryCta.appStoreIcon %}
+            <img src="app-store.svg" alt="App Store" class="btn-icon">{% endif %}{{ primaryCta.label }}</a>
+          <a class="btn btn-secondary" href="/products/{{ featuredProduct.slug }}.html">Read more &rarr;</a>
         </div>
       </div>
     </section>
-    <section class="light_background" id="more">
-      <h2>Games &amp; More</h2>
+    <section class="all-products" aria-labelledby="products-title">
+      <div class="section-heading">
+        <p class="eyebrow">All products</p>
+        <h2 id="products-title">Small, focused products from the studio.</h2>
+      </div>
       <div class="product-grid">
-        <div class="product-card">
-          <a href="/products/portal-door.html" class="app_store">
-            <img class="app_store_icon" src="nether.jpeg" alt="Portal Door app icon" />
-            <span class="app_store_label">Portal Door</span>
-            <span class="product-desc">An immersive puzzle adventure through doors and dimensions.</span>
-            <span class="new-indicator">NEW</span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/products/sonnio.html" class="app_store">
-            <img class="app_store_icon" src="sonnio-logo.jpg" alt="Sonnio app icon" />
-            <span class="app_store_label">Sonnio</span>
-            <span class="product-desc">Mix ambient sounds to create your own focus environment.</span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="/products/double-dozen.html" class="app_store">
-            <img class="app_store_icon" src="double-dozen.png" alt="Double Dozen app icon" />
-            <span class="app_store_label">Double Dozen</span>
-            <span class="product-desc">A fast-paced tap-speed game — how fast can you go?</span>
-            <span class="stars" aria-label="5 stars">
-              <img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" /><img src="star.svg" alt="" />
-            </span>
-          </a>
-        </div>
+        {% for product in products %}
+          {% if product.slug != featuredProductSlug %}
+            <article class="product-card">
+              <a href="/products/{{ product.slug }}.html" class="product-link">
+                <img class="product-icon" src="{{ product.icon }}" alt="{{ product.iconAlt }}" />
+                <span class="product-name">{{ product.name }}</span>
+                <span class="product-desc">{{ product.homepagePitch or product.tagline }}</span>
+                <span class="text-link">Read more &rarr;</span>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
       </div>
     </section>
-    <section class="dark_background" id="other-work">
-      <h2>Other Work</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <a href="https://github.com/sunnypurewal" target="_blank" class="app_store">
-            <img class="app_store_icon github-icon" src="github.svg" alt="GitHub" />
-            <span class="app_store_label">GitHub</span>
-            <span class="product-desc">Open-source projects and developer tools.</span>
-          </a>
-        </div>
-        <div class="product-card">
-          <a href="https://apps.apple.com/app/koneksa-health/id1636936813" target="_blank" class="app_store">
-            <img class="app_store_icon" src="koneksa.webp" alt="Koneksa Health app icon" />
-            <span class="app_store_label">Koneksa</span>
-            <span class="product-desc">Health monitoring app built for Koneksa Health.</span>
-          </a>
-        </div>
-      </div>
-    </section>
-    <section class="light_background" id="contact">
-      <h2>Contact Us</h2>
-      <span>info@riddimsoftware.com</span>
-      <br /><br />
-      <span>155-2 King St. W #386</span>
-      <br />
-      <span>Hamilton, ON L8P 1A1</span>
+    <section class="about-block" aria-labelledby="about-title">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title">Riddim Software is an independent product company led by Sunny Purewal.</h2>
+      <p>The studio ships its own apps, games, civic tools, and web experiments with a bias toward useful interfaces, plain language, and durable craft. Read more on the <a href="/about">about page</a>.</p>
     </section>
   </main>
-  <footer class="light_background">
+  <footer class="site-footer">
+    <div>
+      <img src="wordmark.png" alt="Riddim Software" class="footer-wordmark">
+      <p>Independent apps, games, and web products.</p>
+    </div>
+    <div class="footer-links" aria-label="Product links">
+      {% for product in products %}
+        <a href="/products/{{ product.slug }}.html">{{ product.name }}</a>
+      {% endfor %}
+    </div>
+    <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a>
     <p>&copy; Riddim Software</p>
   </footer>
 </body>
