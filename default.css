@@ -1123,6 +1123,10 @@ html[data-theme-ui="ready"] .theme-toggle {
   .screenshot-strip.phone-screenshots {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
