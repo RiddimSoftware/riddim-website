@@ -220,34 +220,76 @@
     "name": "Sonnio",
     "seo": {
       "title": "Sonnio - Riddim Software",
-      "description": "Sonnio is a music experience app by Riddim Software.",
+      "description": "Sonnio is a voice-first music app for Apple Music, Spotify, and Shazam recognition.",
       "canonical": "https://riddimsoftware.com/sonnio/",
-      "ogImage": "https://riddimsoftware.com/sonnio-logo.jpg"
+      "ogImage": "https://riddimsoftware.com/screenshots/sonnio/1.png"
     },
     "icon": "sonnio-logo.jpg",
     "iconAlt": "Sonnio app icon",
-    "tagline": "A music experience app - find, play, and share the music you love.",
-    "homepagePitch": "A music experience for finding, playing, and sharing what you love.",
+    "tagline": "Just Say It. Play It.",
+    "homepagePitch": "A voice-first music app for playing, recognizing, and switching between Apple Music and Spotify.",
     "primaryCta": {
-      "label": "Open Sonnio",
-      "href": "https://sonnio.riddimsoftware.com",
-      "external": true
+      "label": "Download on the App Store",
+      "href": "https://apps.apple.com/app/id6757932344",
+      "external": true,
+      "appStoreBadge": true
     },
-    "story": "Sonnio gives Riddim Software a dedicated home for music discovery and listening experiments.",
-    "screenshots": [
+    "storyEyebrow": "Built by Riddim",
+    "storyTitle": "A shorter path from hearing a song to playing it.",
+    "story": "Sonnio gives music a simpler surface: speak a song, choose Apple Music or Spotify, and use Shazam recognition when something nearby catches your ear. The canonical Riddim page keeps the product in the portfolio while sonnio.riddimsoftware.com stays live for the fuller app experience.",
+    "featuresTitle": "Music controls with less friction",
+    "featuresIntro": "Sonnio keeps the core actions close, plain, and fast.",
+    "features": [
       {
-        "src": "sonnio-logo.jpg",
-        "alt": "Sonnio product preview"
+        "title": "Voice control",
+        "description": "Ask for a song out loud and move from idea to playback without digging through menus."
+      },
+      {
+        "title": "Apple Music and Spotify",
+        "description": "Connect the services people already use and switch providers when the listening context changes."
+      },
+      {
+        "title": "Shazam recognition",
+        "description": "Identify a song you hear nearby, then keep it moving into your listening flow."
+      },
+      {
+        "title": "Riddim support path",
+        "description": "The Sonnio subdomain remains live, and support stays reachable through Riddim."
       }
     ],
-    "features": [
-      "Music experience app",
-      "Web launch path",
-      "Built for finding and sharing music"
+    "screenshotLayout": "phone-screenshots",
+    "screenshotsEyebrow": "App Store preview",
+    "screenshotsTitle": "Inside the Sonnio experience",
+    "screenshotsIntro": "Three App Store screenshots show the voice-first flow, provider controls, and recognition surface.",
+    "screenshots": [
+      {
+        "src": "screenshots/sonnio/1.png",
+        "alt": "Sonnio voice-first home screen",
+        "width": 592,
+        "height": 1280
+      },
+      {
+        "src": "screenshots/sonnio/2.png",
+        "alt": "Sonnio music provider and playback screen",
+        "width": 592,
+        "height": 1280
+      },
+      {
+        "src": "screenshots/sonnio/3.png",
+        "alt": "Sonnio song recognition screen",
+        "width": 592,
+        "height": 1280
+      }
     ],
+    "secondaryLinksInHero": true,
     "secondaryLinks": [
       {
-        "label": "Contact us",
+        "label": "Open Sonnio site",
+        "href": "https://sonnio.riddimsoftware.com",
+        "external": true
+      },
+      {
+        "label": "Support email",
         "href": "mailto:info@riddimsoftware.com"
       }
     ]

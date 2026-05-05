@@ -27,10 +27,12 @@ module.exports = function (eleventyConfig) {
     "nether.jpeg": "nether.jpeg",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
+    "screenshots": "screenshots",
     "sonnio-app-icon.jpg": "sonnio-app-icon.jpg",
     "sonnio-logo.jpg": "sonnio-logo.jpg",
     "star.svg": "star.svg",
-    "wordmark.png": "wordmark.png"
+    "wordmark.png": "wordmark.png",
+    "wordmark-product.png": "wordmark-product.png"
   });
 
   return {
