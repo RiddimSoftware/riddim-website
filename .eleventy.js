@@ -29,7 +29,6 @@ module.exports = function (eleventyConfig) {
     "monogram.svg": "monogram.svg",
     "portal-door-demo.svg": "portal-door-demo.svg",
     "portal-door-icon.jpeg": "portal-door-icon.jpeg",
-    "portal-door-icon.svg": "portal-door-icon.svg",
     "portal-door.png": "portal-door.png",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
