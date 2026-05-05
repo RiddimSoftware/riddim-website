@@ -468,8 +468,7 @@ img.wordmark {
   outline-offset: 3px;
 }
 
-.site-footer p,
-.site-footer address {
+.site-footer p {
   margin: 0;
   color: var(--color-footer-muted);
 }
@@ -494,10 +493,6 @@ img.wordmark {
 .footer-contact {
   display: grid;
   gap: 10px;
-}
-
-.footer-contact address {
-  font-style: normal;
 }
 
 .footer-copyright {
