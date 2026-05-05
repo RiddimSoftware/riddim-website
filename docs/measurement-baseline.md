@@ -35,7 +35,7 @@
 - Outbound link clicks to App Store or other external destinations (no JavaScript event tracking).
 - Product page engagement depth.
 
-For this baseline, "product link clicks" means requests to first-party product pages such as `/products/epac.html` or `/products/reach.html`, which CloudFront logs can capture. It does not mean outbound App Store or external CTA clicks.
+For this baseline, "product link clicks" means requests to first-party product pages such as `/epac/` or `/reach/`, which CloudFront logs can capture. It does not mean outbound App Store or external CTA clicks.
 
 If outbound CTA clicks or unique visitors become important, a no-cookie SaaS (Plausible/Fathom) is the natural upgrade and should be handled as a separate follow-up ticket.
 
@@ -50,7 +50,7 @@ Once CloudFront standard logs are enabled, the following baseline questions can 
 | Total visits (request baseline) | `wc -l` on combined log files, then subtract obvious bot noise and HEAD/OPTIONS as needed |
 | Top paths | `awk '{print $8}' *.log \| sort \| uniq -c \| sort -rn \| head -20` |
 | Referrers (when sent by the client) | `awk '{print $10}' *.log \| sort \| uniq -c \| sort -rn \| head -20` |
-| Product page visits / internal product-link usage | `awk '{print $8}' *.log \| grep '^/products/' \| sort \| uniq -c \| sort -rn` |
+| Product page visits / internal product-link usage | `awk '{print $8}' *.log \| grep -E '^/(blindfold|epac|bubble-bop|reach|portal-door|sonnio|double-dozen)/' \| sort \| uniq -c \| sort -rn` |
 | 4xx/5xx errors | `awk '{print $9}' *.log \| grep -E '^[45]' \| sort \| uniq -c` |
 | Deploy-to-deploy trend | Compare the same path/referrer counts across release windows using the deploy timestamps in `version.json` or release history |
 

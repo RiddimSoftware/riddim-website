@@ -32,7 +32,7 @@ Astro is a strong static-site framework, but it adds more conventions and framew
 - `src/bubble-bop/index.html` is the Bubble Bop App Clip landing page.
 - `src/reach-privacy.html` is the Reach privacy page.
 - `src/_data/products.json` is the product-page content source.
-- `src/products.njk` generates the current `products/<slug>.html` product pages.
+- `src/products.njk` generates consolidated `<slug>/index.html` product pages, except Bubble Bop, which keeps its hand-authored App Clip landing page at `src/bubble-bop/index.html`.
 - Shared static assets remain at the repository root and are copied through by `.eleventy.js`.
 - Generated deploy output lives in `_site/`.
 
@@ -56,13 +56,13 @@ Add an object to `src/_data/products.json` with:
 - `tagline`
 - `ctas`
 
-Then run `npm run build` and confirm `_site/products/<slug>.html` renders as expected. Product pages intentionally keep the current `products/<slug>.html` output path for this migration; canonical URL cleanup belongs in a separate routing ticket.
+Then run `npm run build` and confirm `_site/<slug>/index.html` renders as expected. Product pages should use stable, lowercase, trailing-slash routes such as `https://riddimsoftware.com/epac/`.
 
 Product pages are added to `_site/sitemap.xml` automatically from `src/_data/products.json`. No hand edit is needed for the sitemap after adding a product; run `npm run build` or `npm run validate` to regenerate it.
 
 ## Sitemap
 
-`src/sitemap.njk` generates `_site/sitemap.xml` during the 11ty build. Its URL list comes from `src/_data/sitemap.js`, which includes the homepage, the Bubble Bop App Clip page, every product in `src/_data/products.json`, `reach-privacy.html`, and `/about` when `src/about.html` or `src/about/index.html` exists.
+`src/sitemap.njk` generates `_site/sitemap.xml` during the 11ty build. Its URL list comes from `src/_data/sitemap.js`, which includes the homepage, every consolidated product route in `src/_data/products.json`, `reach-privacy.html`, and `/about` when `src/about.html` or `src/about/index.html` exists.
 
 Each sitemap entry uses an absolute `https://riddimsoftware.com` URL and a `lastmod` value from the latest git commit touching the relevant source file. If git metadata is unavailable in a build environment, the generator falls back to the current build time. `npm run validate` parses the generated sitemap as Sitemaps 0.9 XML and confirms `robots.txt` references `https://riddimsoftware.com/sitemap.xml`.
 
@@ -94,8 +94,9 @@ npm run validate
 
 ## Validation and Health Checks
 
-Run `npm run validate` before deployment for local HTML and sitemap checks. Run
-`python3 scripts/health_check.py` when checking live product-route health.
+Run `npm run validate` before deployment for local HTML, sitemap, and product
+metadata checks. Run `python3 scripts/health_check.py` when checking live
+product-route and legacy-subdomain health.
 
 Use `docs/deploy-checklist.md` for the complete pre/post-deploy launch checklist
 and screenshot baseline requirements.

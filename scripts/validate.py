@@ -35,6 +35,22 @@ LIVE_PATHS = [
     "/.well-known/apple-app-site-association",
 ]
 
+CONSOLIDATED_PRODUCT_PATHS = [
+    ("Blindfold", "/blindfold/"),
+    ("epac", "/epac/"),
+    ("Bubble Bop", "/bubble-bop/"),
+    ("Reach", "/reach/"),
+    ("Portal Door", "/portal-door/"),
+    ("Sonnio", "/sonnio/"),
+    ("Double Dozen", "/double-dozen/"),
+]
+
+LEGACY_SUBDOMAINS = [
+    ("epac legacy subdomain", "https://epac.riddimsoftware.com"),
+    ("nether legacy subdomain", "https://nether.riddimsoftware.com"),
+    ("sonnio legacy subdomain", "https://sonnio.riddimsoftware.com"),
+]
+
 failures = []
 
 
@@ -162,6 +178,43 @@ def run_local_sitemap_checks():
         ok(f"checked {len(urls)} sitemap URL(s): valid Sitemaps 0.9 XML with lastmod")
 
 
+def run_local_product_metadata_checks():
+    print("\n── Local product metadata checks ──")
+    missing = []
+
+    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+        rel_file = path.strip("/") + "/index.html"
+        html_path = os.path.join(SITE_ROOT, rel_file)
+        canonical = LIVE_BASE + path
+
+        if not os.path.exists(html_path):
+            fail(f"{name} route {path}: generated file missing at {rel_file}")
+            missing.append(name)
+            continue
+
+        with open(html_path, encoding="utf-8") as handle:
+            content = handle.read()
+
+        expected_tags = [
+            (f'<link rel="canonical" href="{canonical}">', "canonical URL"),
+            (f'<meta property="og:url" content="{canonical}">', "Open Graph URL"),
+            ('<meta property="og:title"', "Open Graph title"),
+            ('<meta property="og:description"', "Open Graph description"),
+            ('<meta property="og:image"', "Open Graph image"),
+            ('<meta name="twitter:card"', "Twitter card"),
+            ('<meta name="twitter:title"', "Twitter title"),
+            ('<meta name="twitter:description"', "Twitter description"),
+            ('<meta name="twitter:image"', "Twitter image"),
+        ]
+
+        for expected, label in expected_tags:
+            if expected not in content:
+                fail(f"{name} route {path}: missing {label}")
+
+    if not missing and not failures:
+        ok(f"checked metadata for {len(CONSOLIDATED_PRODUCT_PATHS)} consolidated product route(s)")
+
+
 def public_html_locs():
     locs = set()
 
@@ -227,6 +280,21 @@ def run_live_checks():
         else:
             ok(f"{url} → {status}")
 
+    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+        url = LIVE_BASE + path
+        status = curl_status(url)
+        if not status.startswith("2"):
+            fail(f"{name} route {url} returned {status} (expected 2xx)")
+        else:
+            ok(f"{name} route {url} → {status}")
+
+    for name, url in LEGACY_SUBDOMAINS:
+        status = curl_status(url)
+        if not (status.startswith("2") or status.startswith("3")):
+            fail(f"{name} {url} returned {status} (expected reachable 2xx/3xx)")
+        else:
+            ok(f"{name} {url} → {status}")
+
     # apple-app-site-association must be JSON (not HTML fallback)
     aasa_url = LIVE_BASE + "/.well-known/apple-app-site-association"
     ct = curl_content_type(aasa_url)
@@ -242,6 +310,7 @@ def main():
     live = "--live" in sys.argv
     run_local_checks()
     run_local_sitemap_checks()
+    run_local_product_metadata_checks()
     if live:
         run_live_checks()
 

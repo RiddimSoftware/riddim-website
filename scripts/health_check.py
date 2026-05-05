@@ -20,23 +20,22 @@ See docs/deploy-checklist.md for when to run this script during launch checks.
 import sys
 import argparse
 import subprocess
-import shutil
 
 PRODUCT_ROUTES = [
-    "https://riddimsoftware.com/",
-    "https://riddimsoftware.com/blindfold/",
-    "https://riddimsoftware.com/epac/",
-    "https://riddimsoftware.com/bubble-bop/",
-    "https://riddimsoftware.com/reach/",
-    "https://riddimsoftware.com/portal-door/",
-    "https://riddimsoftware.com/sonnio/",
-    "https://riddimsoftware.com/double-dozen/",
+    ("Homepage", "https://riddimsoftware.com/"),
+    ("Blindfold", "https://riddimsoftware.com/blindfold/"),
+    ("epac", "https://riddimsoftware.com/epac/"),
+    ("Bubble Bop", "https://riddimsoftware.com/bubble-bop/"),
+    ("Reach", "https://riddimsoftware.com/reach/"),
+    ("Portal Door", "https://riddimsoftware.com/portal-door/"),
+    ("Sonnio", "https://riddimsoftware.com/sonnio/"),
+    ("Double Dozen", "https://riddimsoftware.com/double-dozen/"),
 ]
 
 LEGACY_SUBDOMAINS = [
-    "https://epac.riddimsoftware.com",
-    "https://nether.riddimsoftware.com",
-    "https://sonnio.riddimsoftware.com",
+    ("epac legacy subdomain", "https://epac.riddimsoftware.com"),
+    ("nether legacy subdomain", "https://nether.riddimsoftware.com"),
+    ("sonnio legacy subdomain", "https://sonnio.riddimsoftware.com"),
 ]
 
 
@@ -73,17 +72,17 @@ def check_url(url: str, timeout: int) -> tuple[bool, str]:
         return False, f"Unexpected error: {e}"
 
 
-def run_checks(urls: list[str], label: str, timeout: int) -> list[str]:
+def run_checks(urls: list[tuple[str, str]], label: str, timeout: int) -> list[str]:
     """Run checks for a list of URLs. Returns list of failure messages."""
     failures = []
     print(f"\n{label}")
     print("-" * len(label))
-    for url in urls:
+    for name, url in urls:
         ok, detail = check_url(url, timeout)
         status_icon = "OK" if ok else "FAIL"
-        print(f"  [{status_icon}] {url}  ({detail})")
+        print(f"  [{status_icon}] {name}: {url}  ({detail})")
         if not ok:
-            failures.append(f"{url}: {detail}")
+            failures.append(f"{name} ({url}): {detail}")
     return failures
 
 
