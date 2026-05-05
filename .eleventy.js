@@ -19,6 +19,7 @@ module.exports = function (eleventyConfig) {
     "bubble-bop.png": "bubble-bop.png",
     "default.css": "default.css",
     "double-dozen.png": "double-dozen.png",
+    "double-dozen-screenshot-1.webp": "double-dozen-screenshot-1.webp",
     "epac.png": "epac.png",
     "favicon.ico": "favicon.ico",
     "github.svg": "github.svg",
@@ -33,7 +34,8 @@ module.exports = function (eleventyConfig) {
     "sonnio-logo.jpg": "sonnio-logo.jpg",
     "star.svg": "star.svg",
     "wordmark.png": "wordmark.png",
-    "wordmark-product.png": "wordmark-product.png"
+    "wordmark-product.png": "wordmark-product.png",
+    "wordmark-product.webp": "wordmark-product.webp"
   });
 
   return {
