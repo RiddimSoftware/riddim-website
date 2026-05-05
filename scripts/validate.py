@@ -38,13 +38,13 @@ LIVE_PATHS = [
 LIVE_MISSING_PATH = "/__riddim_validate_missing_route__"
 
 CONSOLIDATED_PRODUCT_PATHS = [
-    ("Blindfold", "/blindfold/"),
-    ("epac", "/epac/"),
-    ("Bubble Bop", "/bubble-bop/"),
-    ("Reach", "/reach/"),
-    ("Portal Door", "/portal-door/"),
-    ("Sonnio", "/sonnio/"),
-    ("Double Dozen", "/double-dozen/"),
+    ("Blindfold", "/blindfold/", "Blindfold - Riddim Software"),
+    ("epac", "/epac/", "epac - Riddim Software"),
+    ("Bubble Bop", "/bubble-bop/", "Bubble Bop — Riddim Software"),
+    ("Reach", "/reach/", "Reach - Riddim Software"),
+    ("Portal Door", "/portal-door/", "Portal Door - Riddim Software"),
+    ("Sonnio", "/sonnio/", "Sonnio - Riddim Software"),
+    ("Double Dozen", "/double-dozen/", "Double Dozen - Riddim Software"),
 ]
 
 LEGACY_SUBDOMAINS = [
@@ -184,7 +184,7 @@ def run_local_product_metadata_checks():
     print("\n── Local product metadata checks ──")
     missing = []
 
-    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+    for name, path, expected_title in CONSOLIDATED_PRODUCT_PATHS:
         rel_file = path.strip("/") + "/index.html"
         html_path = os.path.join(SITE_ROOT, rel_file)
         canonical = LIVE_BASE + path
@@ -198,6 +198,7 @@ def run_local_product_metadata_checks():
             content = handle.read()
 
         expected_tags = [
+            (f"<title>{expected_title}</title>", "HTML title"),
             (f'<link rel="canonical" href="{canonical}">', "canonical URL"),
             (f'<meta property="og:url" content="{canonical}">', "Open Graph URL"),
             ('<meta property="og:title"', "Open Graph title"),
@@ -442,7 +443,7 @@ def run_live_checks():
         else:
             ok(f"{url} → {status}")
 
-    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+    for name, path, _expected_title in CONSOLIDATED_PRODUCT_PATHS:
         url = LIVE_BASE + path
         status = curl_status(url)
         if not status.startswith("2"):
@@ -477,6 +478,25 @@ def run_live_checks():
         fail(f"{missing_url} did not render the dedicated 404 page copy")
     else:
         ok(f"{missing_url} rendered the dedicated 404 page copy")
+
+    for name, path, expected_title in CONSOLIDATED_PRODUCT_PATHS:
+        url = LIVE_BASE + path
+        status = curl_status(url)
+        if status != "200":
+            fail(f"{url} returned {status} (expected 200)")
+            continue
+
+        body = curl_body(url)
+        if f"<title>{expected_title}</title>" not in body:
+            fail(f"{url} did not render the expected product page title")
+        else:
+            ok(f"{url} rendered the expected product page title")
+
+        canonical = f'<link rel="canonical" href="{url}">'
+        if canonical not in body:
+            fail(f"{url} did not render the expected canonical URL")
+        else:
+            ok(f"{url} rendered the expected canonical URL")
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────

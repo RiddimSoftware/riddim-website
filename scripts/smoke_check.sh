@@ -21,17 +21,30 @@ curl "${curl_flags[@]}" "${base_url}/version.json" -o "$tmp_dir/version.json"
 curl "${curl_flags[@]}" "${base_url}/.well-known/apple-app-site-association" -o "$tmp_dir/aasa.json"
 
 product_routes=(
-  "/blindfold/"
-  "/epac/"
-  "/bubble-bop/"
-  "/reach/"
-  "/portal-door/"
-  "/sonnio/"
-  "/double-dozen/"
+  "/blindfold/|Blindfold - Riddim Software"
+  "/epac/|epac - Riddim Software"
+  "/bubble-bop/|Bubble Bop — Riddim Software"
+  "/reach/|Reach - Riddim Software"
+  "/portal-door/|Portal Door - Riddim Software"
+  "/sonnio/|Sonnio - Riddim Software"
+  "/double-dozen/|Double Dozen - Riddim Software"
 )
 
-for route in "${product_routes[@]}"; do
-  curl "${curl_flags[@]}" "${base_url}${route}" -o /dev/null
+for route_spec in "${product_routes[@]}"; do
+  route="${route_spec%%|*}"
+  expected_title="${route_spec#*|}"
+  output_path="$tmp_dir$(echo "${route}" | tr '/' '_').html"
+  curl "${curl_flags[@]}" "${base_url}${route}" -o "$output_path"
+
+  if ! grep -q "<title>${expected_title}</title>" "$output_path"; then
+    echo "Expected ${base_url}${route} to render title '${expected_title}'." >&2
+    exit 1
+  fi
+
+  if ! grep -q "<link rel=\"canonical\" href=\"${base_url}${route}\">" "$output_path"; then
+    echo "Expected ${base_url}${route} to render its canonical URL." >&2
+    exit 1
+  fi
 done
 
 missing_route="__riddim_smoke_missing_route_${expected_sha}"

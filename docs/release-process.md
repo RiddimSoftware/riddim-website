@@ -123,7 +123,8 @@ The workflow:
    `scripts/deploy_artifact.sh validation <sha>`;
 7. writes `version.json`;
 8. invalidates validation CloudFront;
-9. smoke checks the validation CloudFront URL.
+9. smoke checks the validation CloudFront URL, including canonical product
+   routes and unknown-route 404 handling.
 
 Artifacts are immutable by key. If `riddim-website/<sha>.tar.gz` already
 exists, the upload script accepts it only when the stored `sha256` metadata
@@ -143,7 +144,8 @@ To promote:
 2. enter the already-built commit SHA from a successful validation deployment;
 3. approve the `production` GitHub Environment gate;
 4. let the workflow deploy the existing artifact to production, write
-   `version.json`, invalidate CloudFront, and run smoke checks.
+   `version.json`, invalidate CloudFront, and run smoke checks that verify the
+   deployed product routes render the expected page content.
 
 The production workflow does not rebuild the site. It downloads
 `riddim-website/<sha>.tar.gz` from the artifact bucket and deploys those bytes.
