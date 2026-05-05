@@ -1,12 +1,20 @@
 :root {
-  --color-ink: #171717;
-  --color-muted: #5f646b;
-  --color-paper: #fbfaf7;
-  --color-panel: #ffffff;
-  --color-line: #ddd8cf;
-  --color-blue: #004d97;
-  --color-blue-dark: #003870;
-  --color-gold: #f4d35e;
+  color-scheme: light;
+
+  /* Light theme tokens. A future [data-theme="dark"] block can override this layer. */
+  --color-bg: #fbfaf7;
+  --color-bg-alt: #f2efe8;
+  --color-fg: #171717;
+  --color-fg-muted: #5f646b;
+  --color-accent: #2f6f5e;
+  --color-accent-fg: #ffffff;
+  --color-border: #ddd8cf;
+  --color-success: #2f7d4f;
+  --color-warning: #8a6200;
+  --color-danger: #b42318;
+  --color-surface: #ffffff;
+  --color-surface-alt: #e8eee9;
+  --color-footer-muted: #cfcac1;
   --space-page: clamp(20px, 5vw, 72px);
   --content-wide: 1120px;
   --content-narrow: 760px;
@@ -17,29 +25,29 @@
 }
 
 html {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-fg);
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-fg);
   line-height: 1.5;
 }
 
 a {
-  color: var(--color-blue);
+  color: var(--color-accent);
 }
 
 a:visited {
-  color: var(--color-blue);
+  color: var(--color-accent);
 }
 
 a:hover {
-  color: var(--color-blue-dark);
+  color: color-mix(in srgb, var(--color-accent), var(--color-fg) 18%);
 }
 
 img {
@@ -48,20 +56,20 @@ img {
 }
 
 .dark_background {
-  background-color: #333; 
-  color: #f4f4f4;
+  background-color: var(--color-fg);
+  color: var(--color-bg);
 }
 .light_background {
-  background-color: #f4f4f4; 
-  color: #333;
+  background-color: var(--color-bg-alt);
+  color: var(--color-fg);
 }
 footer {
   text-align: center;
 }
 
 body > header:not(.site-header) {
-  background-color: var(--color-blue);
-  color: #fff;
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
   text-align: center;
   padding: 25px 5%;
 }
@@ -70,7 +78,7 @@ footer.light_background {
   padding: 20px 0;
 }
 /* Wordmark */
-h1 {
+.site-header h1 {
   margin: 0;
   line-height: 0;
 }
@@ -115,13 +123,13 @@ img.wordmark {
 .hero-copy {
   max-width: 620px;
   margin: 24px 0 0;
-  color: var(--color-muted);
+  color: var(--color-fg-muted);
   font-size: 1.15rem;
 }
 
 .eyebrow {
   margin: 0 0 12px;
-  color: var(--color-blue);
+  color: var(--color-accent);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -136,7 +144,7 @@ img.wordmark {
   width: min(var(--content-wide), calc(100% - (2 * var(--space-page))));
   margin: 0 auto;
   padding: clamp(48px, 9vw, 84px) 0;
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid var(--color-border);
 }
 
 .featured-media {
@@ -144,15 +152,15 @@ img.wordmark {
   place-items: center;
   min-height: 320px;
   padding: clamp(28px, 5vw, 56px);
-  background: #e8eef2;
-  border: 1px solid var(--color-line);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
 }
 
 .featured-media img {
   width: min(280px, 70vw);
   border-radius: 24%;
-  box-shadow: 0 24px 70px rgba(23, 23, 23, 0.16);
+  box-shadow: none;
 }
 
 .featured-copy h2 {
@@ -162,7 +170,7 @@ img.wordmark {
 .featured-copy p:not(.eyebrow) {
   max-width: 620px;
   margin: 18px 0 0;
-  color: var(--color-muted);
+  color: var(--color-fg-muted);
   font-size: 1.05rem;
 }
 
@@ -172,7 +180,7 @@ img.wordmark {
 
 .all-products {
   padding: clamp(56px, 9vw, 96px) var(--space-page);
-  background: #eef1eb;
+  background: var(--color-bg-alt);
 }
 
 .section-heading,
@@ -203,8 +211,8 @@ img.wordmark {
 
 .product-card {
   min-width: 0;
-  background: var(--color-panel);
-  border: 1px solid rgba(23, 23, 23, 0.09);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
 }
 
@@ -214,18 +222,18 @@ img.wordmark {
   min-height: 100%;
   gap: 12px;
   padding: 22px;
-  color: var(--color-ink);
+  color: var(--color-fg);
   text-decoration: none;
   transition: border-color 0.15s, transform 0.15s;
 }
 
 .product-link:visited {
-  color: var(--color-ink);
+  color: var(--color-fg);
 }
 
 .product-link:hover,
 .product-link:focus-visible {
-  color: var(--color-ink);
+  color: var(--color-fg);
   transform: translateY(-2px);
 }
 
@@ -244,14 +252,14 @@ img.wordmark {
 
 .product-desc {
   display: block;
-  color: var(--color-muted);
+  color: var(--color-fg-muted);
   line-height: 1.45;
 }
 
 .text-link {
   display: block;
   margin-top: auto;
-  color: var(--color-blue);
+  color: var(--color-accent);
   font-weight: 700;
 }
 
@@ -266,7 +274,7 @@ img.wordmark {
 
 .about-block p:not(.eyebrow) {
   max-width: 700px;
-  color: var(--color-muted);
+  color: var(--color-fg-muted);
   font-size: 1.08rem;
 }
 
@@ -276,24 +284,24 @@ img.wordmark {
   gap: 28px;
   align-items: start;
   padding: 40px var(--space-page);
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-fg);
+  color: var(--color-bg);
   text-align: left;
 }
 
 .site-footer a {
-  color: var(--color-paper);
+  color: var(--color-bg);
   text-decoration: none;
 }
 
 .site-footer a:hover,
 .site-footer a:focus-visible {
-  color: var(--color-gold);
+  color: var(--color-warning);
 }
 
 .site-footer p {
   margin: 0;
-  color: #cfcac1;
+  color: var(--color-footer-muted);
 }
 
 .footer-wordmark {
@@ -309,10 +317,10 @@ img.wordmark {
 }
 
 .github-icon {
-  background-color: white;
+  background-color: var(--color-surface);
   padding: 15px;
   box-sizing: border-box;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border);
 }
 .app_store_label {
   display: block;
@@ -331,8 +339,8 @@ img.wordmark {
   font-weight: 700;
   letter-spacing: 0.15em;
   border-radius: 999px;
-  background-color: #f4d35e;
-  color: #333;
+  background-color: var(--color-warning);
+  color: var(--color-accent-fg);
 }
 
 .updated-indicator {
@@ -343,16 +351,16 @@ img.wordmark {
   font-weight: 700;
   letter-spacing: 0.15em;
   border-radius: 999px;
-  background-color: #4caf50;
-  color: #fff;
+  background-color: var(--color-success);
+  color: var(--color-accent-fg);
 }
 
 /* Product pages */
 .back-link {
   display: block;
   padding: 12px 20px;
-  background-color: #f4f4f4;
-  color: #004d97;
+  background-color: var(--color-bg-alt);
+  color: var(--color-accent);
   text-decoration: none;
   font-size: 0.9rem;
 }
@@ -401,25 +409,25 @@ img.wordmark {
   cursor: pointer;
 }
 .btn-primary {
-  background-color: #004d97;
-  color: #fff;
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
 }
 .btn-primary:visited {
-  color: #fff;
+  color: var(--color-accent-fg);
 }
 .btn-primary:hover {
-  background-color: #003870;
+  background-color: color-mix(in srgb, var(--color-accent), var(--color-fg) 16%);
 }
 .btn-secondary {
   background-color: transparent;
-  color: #004d97;
-  border: 2px solid #004d97;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
 }
 .btn-secondary:visited {
-  color: #004d97;
+  color: var(--color-accent);
 }
 .btn-secondary:hover {
-  background-color: #e8f0fb;
+  background-color: var(--color-surface-alt);
 }
 
 .btn-icon {

@@ -6,25 +6,17 @@
         <meta name="description" content="Bubble Bop is a gentle bubble and balloon game for young kids. No ads, no tracking, no purchases, and no accounts.">
         <meta name="apple-itunes-app" content="app-id=1469251847, app-clip-bundle-id=net.dinglebox.bubblebop.Clip">
         <title>Bubble Bop | Bubble and Balloon Popping for Kids</title>
+        <link rel="stylesheet" href="/default.css">
         <style>
-            :root {
-                --bg-a: #5bcfff;
-                --bg-b: #6dd0ff;
-                --text-main: #f6fbff;
-                --text-soft: #eaf5ff;
-                --muted: #d6ecff;
-                --button: #ffa500;
-                --button-text: #2f1f00;
-            }
             * {
                 box-sizing: border-box;
             }
             body {
-                background: linear-gradient(160deg, var(--bg-a), var(--bg-b));
+                background: var(--color-bg-alt);
                 margin: 0;
                 min-height: 100vh;
                 text-align: center;
-                color: var(--text-main);
+                color: var(--color-fg);
                 font-family: "Trebuchet MS", Arial, sans-serif;
                 display: flex;
                 align-items: center;
@@ -34,29 +26,29 @@
             .card {
                 max-width: 780px;
                 width: 100%;
-                background: rgba(255, 255, 255, 0.10);
-                border: 1px solid rgba(255, 255, 255, 0.22);
-                border-radius: 24px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 8px;
                 padding: 28px;
-                box-shadow: 0 18px 40px rgba(4, 38, 64, 0.22);
+                box-shadow: none;
             }
             h1 {
                 margin: 0;
                 font-size: 58px;
                 font-weight: normal;
-                color: var(--text-main);
+                color: var(--color-fg);
                 letter-spacing: 0.6px;
             }
             h2 {
                 margin: 8px 0 18px;
                 font-size: 24px;
-                color: var(--text-soft);
+                color: var(--color-fg-muted);
                 font-weight: normal;
             }
             p {
                 margin: 0 auto 16px;
                 max-width: 560px;
-                color: var(--text-soft);
+                color: var(--color-fg-muted);
                 line-height: 1.5;
                 font-size: 18px;
             }
@@ -83,7 +75,7 @@
                 margin-top: 22px;
             }
             a {
-                color: var(--muted);
+                color: var(--color-accent);
             }
             .button {
                 margin-top: 10px;
@@ -91,8 +83,8 @@
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                background: var(--button);
-                color: var(--button-text);
+                background: var(--color-accent);
+                color: var(--color-accent-fg);
                 text-decoration: none;
                 border-radius: 999px;
                 padding: 11px 18px;
