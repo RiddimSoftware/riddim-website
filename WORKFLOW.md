@@ -24,12 +24,9 @@ agent:
       weight: 1
     - name: claude
       weight: 1
-  max_concurrent_agents: 1
+  max_concurrent_agents: 3
   max_turns: 20
   max_retry_backoff_ms: 300000
-  max_concurrent_agents_by_state:
-    In Progress: 1
-    Todo: 1
 codex:
   command: codex app-server
   approval_policy:
