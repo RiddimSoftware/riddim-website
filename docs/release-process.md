@@ -49,6 +49,65 @@ The repository secret `AWS_ROLE_ARN` must remain set to the existing OIDC role:
 `arn:aws:iam::227530433709:role/riddim-website-deploy`. Do not add long-lived
 AWS access keys.
 
+## Production Request Logs
+
+As of **2026-05-05**, the production CloudFront distribution
+`E3RTZ0JDZLBX2I` writes standard access logs to:
+
+- bucket: `riddim-website-cloudfront-accesslogs227530433709`
+- prefix: `cloudfront/production/`
+
+- Current retention target: **90 days**
+- Cookie logging: **disabled**
+- Bucket ownership mode: **BucketOwnerPreferred**
+- Purpose: directional request counts, top paths, referrers, and 4xx/5xx trend
+  checks without client-side analytics
+
+This log bucket is currently managed outside the static-site CloudFormation
+stack because CloudFront standard logging still requires S3 ACL support. Do
+not switch this bucket to `BucketOwnerEnforced`; standard log delivery would
+stop because CloudFront still writes with ACL semantics.
+
+To fetch a recent batch of logs locally (replace the profile name with any
+AWS profile that has read access to the log bucket):
+
+```bash
+AWS_PROFILE=<profile-with-s3-access> aws s3 sync \
+  "s3://riddim-website-cloudfront-accesslogs227530433709/cloudfront/production/" \
+  ./tmp/cloudfront-logs
+```
+
+If you need to force a controlled smoke test before the public
+`riddimsoftware.com` DNS cutover, hit the current static-site production
+CloudFront hostname directly and then look for a fresh object under the log
+prefix. Before DNS cutover, the default CloudFront hostname may still return
+`403 AccessDenied`; that is acceptable for log-seeding purposes as long as the
+request appears in the next delivered log batch.
+
+```bash
+for _ in 1 2 3 4 5; do
+  curl -sS -o /dev/null -w '%{http_code}\n' https://d2qjhrs4yekq6x.cloudfront.net/
+  sleep 1
+done
+
+AWS_PROFILE=<profile-with-s3-access> aws s3api list-objects-v2 \
+  --bucket riddim-website-cloudfront-accesslogs227530433709 \
+  --prefix cloudfront/production/ \
+  --query 'reverse(sort_by(Contents,&LastModified))[:10].[Key,LastModified,Size]' \
+  --output table
+```
+
+Useful one-liners once the `.gz` files are downloaded:
+
+```bash
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $8}' | sort | uniq -c | sort -rn | head -20
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $10}' | sort | uniq -c | sort -rn | head -20
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $9}' | grep -E '^[45]' | sort | uniq -c
+```
+
+CloudFront standard logs are delayed delivery; expect roughly **within one
+hour** after live traffic or a smoke-test request.
+
 ## Validation Deployment
 
 `.github/workflows/deploy-validation.yml` runs on every push to `main`.
