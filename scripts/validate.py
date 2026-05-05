@@ -221,6 +221,8 @@ def run_local_theme_checks():
     css_path = os.path.join(SITE_ROOT, "default.css")
     theme_js_path = os.path.join(SITE_ROOT, "assets", "theme.js")
     manifest_dark_path = os.path.join(SITE_ROOT, "manifest-dark.json")
+    theme_head_template_path = os.path.join(DEFAULT_SITE_ROOT, "src", "_includes", "theme-head.njk")
+    theme_toggle_template_path = os.path.join(DEFAULT_SITE_ROOT, "src", "_includes", "theme-toggle.njk")
 
     if not os.path.exists(css_path):
         fail("default.css missing for theme checks")
@@ -230,6 +232,10 @@ def run_local_theme_checks():
         fail("assets/theme.js missing")
     if not os.path.exists(manifest_dark_path):
         fail("manifest-dark.json missing")
+    if not os.path.exists(theme_head_template_path):
+        fail("src/_includes/theme-head.njk missing")
+    if not os.path.exists(theme_toggle_template_path):
+        fail("src/_includes/theme-toggle.njk missing")
 
     with open(css_path, encoding="utf-8") as handle:
         css = handle.read()
@@ -256,6 +262,53 @@ def run_local_theme_checks():
                 fail("manifest-dark.json theme_color must be #101418")
             if manifest_dark.get("background_color") != "#101418":
                 fail("manifest-dark.json background_color must be #101418")
+
+    if os.path.exists(theme_head_template_path):
+        with open(theme_head_template_path, encoding="utf-8") as handle:
+            theme_head_template = handle.read()
+
+        required_theme_head_snippets = [
+            'window.matchMedia("(prefers-color-scheme: dark)")',
+            'window.localStorage.getItem(storageKey)',
+            'root.dataset.themePreference = preference;',
+            'root.dataset.theme = theme;',
+            'root.style.colorScheme = theme;',
+            'manifestLink.setAttribute("href", nextHref);',
+        ]
+        for snippet in required_theme_head_snippets:
+            if snippet not in theme_head_template:
+                fail(f"src/_includes/theme-head.njk missing behavior snippet: {snippet}")
+
+    if os.path.exists(theme_js_path):
+        with open(theme_js_path, encoding="utf-8") as handle:
+            theme_js = handle.read()
+
+        required_theme_js_snippets = [
+            "window.localStorage.removeItem(storageKey)",
+            "window.localStorage.setItem(storageKey, preference)",
+            "media.addEventListener('change', handleSystemChange)",
+            "media.addListener(handleSystemChange)",
+            "window.dispatchEvent(new CustomEvent('riddim-themechange'",
+        ]
+        for snippet in required_theme_js_snippets:
+            if snippet not in theme_js:
+                fail(f"assets/theme.js missing behavior snippet: {snippet}")
+
+    if os.path.exists(theme_toggle_template_path):
+        with open(theme_toggle_template_path, encoding="utf-8") as handle:
+            theme_toggle_template = handle.read()
+
+        required_theme_toggle_snippets = [
+            '<option value="system">System</option>',
+            '<option value="light">Light</option>',
+            '<option value="dark">Dark</option>',
+            'aria-describedby="theme-status"',
+            'role="status"',
+            'aria-live="polite"',
+        ]
+        for snippet in required_theme_toggle_snippets:
+            if snippet not in theme_toggle_template:
+                fail(f"src/_includes/theme-toggle.njk missing control snippet: {snippet}")
 
     html_files = []
     for root, _, files in os.walk(SITE_ROOT):
@@ -285,6 +338,17 @@ def run_local_theme_checks():
         for snippet in required_html_snippets:
             if snippet not in content:
                 fail(f"{rel}: missing theme markup snippet: {snippet}")
+
+        inline_script_marker = "<script>\n  (() => {"
+        stylesheet_marker = '<link rel="stylesheet" href="/default.css">'
+        inline_script_index = content.find(inline_script_marker)
+        stylesheet_index = content.find(stylesheet_marker)
+        if inline_script_index == -1:
+            fail(f"{rel}: missing inline theme bootstrap script")
+        elif stylesheet_index == -1:
+            fail(f"{rel}: missing default.css stylesheet link")
+        elif inline_script_index > stylesheet_index:
+            fail(f"{rel}: inline theme bootstrap must appear before default.css to avoid flash")
 
     if not failures:
         ok(f"checked theme assets and markup across {len(html_files)} HTML file(s)")
