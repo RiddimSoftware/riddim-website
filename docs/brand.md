@@ -1,47 +1,49 @@
-# Riddim Website Brand Tokens
+# Riddim Brand Usage
 
-## Light Theme Palette
+## Identity in one paragraph
 
-The website ships a single light theme today. Tokens live in `default.css` under `:root` so a future dark theme can override the same names in a `[data-theme="dark"]` block without changing component CSS.
+Riddim Software is Sunny Purewal's one-person indie product company: a quiet home for small, useful products that can stand on their own. It is not an agency, a client-services shop, a venture studio, or a contractor portfolio. The company brand should feel calm, direct, and founder-led, with enough structure that each product benefits from the shared trust without losing its own shape.
 
-| Token | Value | Intended use |
+## Wordmark Usage
+
+Use the wordmark for the site header, footer, press references, and any surface where the company name needs to be read.
+
+![Riddim Software wordmark](../wordmark.png)
+
+Use the monogram only where space is tight, such as favicons, social avatars, or square previews.
+
+![Riddim monogram](../logo.png)
+
+Keep the wordmark at least 140 px wide on screens and the monogram at least 32 px square. Leave clear space around either mark equal to the height of the lowercase letters in the wordmark. Do use the marks on quiet, high-contrast backgrounds. Do not stretch, recolor, outline, rotate, crop, add shadows, or place them on busy product art.
+
+## Type
+
+Canonical Riddim pages use the system stack already in `default.css`: `Arial, Helvetica, sans-serif` for headings and body copy. Keep headings confident and compact, with normal letter spacing. Body copy should stay readable before it tries to be expressive. Use the browser's default monospace stack for code, tokens, paths, and command snippets. Do not import Sonnio's Outfit, Portal Door's Space Grotesk, or another product's type direction into canonical Riddim pages.
+
+## Color
+
+| Token | Hex | Intended use |
 | --- | --- | --- |
-| `--color-bg` | `#fbfaf7` | Main page background; warm paper white. |
-| `--color-bg-alt` | `#f2efe8` | Alternating bands and quiet product page backgrounds. |
-| `--color-fg` | `#171717` | Primary text, dark footer background, and high-emphasis UI. |
-| `--color-fg-muted` | `#5f646b` | Supporting copy, descriptions, and secondary text. |
-| `--color-accent` | `#2f6f5e` | Links, header bars, primary buttons, back-links, and small emphasis labels. |
-| `--color-accent-fg` | `#ffffff` | Text placed on accent, success, warning, or danger fills. |
-| `--color-border` | `#ddd8cf` | Dividers, quiet card borders, and framed media edges. |
-| `--color-success` | `#2f7d4f` | Positive status indicators such as `UPDATED`. |
-| `--color-warning` | `#8a6200` | Caution or freshness indicators such as `NEW`. |
-| `--color-danger` | `#b42318` | Error or destructive status indicators. |
+| `--color-bg` | `#fbfaf7` | Main warm paper background. |
+| `--color-bg-alt` | `#f2efe8` | Alternating bands and quiet page sections. |
+| `--color-fg` | `#171717` | Primary text and dark footer background. |
+| `--color-fg-muted` | `#5f646b` | Supporting copy and secondary labels. |
+| `--color-accent` | `#2f6f5e` | Links, primary actions, and compact emphasis. |
+| `--color-accent-fg` | `#ffffff` | Text on accent or status fills. |
+| `--color-border` | `#ddd8cf` | Dividers, card borders, and framed media. |
+| `--color-success` | `#2f7d4f` | Positive status. |
+| `--color-warning` | `#8a6200` | Caution or freshness status. |
+| `--color-danger` | `#b42318` | Error or destructive status. |
+| `--color-surface` | `#ffffff` | Cards and contained panels. |
+| `--color-surface-alt` | `#e8eee9` | Subtle media wells and hover fills. |
+| `--color-footer-muted` | `#cfcac1` | Secondary text on dark footer. |
 
-Supporting surface tokens currently derive from the same palette:
+Forbidden values: do not use `#004d97` royal blue, neon Minecraft green, or product-specific colors as company-page accents unless the wordmark itself has been deliberately updated to support them.
 
-| Token | Value | Intended use |
-| --- | --- | --- |
-| `--color-surface` | `#ffffff` | Product cards and contained panels. |
-| `--color-surface-alt` | `#e8eee9` | Subtle accent-tinted media wells and hover fills. |
-| `--color-footer-muted` | `#cfcac1` | Secondary text on the dark footer. |
+## Voice
 
-## Palette Options
+Use plain language. Prefer concrete nouns and short sentences. Avoid superlatives, hype, growth-deck phrasing, and "we" when the sentence is really about the founder's judgment. Let Sunny be visible when authorship matters, but keep the company pages focused on products and trust. A good Riddim sentence should sound like a careful maker explaining what exists, why it exists, and what someone can do next.
 
-Option 1, neutral-led with refined green accent, is the implemented recommendation. It keeps the existing warm paper and near-black foundation, removes the old royal blue, and uses a restrained green only for links, primary buttons, back-links, and compact emphasis. This is conservative because it can survive a future wordmark decision without making the whole site feel green.
+## Out of Brand Scope
 
-Option 2, monochrome with amber accent, was considered for founder review. It would keep `#fbfaf7` and `#171717`, use a stricter paper-and-ink visual system, and set the accent closer to a saturated amber for links/buttons only. That direction is more editorial, but it risks making warning/status UI and brand accent compete unless the status palette is also revisited.
-
-## Contrast Notes
-
-Checked combinations meet WCAG 2.2 AA contrast targets:
-
-| Combination | Ratio | Target |
-| --- | ---: | --- |
-| `--color-fg` on `--color-bg` | 17.18:1 | Body text, 4.5:1 minimum. |
-| `--color-fg-muted` on `--color-bg` | 5.71:1 | Body/supporting text, 4.5:1 minimum. |
-| `--color-fg` on `--color-bg-alt` | 15.61:1 | Body text, 4.5:1 minimum. |
-| `--color-accent` on `--color-bg` | 5.66:1 | Link text, 4.5:1 minimum. |
-| `--color-accent-fg` on `--color-accent` | 5.91:1 | Button text, 4.5:1 minimum. |
-| `--color-accent-fg` on `--color-success` | 5.04:1 | Status text, 4.5:1 minimum. |
-| `--color-accent-fg` on `--color-warning` | 5.49:1 | Status text, 4.5:1 minimum. |
-| `--color-accent-fg` on `--color-danger` | 6.57:1 | Status text, 4.5:1 minimum. |
+Per-product experiences keep their own brands. Sonnio, Portal Door, Blindfold, Reach, Bubble Bop, Double Dozen, and future product subsites may use their own type, color, illustration, screenshots, and voice when those choices serve the product. This guide covers canonical Riddim company pages, shared company marks, and repo-level documentation only.
