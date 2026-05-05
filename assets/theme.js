@@ -75,6 +75,7 @@
   const applyTheme = (preference, { persist = false } = {}) => {
     const theme = preference === 'system' ? systemTheme() : preference;
 
+    root.dataset.themeUi = 'ready';
     root.dataset.themePreference = preference;
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
