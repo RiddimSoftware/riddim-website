@@ -1132,7 +1132,7 @@ html[data-theme-ui="ready"] .theme-toggle {
   }
 
   .home-hero {
-    padding: 40px 0 36px;
+    padding: 40px var(--space-page) 36px;
   }
 
   .home-hero h1,
@@ -1157,6 +1157,10 @@ html[data-theme-ui="ready"] .theme-toggle {
 
   .theme-toggle-select {
     width: min(100%, 15rem);
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr;
   }
 }
 
