@@ -147,35 +147,46 @@
     "name": "Portal Door",
     "seo": {
       "title": "Portal Door - Riddim Software",
-      "description": "Portal Door is a generative web experience by Riddim Software.",
+      "description": "Portal Door turns a doorway into a camera-powered portal interaction for iPhone and iPad.",
       "canonical": "https://riddimsoftware.com/portal-door/",
-      "ogImage": "https://riddimsoftware.com/nether.jpeg"
+      "ogImage": "https://riddimsoftware.com/portal-door-icon.jpeg"
     },
-    "icon": "nether.jpeg",
+    "icon": "portal-door-icon.jpeg",
     "iconAlt": "Portal Door app icon",
-    "tagline": "Step through to something new - a generative web experience that opens wherever you are.",
-    "homepagePitch": "A generative web experience that opens into unexpected digital spaces.",
+    "tagline": "Turn a real doorway into a playful portal moment with your iPhone or iPad camera.",
+    "homepagePitch": "A playful camera-powered doorway interaction for iPhone and iPad.",
     "primaryCta": {
-      "label": "Open Portal Door",
+      "label": "Get on the App Store",
+      "href": "https://apps.apple.com/ca/app/portal-door/id6758596602",
+      "external": true,
+      "appStoreBadge": true
+    },
+    "heroSecondaryCta": {
+      "label": "Open at nether.riddimsoftware.com",
       "href": "https://nether.riddimsoftware.com",
       "external": true
     },
-    "story": "Portal Door is a small web experiment about arrival, chance, and the feeling of crossing into a new scene.",
+    "story": "Portal Door uses the camera and Apple's Vision pose detection to watch a doorway frame, then plays a satisfying portal sound when someone walks through.",
     "screenshots": [
       {
-        "src": "nether.jpeg",
-        "alt": "Portal Door product preview"
+        "src": "portal-door-demo.svg",
+        "alt": "Portal Door camera view showing a detected doorway frame"
       }
     ],
     "features": [
-      "Generative web experience",
-      "Launches directly in the browser",
-      "Built as an exploratory Riddim Software project"
+      "Camera-first doorway detection",
+      "Vision pose tracking for walk-through moments",
+      "Designed for quick iPhone and iPad play"
     ],
     "secondaryLinks": [
       {
-        "label": "Contact us",
-        "href": "mailto:info@riddimsoftware.com"
+        "label": "Support",
+        "href": "mailto:support@riddimsoftware.com"
+      },
+      {
+        "label": "Source",
+        "href": "https://github.com/RiddimSoftware/nether",
+        "external": true
       }
     ]
   },

@@ -28,6 +28,8 @@ module.exports = function (eleventyConfig) {
     "logo.png": "logo.png",
     "mac-app-store.svg": "mac-app-store.svg",
     "nether.jpeg": "nether.jpeg",
+    "portal-door-demo.svg": "portal-door-demo.svg",
+    "portal-door-icon.jpeg": "portal-door-icon.jpeg",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
     "screenshots": "screenshots",

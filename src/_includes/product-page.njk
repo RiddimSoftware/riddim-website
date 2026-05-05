@@ -43,6 +43,9 @@
           <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
           {%- endfor %}
           {%- endif %}
+          {%- if product.heroSecondaryCta %}
+          <a class="btn btn-secondary" href="{{ product.heroSecondaryCta.href }}"{% if product.heroSecondaryCta.external %} target="_blank" rel="noopener"{% endif %}>{{ product.heroSecondaryCta.label }}</a>
+          {%- endif %}
         </div>
       </div>
     </section>
