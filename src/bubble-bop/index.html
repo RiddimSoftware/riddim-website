@@ -17,7 +17,8 @@
         <meta name="twitter:description" content="Bubble Bop is a gentle bubble and balloon game for young kids. No ads, no tracking, no purchases, and no accounts.">
         <meta name="twitter:image" content="https://riddimsoftware.com/bubble-bop.png">
         <title>Bubble Bop | Bubble and Balloon Popping for Kids</title>
-        <link rel="stylesheet" href="/default.css">
+        {% include "font-links.njk" %}
+  <link rel="stylesheet" href="/default.css">
         <style>
             * {
                 box-sizing: border-box;
@@ -28,7 +29,7 @@
                 min-height: 100vh;
                 text-align: center;
                 color: var(--color-fg);
-                font-family: "Trebuchet MS", Arial, sans-serif;
+                font-family: var(--font-body);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -47,19 +48,20 @@
             .site-footer {
                 width: min(1120px, 100%);
                 margin-top: 24px;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: var(--font-body);
                 text-align: left;
             }
             h1 {
                 margin: 0;
-                font-size: 58px;
+                font-family: var(--font-heading);
+                font-size: clamp(var(--text-4xl), 8vw, 3.625rem);
                 font-weight: normal;
                 color: var(--color-fg);
                 letter-spacing: 0.6px;
             }
             h2 {
                 margin: 8px 0 18px;
-                font-size: 24px;
+                font-size: var(--text-2xl);
                 color: var(--color-fg-muted);
                 font-weight: normal;
             }
@@ -68,7 +70,7 @@
                 max-width: 560px;
                 color: var(--color-fg-muted);
                 line-height: 1.5;
-                font-size: 18px;
+                font-size: var(--text-lg);
             }
             .benefits {
                 margin: 10px auto 24px;
@@ -77,7 +79,7 @@
             }
             .benefits li {
                 margin: 8px 0;
-                font-size: 17px;
+                font-size: var(--text-base);
             }
             .store {
                 margin-top: 18px;
@@ -119,14 +121,14 @@
             }
             @media (max-width: 600px) {
                 h1 {
-                    font-size: 44px;
+                    font-size: var(--text-4xl);
                 }
                 h2 {
-                    font-size: 20px;
+                    font-size: var(--text-xl);
                 }
                 p,
                 .benefits li {
-                    font-size: 16px;
+                    font-size: var(--text-base);
                 }
                 #icon {
                     width: 120px;
