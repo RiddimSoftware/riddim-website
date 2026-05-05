@@ -1,0 +1,29 @@
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" data-theme-color="light">
+<meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)" data-theme-color="dark">
+<link rel="manifest" href="/manifest.json" data-manifest-light="/manifest.json" data-manifest-dark="/manifest-dark.json">
+<script>
+  (() => {
+    const storageKey = "riddim-theme";
+    const root = document.documentElement;
+    const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    const readPreference = () => {
+      try {
+        const value = window.localStorage.getItem(storageKey);
+        return value === "light" || value === "dark" || value === "system" ? value : "system";
+      } catch {
+        return "system";
+      }
+    };
+
+    const preference = readPreference();
+    const theme = preference === "system"
+      ? (media && media.matches ? "dark" : "light")
+      : preference;
+
+    root.dataset.themePreference = preference;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    window.__riddimTheme = { storageKey };
+  })();
+</script>

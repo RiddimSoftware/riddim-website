@@ -7,14 +7,14 @@
   <title>{{ product.seo.title }}</title>
   <meta name="description" content="{{ product.seo.description }}">
   {% include "font-links.njk" %}
+  {% include "theme-head.njk" %}
   <link rel="stylesheet" href="/default.css">
+  <script src="/assets/theme.js" defer></script>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1c2d42">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#fbfaf7">
   <link rel="canonical" href="{{ product.seo.canonical }}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Riddim Software">
@@ -29,10 +29,11 @@
 </head>
 
 <body>
-  <header>
+  <header class="product-header">
     <a class="wordmark-link" href="/" aria-label="Riddim Software home">
-      <img class="wordmark product-wordmark" src="/wordmark.svg" alt="Riddim Software" width="763" height="76" fetchpriority="high" />
+      {% include "wordmark.njk" %}
     </a>
+    {% include "theme-toggle.njk" %}
   </header>
   <main class="product-page">
     <a class="back-link" href="/">&larr; All products</a>
