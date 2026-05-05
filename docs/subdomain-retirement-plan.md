@@ -84,19 +84,30 @@ Before any Phase 1 action on a subdomain, confirm:
 
 ## Completed Retirements
 
-### doubledozenwebsite (Firebase Hosting) — not publicly reachable as of 2026-05-05
+### doubledozenwebsite (Firebase Hosting) — still publicly reachable as of 2026-05-05
 
 The standalone Double Dozen marketing page (`doubledozenwebsite/public/index.html`)
 was hosted via Firebase Hosting. Verified 2026-05-05:
 
-- Firebase Hosting URLs (`doubledozenwebsite.web.app`, `doubledozen.web.app`,
-  `double-dozen.web.app`) all return 404 — the Firebase project is no longer active.
+- The legacy site is still reachable at the Firebase project-default URLs
+  `https://doubledozen-4be0f.web.app/` and
+  `https://doubledozen-4be0f.firebaseapp.com/`.
+- The live HTML at both URLs still contains the wrong Bubble Bop App Store link
+  (`https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847`)
+  instead of the Double Dozen listing.
+- Common guessed aliases (`doubledozenwebsite.web.app`, `doubledozen.web.app`,
+  `double-dozen.web.app`) return 404, which is why the earlier public check
+  was incomplete.
 - No local `/Users/sunny/code/doubledozenwebsite` checkout was present in this
   workspace, and no public GitHub repository was found under the obvious
   `RiddimSoftware/doubledozenwebsite`, `RiddimSoftware/double-dozen-website`,
   or `RiddimSoftware/double-dozen` names.
-- Based on the public checks above, no live legacy deployment was verifiable from
-  this repo, so no deployment or URL-fix action was taken here.
+- Local Firebase CLI state still maps
+  `/Users/sunny/Documents/code/doubledozenwebsite` to project
+  `doubledozen-4be0f`, but the saved Firebase OAuth token on this machine is
+  expired. `firebase projects:list` currently fails with unauthenticated 401 /
+  token-refresh 400 errors, so this repo cannot redeploy or disable the site
+  until `firebase login` is run again.
 - The canonical Double Dozen page at `riddimsoftware.com/products/double-dozen.html`
   is live and links to the correct App Store listing
   (`https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786`).
