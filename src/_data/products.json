@@ -196,17 +196,27 @@
       "external": true,
       "appStoreBadge": true
     },
-    "story": "Reach focuses on keeping important personal connections close without adding unnecessary noise.",
+    "story": "Reach keeps the small, important trips close at hand: save the places you go most, then get directions from your iPhone without opening a full maps workflow or retyping an address when you are trying to move.",
+    "screenshotLayout": "phone-screenshots",
     "screenshots": [
       {
-        "src": "reach.png",
-        "alt": "Reach product preview"
+        "src": "assets/reach/screenshot-1.jpg",
+        "alt": "Reach iPhone destination list screenshot"
+      },
+      {
+        "src": "assets/reach/screenshot-2.jpg",
+        "alt": "Reach iPhone add destination screenshot"
+      },
+      {
+        "src": "assets/reach/screenshot-3.jpg",
+        "alt": "Reach iPhone route options screenshot"
       }
     ],
     "features": [
-      "Designed for important personal connections",
-      "Simple iPhone-first experience",
-      "Privacy policy available from the product page"
+      "Save common destinations for quick one-tap directions.",
+      "Use transit directions in supported cities alongside driving routes.",
+      "Set up destinations quickly with a focused iPhone interface.",
+      "Keep addresses on your device; Reach does not collect user information."
     ],
     "secondaryLinks": [
       {
