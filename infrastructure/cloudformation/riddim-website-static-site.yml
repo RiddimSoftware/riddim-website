@@ -1,0 +1,440 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Private S3 + CloudFront deployment path for riddim-website artifact promotion.
+
+Parameters:
+  SiteName:
+    Type: String
+    Default: riddim-website
+    AllowedPattern: "^[a-z0-9-]+$"
+  ArtifactPrefix:
+    Type: String
+    Default: riddim-website
+    AllowedPattern: "^[A-Za-z0-9._/-]+$"
+  DeployRoleName:
+    Type: String
+    Default: riddim-website-deploy
+  EnableProductionAliases:
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+  ProductionAcmCertificateArn:
+    Type: String
+    Default: ""
+    Description: ACM certificate ARN in us-east-1. Required only when EnableProductionAliases is true.
+  ProductionAlternateDomainNames:
+    Type: CommaDelimitedList
+    Default: "riddimsoftware.com,www.riddimsoftware.com"
+  EnableRoute53CutoverRecords:
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+  PublicHostedZoneId:
+    Type: String
+    Default: ""
+    Description: Route 53 public hosted zone ID for riddimsoftware.com. Required only for cutover records.
+
+Conditions:
+  UseProductionAliases: !Equals [!Ref EnableProductionAliases, "true"]
+  CreateRoute53CutoverRecords: !And
+    - !Equals [!Ref EnableRoute53CutoverRecords, "true"]
+    - !Condition UseProductionAliases
+
+Resources:
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: RetainArtifactsForTwoYears
+            Status: Enabled
+            ExpirationInDays: 730
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  ValidationBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  ProductionBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  ValidationOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description: !Sub "${SiteName} validation S3 origin access"
+        Name: !Sub "${AWS::StackName}-validation-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  ProductionOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description: !Sub "${SiteName} production S3 origin access"
+        Name: !Sub "${AWS::StackName}-production-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  StaticAssetCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: !Sub "${AWS::StackName}-static-assets"
+        DefaultTTL: 3600
+        MaxTTL: 31536000
+        MinTTL: 0
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: true
+          EnableAcceptEncodingGzip: true
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none
+
+  MetadataCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: !Sub "${AWS::StackName}-metadata"
+        DefaultTTL: 60
+        MaxTTL: 3600
+        MinTTL: 0
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: true
+          EnableAcceptEncodingGzip: true
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none
+
+  ResponseHeadersPolicy:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub "${AWS::StackName}-security-headers"
+        SecurityHeadersConfig:
+          ContentTypeOptions:
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ReferrerPolicy:
+            Override: true
+            ReferrerPolicy: strict-origin-when-cross-origin
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 31536000
+            IncludeSubdomains: true
+            Override: true
+            Preload: false
+
+  ValidationDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: !Sub "${SiteName} validation"
+        DefaultCacheBehavior:
+          AllowedMethods: [GET, HEAD, OPTIONS]
+          CachedMethods: [GET, HEAD, OPTIONS]
+          CachePolicyId: !Ref StaticAssetCachePolicy
+          Compress: true
+          ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+          TargetOriginId: validation-s3
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+        Enabled: true
+        HttpVersion: http2and3
+        Origins:
+          - DomainName: !GetAtt ValidationBucket.RegionalDomainName
+            Id: validation-s3
+            OriginAccessControlId: !Ref ValidationOriginAccessControl
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        OrderedCacheBehaviors:
+          - PathPattern: "*.html"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: validation-s3
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: "version.json"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: validation-s3
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: ".well-known/apple-app-site-association"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: validation-s3
+            ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_100
+
+  ProductionDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases: !If
+          - UseProductionAliases
+          - !Ref ProductionAlternateDomainNames
+          - !Ref AWS::NoValue
+        Comment: !Sub "${SiteName} production"
+        DefaultCacheBehavior:
+          AllowedMethods: [GET, HEAD, OPTIONS]
+          CachedMethods: [GET, HEAD, OPTIONS]
+          CachePolicyId: !Ref StaticAssetCachePolicy
+          Compress: true
+          ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+          TargetOriginId: production-s3
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 0
+        Enabled: true
+        HttpVersion: http2and3
+        Origins:
+          - DomainName: !GetAtt ProductionBucket.RegionalDomainName
+            Id: production-s3
+            OriginAccessControlId: !Ref ProductionOriginAccessControl
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        OrderedCacheBehaviors:
+          - PathPattern: "*.html"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: production-s3
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: "version.json"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: production-s3
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: ".well-known/apple-app-site-association"
+            AllowedMethods: [GET, HEAD, OPTIONS]
+            CachedMethods: [GET, HEAD, OPTIONS]
+            CachePolicyId: !Ref MetadataCachePolicy
+            Compress: true
+            ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
+            TargetOriginId: production-s3
+            ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_100
+        ViewerCertificate: !If
+          - UseProductionAliases
+          - AcmCertificateArn: !Ref ProductionAcmCertificateArn
+            MinimumProtocolVersion: TLSv1.2_2021
+            SslSupportMethod: sni-only
+          - CloudFrontDefaultCertificate: true
+
+  ValidationBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ValidationBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFrontRead
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub "${ValidationBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${ValidationDistribution}"
+
+  ProductionBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ProductionBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFrontRead
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub "${ProductionBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${ProductionDistribution}"
+
+  DeploymentPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Sub "${SiteName}-artifact-promotion"
+      Roles:
+        - !Ref DeployRoleName
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: ArtifactBucketList
+            Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource: !GetAtt ArtifactBucket.Arn
+            Condition:
+              StringLike:
+                s3:prefix:
+                  - !Sub "${ArtifactPrefix}/*"
+          - Sid: ArtifactObjectReadWriteNoDelete
+            Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+            Resource: !Sub "${ArtifactBucket.Arn}/${ArtifactPrefix}/*"
+          - Sid: HostedBucketList
+            Effect: Allow
+            Action:
+              - s3:ListBucket
+            Resource:
+              - !GetAtt ValidationBucket.Arn
+              - !GetAtt ProductionBucket.Arn
+          - Sid: HostedObjectPromotion
+            Effect: Allow
+            Action:
+              - s3:DeleteObject
+              - s3:GetObject
+              - s3:PutObject
+            Resource:
+              - !Sub "${ValidationBucket.Arn}/*"
+              - !Sub "${ProductionBucket.Arn}/*"
+          - Sid: CloudFrontInvalidations
+            Effect: Allow
+            Action:
+              - cloudfront:CreateInvalidation
+              - cloudfront:GetInvalidation
+            Resource:
+              - !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${ValidationDistribution}"
+              - !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${ProductionDistribution}"
+
+  ProductionCutoverRecords:
+    Type: AWS::Route53::RecordSetGroup
+    Condition: CreateRoute53CutoverRecords
+    Properties:
+      HostedZoneId: !Ref PublicHostedZoneId
+      RecordSets:
+        - Name: riddimsoftware.com.
+          Type: A
+          AliasTarget:
+            DNSName: !GetAtt ProductionDistribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Name: riddimsoftware.com.
+          Type: AAAA
+          AliasTarget:
+            DNSName: !GetAtt ProductionDistribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Name: www.riddimsoftware.com.
+          Type: A
+          AliasTarget:
+            DNSName: !GetAtt ProductionDistribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Name: www.riddimsoftware.com.
+          Type: AAAA
+          AliasTarget:
+            DNSName: !GetAtt ProductionDistribution.DomainName
+            HostedZoneId: Z2FDTNDATAQYW2
+
+Outputs:
+  ArtifactBucketName:
+    Value: !Ref ArtifactBucket
+  ArtifactPrefix:
+    Value: !Ref ArtifactPrefix
+  ValidationBucketName:
+    Value: !Ref ValidationBucket
+  ValidationDistributionId:
+    Value: !Ref ValidationDistribution
+  ValidationCloudFrontUrl:
+    Value: !Sub "https://${ValidationDistribution.DomainName}"
+  ProductionBucketName:
+    Value: !Ref ProductionBucket
+  ProductionDistributionId:
+    Value: !Ref ProductionDistribution
+  ProductionCloudFrontUrl:
+    Value: !Sub "https://${ProductionDistribution.DomainName}"
