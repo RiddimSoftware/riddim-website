@@ -25,8 +25,8 @@ module.exports = function (eleventyConfig) {
     "favicon.ico": "favicon.ico",
     "github.svg": "github.svg",
     "koneksa.webp": "koneksa.webp",
-    "logo.png": "logo.png",
     "mac-app-store.svg": "mac-app-store.svg",
+    "monogram.svg": "monogram.svg",
     "nether.jpeg": "nether.jpeg",
     "portal-door-demo.svg": "portal-door-demo.svg",
     "portal-door-icon.jpeg": "portal-door-icon.jpeg",
@@ -36,9 +36,7 @@ module.exports = function (eleventyConfig) {
     "sonnio-app-icon.jpg": "sonnio-app-icon.jpg",
     "sonnio-logo.jpg": "sonnio-logo.jpg",
     "star.svg": "star.svg",
-    "wordmark.png": "wordmark.png",
-    "wordmark-product.png": "wordmark-product.png",
-    "wordmark-product.webp": "wordmark-product.webp"
+    "wordmark.svg": "wordmark.svg"
   });
 
   return {

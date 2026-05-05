@@ -8,11 +8,11 @@ Riddim Software is Sunny Purewal's one-person indie product company: a quiet hom
 
 Use the wordmark for the site header, footer, press references, and any surface where the company name needs to be read.
 
-![Riddim Software wordmark](../wordmark.png)
+![Riddim Software wordmark](../wordmark.svg)
 
 Use the monogram only where space is tight, such as favicons, social avatars, or square previews.
 
-![Riddim monogram](../logo.png)
+![Riddim monogram](../monogram.svg)
 
 Keep the wordmark at least 140 px wide on screens and the monogram at least 32 px square. Leave clear space around either mark equal to the height of the lowercase letters in the wordmark. Do use the marks on quiet, high-contrast backgrounds. Do not stretch, recolor, outline, rotate, crop, add shadows, or place them on busy product art.
 
