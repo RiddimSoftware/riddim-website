@@ -253,6 +253,16 @@ img.theme-asset--dark {
   display: block;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .app-store-badge {
+    filter: invert(1);
+  }
+}
+
+:root[data-theme="dark"] .app-store-badge {
+  filter: invert(1);
+}
+
 .home {
   display: flex;
   flex-direction: column;
