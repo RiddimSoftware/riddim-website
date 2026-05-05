@@ -27,7 +27,7 @@
 - Answers the baseline questions that matter for the current static site refresh: total visits by request volume, product page visits, referrers when the header is present, and deploy-to-deploy trend.
 - No third-party script loaded by visitors.
 - Requires one AWS console change and no code changes to the website.
-- Fits the current S3/CloudFront hosting model already documented in [docs/release-process.md](/Users/sunny/code/riddim-website-web-8/docs/release-process.md).
+- Fits the current S3/CloudFront hosting model already documented in [./release-process.md](./release-process.md).
 
 ### What it does not answer
 
@@ -66,7 +66,7 @@ Enabling CloudFront standard logs requires:
 1. Create or designate an S3 bucket for logs (e.g. `riddim-website-logs`).
 2. In the CloudFront distribution for `riddimsoftware.com`, enable standard logging → point at the bucket.
 3. Set an S3 lifecycle rule to expire logs after 90 days (cost control).
-4. Record the chosen bucket name and retention window in [docs/release-process.md](/Users/sunny/code/riddim-website-web-8/docs/release-process.md) if the team wants the operational runbook to stay fully current.
+4. Record the chosen bucket name and retention window in [./release-process.md](./release-process.md) if the team wants the operational runbook to stay fully current.
 
 This is a sub-one-day AWS task, so it stays out of `WEB-8` and should be split into a follow-up Linear issue, for example:
 `Enable CloudFront standard logging for riddimsoftware.com`
