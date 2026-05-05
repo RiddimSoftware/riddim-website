@@ -17,6 +17,7 @@ evidence expectations.
 import sys
 import os
 import re
+import json
 import subprocess
 import xml.etree.ElementTree as ET
 from urllib.parse import urlparse
@@ -215,6 +216,80 @@ def run_local_product_metadata_checks():
         ok(f"checked metadata for {len(CONSOLIDATED_PRODUCT_PATHS)} consolidated product route(s)")
 
 
+def run_local_theme_checks():
+    print("\n── Local theme checks ──")
+    css_path = os.path.join(SITE_ROOT, "default.css")
+    theme_js_path = os.path.join(SITE_ROOT, "assets", "theme.js")
+    manifest_dark_path = os.path.join(SITE_ROOT, "manifest-dark.json")
+
+    if not os.path.exists(css_path):
+        fail("default.css missing for theme checks")
+        return
+
+    if not os.path.exists(theme_js_path):
+        fail("assets/theme.js missing")
+    if not os.path.exists(manifest_dark_path):
+        fail("manifest-dark.json missing")
+
+    with open(css_path, encoding="utf-8") as handle:
+        css = handle.read()
+
+    required_css_snippets = [
+        '@media (prefers-color-scheme: dark)',
+        ':root[data-theme="dark"]',
+        'html[data-theme-ui="ready"] .theme-toggle',
+    ]
+    for snippet in required_css_snippets:
+        if snippet not in css:
+            fail(f"default.css missing theme rule: {snippet}")
+
+    if os.path.exists(manifest_dark_path):
+        with open(manifest_dark_path, encoding="utf-8") as handle:
+            try:
+                manifest_dark = json.load(handle)
+            except json.JSONDecodeError as error:
+                fail(f"manifest-dark.json is not valid JSON: {error}")
+                manifest_dark = None
+
+        if manifest_dark is not None:
+            if manifest_dark.get("theme_color") != "#101418":
+                fail("manifest-dark.json theme_color must be #101418")
+            if manifest_dark.get("background_color") != "#101418":
+                fail("manifest-dark.json background_color must be #101418")
+
+    html_files = []
+    for root, _, files in os.walk(SITE_ROOT):
+        rel_root = os.path.relpath(root, SITE_ROOT)
+        parts = rel_root.replace("\\", "/").split("/")
+        if any(p in parts for p in [".git", "node_modules"]):
+            continue
+        for filename in files:
+            if filename.endswith(".html"):
+                html_files.append(os.path.join(root, filename))
+
+    required_html_snippets = [
+        '<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" data-theme-color="light">',
+        '<meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)" data-theme-color="dark">',
+        '<link rel="manifest" href="/manifest.json" data-manifest-light="/manifest.json" data-manifest-dark="/manifest-dark.json">',
+        '<script src="/assets/theme.js" defer></script>',
+        'data-theme-select',
+        'data-theme-status',
+        'role="status"',
+    ]
+
+    for path in sorted(html_files):
+        rel = os.path.relpath(path, SITE_ROOT)
+        with open(path, encoding="utf-8") as handle:
+            content = handle.read()
+
+        for snippet in required_html_snippets:
+            if snippet not in content:
+                fail(f"{rel}: missing theme markup snippet: {snippet}")
+
+    if not failures:
+        ok(f"checked theme assets and markup across {len(html_files)} HTML file(s)")
+
+
 def run_local_homepage_tile_css_checks():
     print("\n── Local homepage tile CSS checks ──")
     css_path = os.path.join(SITE_ROOT, "default.css")
@@ -335,6 +410,7 @@ def main():
     run_local_checks()
     run_local_sitemap_checks()
     run_local_product_metadata_checks()
+    run_local_theme_checks()
     run_local_homepage_tile_css_checks()
     if live:
         run_live_checks()
