@@ -40,14 +40,14 @@
     "slug": "bubble-bop",
     "name": "Bubble Bop",
     "seo": {
-      "title": "Bubble Bop - Riddim Software",
-      "description": "Bubble Bop is a colourful kids balloon game for iPhone and iPad, available on the App Store.",
+      "title": "Bubble Bop — Riddim Software",
+      "description": "Bubble Bop is a simple bubble-and-balloon popping game for little kids. Free on iPhone and iPad.",
       "canonical": "https://riddimsoftware.com/bubble-bop/",
       "ogImage": "https://riddimsoftware.com/bubble-bop.png"
     },
     "icon": "bubble-bop.png",
     "iconAlt": "Bubble Bop app icon",
-    "tagline": "A colourful kids balloon game - tap to pop, giggle, and go. Free on iPhone and iPad.",
+    "tagline": "A simple bubble-and-balloon popping game for little kids.",
     "homepagePitch": "A bright balloon-popping game for playful iPhone and iPad breaks.",
     "primaryCta": {
       "label": "Download on the App Store",
@@ -55,17 +55,30 @@
       "external": true,
       "appStoreBadge": true
     },
-    "story": "Bubble Bop keeps the experience simple: bright balloons, quick taps, and a playful rhythm for young players.",
+    "storyTitle": "Tap to pop.",
+    "story": "Bubble Bop is a simple bubble-and-balloon popping game for little kids on iPhone and iPad. Tap balloons to pop them — no ads, no tracking, no in-app purchases, and no internet required to play.",
+    "screenshotLayout": "phone-screenshots",
+    "screenshotsEyebrow": "App Store preview",
+    "screenshotsTitle": "iPhone and iPad",
     "screenshots": [
       {
-        "src": "bubble-bop.png",
-        "alt": "Bubble Bop product preview"
+        "src": "screenshots/bubble-bop/1.png",
+        "alt": "Bubble Bop gameplay — colorful balloons on screen",
+        "width": 576,
+        "height": 768
+      },
+      {
+        "src": "screenshots/bubble-bop/2.png",
+        "alt": "Bubble Bop gameplay — popping balloons in full screen",
+        "width": 576,
+        "height": 768
       }
     ],
+    "featuresTitle": "Kid-safe by design",
     "features": [
-      "Kid-friendly balloon popping",
       "Free on iPhone and iPad",
-      "Simple tap-first play"
+      "No ads, no tracking, no in-app purchases",
+      "Works offline — no internet required"
     ],
     "secondaryLinks": []
   },
