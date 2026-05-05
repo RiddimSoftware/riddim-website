@@ -117,14 +117,15 @@ footer.light_background {
   padding: 20px 0;
 }
 /* Wordmark */
-.site-header h1 {
-  margin: 0;
-  line-height: 0;
-}
 img.wordmark {
   display: block;
   width: min(360px, 78vw);
   height: auto;
+}
+
+.wordmark-link {
+  display: block;
+  line-height: 0;
 }
 
 .site-header {
@@ -145,7 +146,7 @@ img.wordmark {
   text-align: left;
 }
 
-.home-hero h2,
+.home-hero h1,
 .featured-copy h2,
 .section-heading h2,
 .about-block h2 {
@@ -154,7 +155,7 @@ img.wordmark {
   line-height: var(--leading-4xl);
 }
 
-.home-hero h2 {
+.home-hero h1 {
   max-width: 720px;
   font-size: clamp(var(--text-4xl), 7vw, 5.75rem);
 }
