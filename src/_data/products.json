@@ -8,6 +8,7 @@
     "icon": "blindfold.png",
     "iconAlt": "Blindfold app icon",
     "tagline": "An NFC-powered cannabis game that turns product discovery into a memorable retail experience.",
+    "homepagePitch": "NFC-powered product discovery built for memorable cannabis retail moments.",
     "ctas": [
       {
         "label": "Visit blindfold.lol",
@@ -31,6 +32,7 @@
     "icon": "bubble-bop.png",
     "iconAlt": "Bubble Bop app icon",
     "tagline": "A colourful kids balloon game — tap to pop, giggle, and go. Free on iPhone and iPad.",
+    "homepagePitch": "A bright balloon-popping game for playful iPhone and iPad breaks.",
     "ctas": [
       {
         "label": "Download on the App Store",
@@ -50,6 +52,7 @@
     "icon": "double-dozen.png",
     "iconAlt": "Double Dozen app icon",
     "tagline": "A tap speed game that tests your reflexes — race to 24 taps and prove you're the fastest.",
+    "homepagePitch": "A fast reflex challenge for quick, competitive tap-speed sessions.",
     "ctas": [
       {
         "label": "Download on the App Store",
@@ -69,6 +72,8 @@
     "icon": "epac.png",
     "iconAlt": "epac app icon",
     "tagline": "Verified Canadian government data in your pocket — search Hansard, track your MP, and explore lobbying records. All data from official government sources.",
+    "featuredPitch": "epac puts verified Canadian government data in your pocket, giving researchers, journalists, civic watchers, and curious citizens a focused way to search Hansard, track MPs, and explore lobbying records without chasing scattered sources. It is built around official datasets, clear paths, and fast answers for public-interest work.",
+    "homepagePitch": "Verified Canadian government data for faster public-interest research.",
     "ctas": [
       {
         "label": "Open web app",
@@ -92,6 +97,7 @@
     "icon": "nether.jpeg",
     "iconAlt": "Portal Door app icon",
     "tagline": "Step through to something new — a generative web experience that opens wherever you are.",
+    "homepagePitch": "A generative web experience that opens into unexpected digital spaces.",
     "ctas": [
       {
         "label": "Open Portal Door",
@@ -115,6 +121,7 @@
     "icon": "reach.png",
     "iconAlt": "Reach app icon",
     "tagline": "Stay connected with the people who matter most — simple, distraction-free communication for iPhone.",
+    "homepagePitch": "Simple, distraction-free communication for staying close to important people.",
     "ctas": [
       {
         "label": "Download on the App Store",
@@ -139,6 +146,7 @@
     "icon": "sonnio-logo.jpg",
     "iconAlt": "Sonnio app icon",
     "tagline": "A music experience app — find, play, and share the music you love.",
+    "homepagePitch": "A music experience for finding, playing, and sharing what you love.",
     "ctas": [
       {
         "label": "Open Sonnio",
