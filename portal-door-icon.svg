@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Dark purple-black background -->
+    <radialGradient id="bgGrad" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#1a0430"/>
+      <stop offset="55%" stop-color="#0c0120"/>
+      <stop offset="100%" stop-color="#050008"/>
+    </radialGradient>
+
+    <!-- Portal interior: bright purple centre, fades to dark at bottom -->
+    <linearGradient id="portalFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#c026d3"/>
+      <stop offset="25%"  stop-color="#9333ea"/>
+      <stop offset="60%"  stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#3b0764"/>
+    </linearGradient>
+
+    <!-- Bright central shimmer over the portal fill -->
+    <radialGradient id="shimmer" cx="50%" cy="30%" r="55%">
+      <stop offset="0%"   stop-color="#f0abfc" stop-opacity="0.8"/>
+      <stop offset="45%"  stop-color="#c084fc" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#7e22ce" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Outer ambient glow (simple, no filter needed) -->
+    <radialGradient id="ambientGlow" cx="50%" cy="48%" r="52%">
+      <stop offset="0%"   stop-color="#a855f7" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#4c1d95" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Frame: top to bottom gradient -->
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#e9d5ff"/>
+      <stop offset="35%"  stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+
+    <!-- Soft outer-glow duplicate of the frame (just blur, no merge) -->
+    <filter id="outerGlow" x="-30%" y="-20%" width="160%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
+    </filter>
+
+    <!-- Frame highlight filter (subtle) -->
+    <filter id="frameGlow" x="-15%" y="-10%" width="130%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Star glow -->
+    <filter id="starGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Icon rounded-square clip (iOS App Store style) -->
+    <clipPath id="iconClip">
+      <rect x="0" y="0" width="1024" height="1024" rx="220" ry="220"/>
+    </clipPath>
+
+    <!-- Portal interior clip -->
+    <clipPath id="doorClip">
+      <path d="M 356 220 L 356 818 L 668 818 L 668 220
+               Q 668 155 612 136 Q 512 104 412 136 Q 356 155 356 220 Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#iconClip)">
+
+    <!-- ── BACKGROUND ──────────────────────────────────────────── -->
+    <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+
+    <!-- Ambient purple haze (plain radial, no filter) -->
+    <ellipse cx="512" cy="490" rx="290" ry="380" fill="url(#ambientGlow)"/>
+
+    <!-- ── OUTER FRAME GLOW (blurred duplicate behind frame) ───── -->
+    <path d="M 340 218 L 340 828 L 684 828 L 684 218
+             Q 684 145 622 122 Q 512 86 402 122 Q 340 145 340 218 Z"
+          fill="none" stroke="#a855f7" stroke-width="42"
+          filter="url(#outerGlow)"/>
+
+    <!-- ── PORTAL INTERIOR ────────────────────────────────────── -->
+
+    <!-- Base purple fill -->
+    <path d="M 356 220 L 356 818 L 668 818 L 668 220
+             Q 668 155 612 136 Q 512 104 412 136 Q 356 155 356 220 Z"
+          fill="url(#portalFill)"/>
+
+    <!-- Bright shimmer overlay -->
+    <path d="M 356 220 L 356 818 L 668 818 L 668 220
+             Q 668 155 612 136 Q 512 104 412 136 Q 356 155 356 220 Z"
+          fill="url(#shimmer)"/>
+
+    <!-- Horizontal energy bands (clipped to door) -->
+    <g clip-path="url(#doorClip)">
+      <rect x="350" y="195" width="324" height="12" fill="#f0abfc" opacity="0.18"/>
+      <rect x="350" y="280" width="324" height="6"  fill="#f0abfc" opacity="0.12"/>
+      <rect x="350" y="360" width="324" height="8"  fill="#e879f9" opacity="0.14"/>
+      <rect x="350" y="445" width="324" height="5"  fill="#f0abfc" opacity="0.10"/>
+      <rect x="350" y="530" width="324" height="7"  fill="#e879f9" opacity="0.13"/>
+      <rect x="350" y="620" width="324" height="5"  fill="#f0abfc" opacity="0.09"/>
+      <rect x="350" y="705" width="324" height="6"  fill="#e879f9" opacity="0.11"/>
+      <!-- Bright top beam -->
+      <rect x="440" y="104" width="144" height="130" fill="#f0abfc" opacity="0.22"/>
+    </g>
+
+    <!-- ── DOOR FRAME ─────────────────────────────────────────── -->
+
+    <!-- Frame outer glow layer -->
+    <path d="M 340 218 L 340 828 L 684 828 L 684 218
+             Q 684 145 622 122 Q 512 86 402 122 Q 340 145 340 218 Z"
+          fill="none" stroke="#c084fc" stroke-width="26"
+          filter="url(#frameGlow)"/>
+
+    <!-- Frame solid border -->
+    <path d="M 340 218 L 340 828 L 684 828 L 684 218
+             Q 684 145 622 122 Q 512 86 402 122 Q 340 145 340 218 Z"
+          fill="none" stroke="url(#frameGrad)" stroke-width="20"/>
+
+    <!-- Inner bright accent line -->
+    <path d="M 356 220 L 356 818 L 668 818 L 668 220
+             Q 668 155 612 136 Q 512 104 412 136 Q 356 155 356 220 Z"
+          fill="none" stroke="#e9d5ff" stroke-width="2.5" opacity="0.70"/>
+
+    <!-- Keystone gem at arch crown -->
+    <ellipse cx="512" cy="97" rx="18" ry="11" fill="#f5d0fe" opacity="0.95"
+             filter="url(#starGlow)"/>
+
+    <!-- ── THRESHOLD ────────────────────────────────────────────── -->
+    <line x1="326" y1="828" x2="698" y2="828" stroke="#c084fc" stroke-width="5" opacity="0.75"/>
+    <line x1="310" y1="833" x2="714" y2="833" stroke="#7e22ce" stroke-width="2.5" opacity="0.40"/>
+
+    <!-- Ground glow puddle -->
+    <ellipse cx="512" cy="875" rx="190" ry="22" fill="#7e22ce" opacity="0.35"/>
+    <ellipse cx="512" cy="875" rx="110" ry="12" fill="#c084fc" opacity="0.20"/>
+
+    <!-- ── STAR FIELD ─────────────────────────────────────────── -->
+
+    <!-- Left -->
+    <circle cx="175" cy="235" r="3"   fill="#e9d5ff" opacity="0.85" filter="url(#starGlow)"/>
+    <circle cx="143" cy="370" r="2"   fill="#c084fc" opacity="0.70"/>
+    <circle cx="208" cy="452" r="4"   fill="#f0abfc" opacity="0.65" filter="url(#starGlow)"/>
+    <circle cx="162" cy="568" r="2"   fill="#e9d5ff" opacity="0.55"/>
+    <circle cx="222" cy="650" r="3.5" fill="#c084fc" opacity="0.75" filter="url(#starGlow)"/>
+    <circle cx="132" cy="724" r="2"   fill="#e9d5ff" opacity="0.45"/>
+    <circle cx="264" cy="795" r="2.5" fill="#f0abfc" opacity="0.55"/>
+    <circle cx="188" cy="298" r="2"   fill="#c084fc" opacity="0.60"/>
+    <circle cx="253" cy="162" r="3"   fill="#e9d5ff" opacity="0.72" filter="url(#starGlow)"/>
+    <circle cx="112" cy="490" r="2"   fill="#c084fc" opacity="0.50"/>
+    <circle cx="195" cy="130" r="1.5" fill="#e9d5ff" opacity="0.55"/>
+    <circle cx="280" cy="880" r="2"   fill="#c084fc" opacity="0.40"/>
+
+    <!-- Right -->
+    <circle cx="848" cy="250" r="3"   fill="#e9d5ff" opacity="0.85" filter="url(#starGlow)"/>
+    <circle cx="882" cy="382" r="2"   fill="#c084fc" opacity="0.70"/>
+    <circle cx="822" cy="464" r="4"   fill="#f0abfc" opacity="0.65" filter="url(#starGlow)"/>
+    <circle cx="858" cy="542" r="2"   fill="#e9d5ff" opacity="0.55"/>
+    <circle cx="802" cy="638" r="3.5" fill="#c084fc" opacity="0.75" filter="url(#starGlow)"/>
+    <circle cx="896" cy="712" r="2"   fill="#e9d5ff" opacity="0.45"/>
+    <circle cx="764" cy="802" r="2.5" fill="#f0abfc" opacity="0.55"/>
+    <circle cx="836" cy="172" r="3"   fill="#e9d5ff" opacity="0.72" filter="url(#starGlow)"/>
+    <circle cx="912" cy="494" r="2"   fill="#c084fc" opacity="0.50"/>
+    <circle cx="776" cy="328" r="2"   fill="#c084fc" opacity="0.60"/>
+    <circle cx="828" cy="115" r="1.5" fill="#e9d5ff" opacity="0.55"/>
+    <circle cx="744" cy="878" r="2"   fill="#c084fc" opacity="0.40"/>
+
+    <!-- Upper scatter -->
+    <circle cx="200" cy="115" r="2"   fill="#e9d5ff" opacity="0.60"/>
+    <circle cx="820" cy="108" r="2"   fill="#e9d5ff" opacity="0.60"/>
+    <circle cx="308" cy="82"  r="1.5" fill="#c084fc" opacity="0.50"/>
+    <circle cx="716" cy="78"  r="1.5" fill="#c084fc" opacity="0.50"/>
+    <circle cx="420" cy="65"  r="1.5" fill="#e9d5ff" opacity="0.45"/>
+    <circle cx="600" cy="62"  r="1.5" fill="#e9d5ff" opacity="0.45"/>
+
+  </g>
+</svg>
