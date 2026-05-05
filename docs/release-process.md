@@ -77,18 +77,21 @@ AWS_PROFILE=<profile-with-s3-access> aws s3 sync \
 If you need to force a controlled smoke test before the public
 `riddimsoftware.com` DNS cutover, hit the current static-site production
 CloudFront hostname directly and then look for a fresh object under the log
-prefix:
+prefix. Before DNS cutover, the default CloudFront hostname may still return
+`403 AccessDenied`; that is acceptable for log-seeding purposes as long as the
+request appears in the next delivered log batch.
 
 ```bash
 for _ in 1 2 3 4 5; do
-  curl -I https://d2qjhrs4yekq6x.cloudfront.net/ >/dev/null
+  curl -sS -o /dev/null -w '%{http_code}\n' https://d2qjhrs4yekq6x.cloudfront.net/
   sleep 1
 done
 
 AWS_PROFILE=<profile-with-s3-access> aws s3api list-objects-v2 \
   --bucket riddim-website-cloudfront-logs-227530433709 \
   --prefix cloudfront/production/ \
-  --max-items 10
+  --query 'reverse(sort_by(Contents,&LastModified))[:10].[Key,LastModified,Size]' \
+  --output table
 ```
 
 Useful one-liners once the `.gz` files are downloaded:
