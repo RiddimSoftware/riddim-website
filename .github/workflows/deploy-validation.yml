@@ -54,8 +54,11 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
 
+      - name: Install dependencies
+        run: npm install --package-lock=false
+
       - name: Static validation
-        run: python3 scripts/validate.py
+        run: npm run validate
 
       - name: Build immutable artifact
         run: scripts/build_artifact.sh "$GITHUB_SHA" "/tmp/${GITHUB_SHA}.tar.gz"

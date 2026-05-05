@@ -6,7 +6,26 @@ permissions:
   contents: read
 jobs:
   build:
-    uses: RiddimSoftware/riddim-release/.github/workflows/web-validate.yml@main
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install --package-lock=false
+
+      - name: Validate generated site
+        run: npm run validate
+
+      - name: Check deploy scripts
+        run: bash -n scripts/build_artifact.sh scripts/upload_artifact.sh scripts/deploy_artifact.sh scripts/smoke_check.sh
+
   success:
     needs: [build]
     runs-on: ubuntu-latest

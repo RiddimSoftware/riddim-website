@@ -1,0 +1,14 @@
+{
+  "name": "riddim-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "rm -rf _site && eleventy",
+    "dev": "eleventy --serve --watch",
+    "validate": "npm run build && VALIDATE_SITE_ROOT=_site python3 scripts/validate.py"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.5"
+  }
+}
