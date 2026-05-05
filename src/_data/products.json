@@ -53,7 +53,7 @@
       "label": "Download on the App Store",
       "href": "https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847",
       "external": true,
-      "appStoreIcon": true
+      "appStoreBadge": true
     },
     "story": "Bubble Bop keeps the experience simple: bright balloons, quick taps, and a playful rhythm for young players.",
     "screenshots": [
@@ -86,7 +86,7 @@
       "label": "Download on the App Store",
       "href": "https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786",
       "external": true,
-      "appStoreIcon": true
+      "appStoreBadge": true
     },
     "story": "Double Dozen turns a tiny reflex challenge into a quick replayable race against your own speed.",
     "screenshots": [
@@ -194,7 +194,7 @@
       "label": "Download on the App Store",
       "href": "https://apps.apple.com/us/app/reach/id1024071726",
       "external": true,
-      "appStoreIcon": true
+      "appStoreBadge": true
     },
     "story": "Reach focuses on keeping important personal connections close without adding unnecessary noise.",
     "screenshots": [

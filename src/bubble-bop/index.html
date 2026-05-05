@@ -75,8 +75,14 @@
             .store {
                 margin-top: 18px;
             }
+            .store a {
+                display: inline-block;
+                padding: 10px;
+                line-height: 0;
+            }
             #appstore {
-                width: 230px;
+                width: auto;
+                height: 40px;
             }
             #icon {
                 margin: 10px 0 4px;
@@ -122,7 +128,7 @@
         </style>
     </head>
     <body>
-        <div class="card">
+        <main class="card">
             <img id="icon" src="/bubble-bop.png" alt="Bubble Bop icon">
             <h1>Bubble Bop</h1>
             <h2>A gentle bubble and balloon game for young kids</h2>
@@ -137,10 +143,10 @@
                 <li>No internet required to play</li>
             </ul>
             <div class="store">
-                <a href="https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847">
+                <a href="https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847" aria-label="Download on the App Store">
                     <img id="appstore" src="/app-store.svg" alt="Download on the App Store">
                 </a>
             </div>
-        </div>
+        </main>
     </body>
 </html>

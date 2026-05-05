@@ -1,0 +1,11 @@
+{%- set storeBadgeType = cta.storeBadge or "app-store" -%}
+{%- if storeBadgeType == "mac-app-store" -%}
+  {%- set storeBadgeSrc = "/mac-app-store.svg" -%}
+  {%- set storeBadgeAlt = "Download on the Mac App Store" -%}
+{%- else -%}
+  {%- set storeBadgeSrc = "/app-store.svg" -%}
+  {%- set storeBadgeAlt = "Download on the App Store" -%}
+{%- endif -%}
+<a class="app-store-badge-link" href="{{ cta.href }}"{% if cta.external %} target="_blank" rel="noopener"{% endif %} aria-label="{{ storeBadgeAlt }}">
+  <img class="app-store-badge" src="{{ storeBadgeSrc }}" alt="{{ storeBadgeAlt }}">
+</a>

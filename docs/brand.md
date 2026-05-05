@@ -47,3 +47,25 @@ Use plain language. Prefer concrete nouns and short sentences. Avoid superlative
 ## Out of Brand Scope
 
 Per-product experiences keep their own brands. Sonnio, Portal Door, Blindfold, Reach, Bubble Bop, Double Dozen, and future product subsites may use their own type, color, illustration, screenshots, and voice when those choices serve the product. This guide covers canonical Riddim company pages, shared company marks, and repo-level documentation only.
+
+## App Store Badges
+
+Use the shared App Store badge treatment for product CTAs that link to Apple App Store listings:
+
+```json
+{
+  "label": "Download on the App Store",
+  "href": "https://apps.apple.com/us/app/example/id1234567890",
+  "external": true,
+  "appStoreBadge": true
+}
+```
+
+The rendered CTA uses Apple's official badge artwork inside a plain link. Do not wrap the badge in `.btn`, add extra text, add borders, recolor it, change its proportions, or shrink it below 40 px tall. Keep at least 10 px of clear space around the 40 px badge.
+
+Badge asset sources:
+
+- App Store badge: `https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg`
+- Mac App Store badge: `https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-mac-app-store.svg`
+
+Apple's current App Store Marketing Guidelines live at `https://developer.apple.com/app-store/marketing/guidelines/`.

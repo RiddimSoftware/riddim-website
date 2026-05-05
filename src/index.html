@@ -50,9 +50,10 @@
         <h2 id="featured-title">{{ featuredProduct.name }}</h2>
         <p>{{ featuredProduct.featuredPitch or featuredProduct.tagline }}</p>
         <div class="cta-group align-start">
-          {% set primaryCta = featuredProduct.ctas[0] %}
-          <a class="btn btn-primary" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}>{% if primaryCta.appStoreIcon %}
-            <img src="app-store.svg" alt="App Store" class="btn-icon">{% endif %}{{ primaryCta.label }}</a>
+          {% set primaryCta = featuredProduct.primaryCta %}
+          <a class="{% if primaryCta.appStoreBadge %}app-store-badge-link{% else %}btn btn-primary{% endif %}" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}{% if primaryCta.appStoreBadge %} aria-label="{{ primaryCta.label }}"{% endif %}>{% if primaryCta.appStoreBadge %}
+            <img class="app-store-badge" src="/app-store.svg" alt="{{ primaryCta.label }}">{% elif primaryCta.appStoreIcon %}
+            <img src="app-store.svg" alt="" aria-hidden="true" class="button-icon">{% endif %}{% if not primaryCta.appStoreBadge %}{{ primaryCta.label }}{% endif %}</a>
           <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Read more &rarr;</a>
         </div>
       </div>

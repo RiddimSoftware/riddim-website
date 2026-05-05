@@ -655,17 +655,22 @@ img.wordmark {
 
 .app-store-badge {
   display: block;
-  width: 180px;
-  height: auto;
+  width: auto;
+  height: 40px;
 }
 
 .app-store-badge-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 10px;
   border: 0;
   background: transparent;
+  line-height: 0;
+}
+
+.align-start .app-store-badge-link {
+  align-self: flex-start;
 }
 
 .app-store-badge-link:hover,
