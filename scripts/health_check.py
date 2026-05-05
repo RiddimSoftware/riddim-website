@@ -13,6 +13,8 @@ Exit codes:
 No Node/npm required. Uses Python 3 stdlib + curl (per project constraint).
 curl is used for HTTP requests so the system trust store is always respected
 (avoids macOS Python SSL cert bundle issues without requiring certifi).
+
+See docs/deploy-checklist.md for when to run this script during launch checks.
 """
 
 import sys
