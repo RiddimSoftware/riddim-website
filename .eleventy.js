@@ -15,6 +15,7 @@ module.exports = function (eleventyConfig) {
     ".well-known": ".well-known",
     "app-store.svg": "app-store.svg",
     "apple-app-site-association.json": "apple-app-site-association.json",
+    "assets": "assets",
     "blindfold.png": "blindfold.png",
     "bubble-bop.png": "bubble-bop.png",
     "default.css": "default.css",
