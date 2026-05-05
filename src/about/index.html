@@ -61,20 +61,7 @@
       <p>Contact: <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a></p>
     </section>
   </main>
-  <footer class="site-footer">
-    <div>
-      <img src="/wordmark.png" alt="Riddim Software" class="footer-wordmark">
-      <p>Independent apps, games, and web products.</p>
-    </div>
-    <div class="footer-links" aria-label="Site links">
-      <a href="/about/">About</a>
-      {% for product in products %}
-        <a href="/{{ product.slug }}/">{{ product.name }}</a>
-      {% endfor %}
-    </div>
-    <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a>
-    <p>&copy; Riddim Software</p>
-  </footer>
+  {% include "site-footer.njk" %}
 </body>
 
 </html>
