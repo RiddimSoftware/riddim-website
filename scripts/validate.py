@@ -26,6 +26,12 @@ DEFAULT_SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.environ.get("VALIDATE_SITE_ROOT", DEFAULT_SITE_ROOT)
 if not os.path.isabs(SITE_ROOT):
     SITE_ROOT = os.path.join(DEFAULT_SITE_ROOT, SITE_ROOT)
+TEMPLATE_PATH = os.path.join(
+    DEFAULT_SITE_ROOT,
+    "infrastructure",
+    "cloudformation",
+    "riddim-website-static-site.yml",
+)
 LIVE_BASE = "https://riddimsoftware.com"
 
 LIVE_PATHS = [
@@ -346,6 +352,44 @@ def run_local_asset_path_checks():
         ok(f"checked {checked_files} HTML file(s): shared assets use root-relative paths")
 
 
+def run_local_routing_infra_checks():
+    print("\n── Local routing infrastructure checks ──")
+
+    if not os.path.exists(TEMPLATE_PATH):
+        fail("static-site CloudFormation template missing")
+        return
+
+    with open(TEMPLATE_PATH, encoding="utf-8") as handle:
+        template = handle.read()
+
+    required_snippets = [
+        ("DirectoryIndexRewriteFunction:", "CloudFront directory-index rewrite function resource"),
+        ('request.uri = uri + "index.html";', "trailing-slash directory rewrite"),
+        ('request.uri = uri + "/index.html";', "extensionless route rewrite"),
+        ("FunctionAssociations:", "viewer-request function association"),
+        ("EventType: viewer-request", "viewer-request function event"),
+        (
+            "FunctionARN: !GetAtt DirectoryIndexRewriteFunction.FunctionMetadata.FunctionARN",
+            "rewrite function ARN attachment",
+        ),
+    ]
+
+    for snippet, label in required_snippets:
+        if snippet not in template:
+            fail(f"CloudFormation template missing {label}")
+
+    response_404_count = template.count("ResponsePagePath: /404.html")
+    if response_404_count < 4:
+        fail("CloudFormation template must map 403/404 errors to /404.html on both distributions")
+
+    status_404_count = template.count("ResponseCode: 404")
+    if status_404_count < 4:
+        fail("CloudFormation template must preserve HTTP 404 status on both distributions")
+
+    if not failures:
+        ok("CloudFront template includes directory-index rewrites and dedicated 404 responses")
+
+
 def run_local_homepage_tile_css_checks():
     print("\n── Local homepage tile CSS checks ──")
     css_path = os.path.join(SITE_ROOT, "default.css")
@@ -508,6 +552,7 @@ def main():
     run_local_product_metadata_checks()
     run_local_theme_checks()
     run_local_asset_path_checks()
+    run_local_routing_infra_checks()
     run_local_homepage_tile_css_checks()
     if live:
         run_live_checks()
