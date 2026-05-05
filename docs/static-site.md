@@ -58,6 +58,14 @@ Add an object to `src/_data/products.json` with:
 
 Then run `npm run build` and confirm `_site/products/<slug>.html` renders as expected. Product pages intentionally keep the current `products/<slug>.html` output path for this migration; canonical URL cleanup belongs in a separate routing ticket.
 
+Product pages are added to `_site/sitemap.xml` automatically from `src/_data/products.json`. No hand edit is needed for the sitemap after adding a product; run `npm run build` or `npm run validate` to regenerate it.
+
+## Sitemap
+
+`src/sitemap.njk` generates `_site/sitemap.xml` during the 11ty build. Its URL list comes from `src/_data/sitemap.js`, which includes the homepage, the Bubble Bop App Clip page, every product in `src/_data/products.json`, `reach-privacy.html`, and `/about` when `src/about.html` or `src/about/index.html` exists.
+
+Each sitemap entry uses an absolute `https://riddimsoftware.com` URL and a `lastmod` value from the latest git commit touching the relevant source file. If git metadata is unavailable in a build environment, the generator falls back to the current build time. `npm run validate` parses the generated sitemap as Sitemaps 0.9 XML and confirms `robots.txt` references `https://riddimsoftware.com/sitemap.xml`.
+
 ## Local Workflow
 
 Install dependencies:
