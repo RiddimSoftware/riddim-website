@@ -253,16 +253,6 @@ img.theme-asset--dark {
   display: block;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .app-store-badge {
-    filter: invert(1);
-  }
-}
-
-:root[data-theme="dark"] .app-store-badge {
-  filter: invert(1);
-}
-
 .home {
   display: flex;
   flex-direction: column;
@@ -893,6 +883,24 @@ img.theme-asset--dark {
 .app-store-badge-link:hover,
 .app-store-badge-link:focus-visible {
   transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .app-store-badge-link {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  }
+}
+
+:root[data-theme="dark"] .app-store-badge-link {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
 }
 
 .product-detail {
