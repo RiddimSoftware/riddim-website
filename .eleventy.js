@@ -25,6 +25,8 @@ module.exports = function (eleventyConfig) {
     "koneksa.webp": "koneksa.webp",
     "logo.png": "logo.png",
     "nether.jpeg": "nether.jpeg",
+    "portal-door-demo.svg": "portal-door-demo.svg",
+    "portal-door-icon.jpeg": "portal-door-icon.jpeg",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
     "screenshots": "screenshots",
