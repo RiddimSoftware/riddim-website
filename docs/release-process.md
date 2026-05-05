@@ -49,6 +49,41 @@ The repository secret `AWS_ROLE_ARN` must remain set to the existing OIDC role:
 `arn:aws:iam::227530433709:role/riddim-website-deploy`. Do not add long-lived
 AWS access keys.
 
+## Production Request Logs
+
+As of **2026-05-05**, the production CloudFront distribution
+`E3RTZ0JDZLBX2I` writes standard access logs to:
+
+- bucket: `riddim-website-cloudfront-logs-227530433709`
+- prefix: `cloudfront/production/`
+
+- Current retention target: **90 days**
+- Cookie logging: **disabled**
+- Purpose: directional request counts, top paths, referrers, and 4xx/5xx trend
+  checks without client-side analytics
+
+This log bucket is currently managed outside the static-site CloudFormation
+stack because CloudFront standard logging still requires S3 ACL support.
+
+To fetch a recent batch of logs locally:
+
+```bash
+AWS_PROFILE=riddim-agent aws s3 sync \
+  "s3://riddim-website-cloudfront-logs-227530433709/cloudfront/production/" \
+  ./tmp/cloudfront-logs
+```
+
+Useful one-liners once the `.gz` files are downloaded:
+
+```bash
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $8}' | sort | uniq -c | sort -rn | head -20
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $10}' | sort | uniq -c | sort -rn | head -20
+find ./tmp/cloudfront-logs -name '*.gz' -print0 | xargs -0 zcat | awk '{print $9}' | grep -E '^[45]' | sort | uniq -c
+```
+
+CloudFront standard logs are delayed delivery; expect roughly **within one
+hour** after live traffic or a smoke-test request.
+
 ## Validation Deployment
 
 `.github/workflows/deploy-validation.yml` runs on every push to `main`.
