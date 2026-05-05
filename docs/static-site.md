@@ -43,6 +43,10 @@ Create the page under `src/` at the path it should have in production. For examp
 
 Use root-relative asset paths when a page is meant to live at a route directory, and keep canonical URLs explicit when the page is intended for indexing.
 
+Unknown routes should render the dedicated `src/404.html` page. Canonical
+directory routes such as `/double-dozen/` are resolved at CloudFront to the
+matching `index.html` object instead of relying on SPA-style homepage fallbacks.
+
 ## Add a Product
 
 Follow `docs/adding-a-product.md`. In short, add assets at the repository root, add one object to `src/_data/products.json`, then run `npm run build` and confirm `_site/<slug>/index.html` renders as expected. Product pages should use stable, lowercase, trailing-slash routes such as `https://riddimsoftware.com/epac/`.

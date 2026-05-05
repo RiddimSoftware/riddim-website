@@ -168,8 +168,10 @@ Deployment metadata is set in `scripts/deploy_artifact.sh`.
 - Other static assets use a conservative one-hour revalidated cache.
 - Every deployment issues a CloudFront invalidation for `/*`.
 
-Unknown routes fall back to `index.html` through CloudFront custom error
-responses, preserving the current SPA-style fallback behavior.
+Unknown routes return the dedicated `404.html` page with HTTP 404. CloudFront
+also rewrites extensionless directory routes such as `/double-dozen/` to the
+matching `index.html` object before the S3 origin lookup, so canonical product
+pages resolve correctly on the static origin.
 
 ## Human-Gated Cutover
 
