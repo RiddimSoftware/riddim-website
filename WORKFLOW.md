@@ -23,7 +23,7 @@ agent:
     - name: codex
       weight: 1
     - name: claude
-      weight: 1
+      weight: 0
   max_concurrent_agents: 3
   max_turns: 20
   max_retry_backoff_ms: 300000
