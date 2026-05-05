@@ -218,47 +218,6 @@ img.wordmark {
   height: auto;
 }
 
-.site-header,
-.product-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 28px var(--space-page) 20px;
-}
-
-.product-header {
-  background-color: var(--color-bg-alt);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.site-brand {
-  margin: 0;
-  line-height: 0;
-}
-
-.wordmark-link {
-  display: inline-block;
-  line-height: 0;
-  text-decoration: none;
-}
-
-.wordmark-lockup {
-  display: block;
-  width: min(360px, 78vw);
-}
-
-.product-header .wordmark-lockup {
-  width: min(420px, 78vw);
-}
-
-img.wordmark {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .theme-asset-stack {
   display: grid;
   place-items: center;
