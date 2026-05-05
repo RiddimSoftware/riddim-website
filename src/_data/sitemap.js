@@ -49,11 +49,11 @@ module.exports = function () {
   const products = require("./products.json");
   const entries = [
     entry("/", ["src/index.html"]),
-    entry("/bubble-bop/", ["src/bubble-bop/index.html"]),
     ...products.map((product) =>
-      entry(`/products/${product.slug}.html`, [
+      entry(`/${product.slug}/`, [
         "src/products.njk",
-        "src/_data/products.json"
+        "src/_data/products.json",
+        `src/${product.slug}/index.html`
       ])
     ),
     entry("/reach-privacy.html", ["src/reach-privacy.html"])

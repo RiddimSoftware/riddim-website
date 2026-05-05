@@ -7,8 +7,8 @@ operator can compare what changed.
 ## Pre-Deploy
 
 - Run `npm run validate`; it must pass local HTML and sitemap checks.
-- Run `python3 scripts/health_check.py`; every route must return a passing HTTP
-  status.
+- Run `python3 scripts/health_check.py`; every consolidated product route and
+  coexistence legacy subdomain must return a passing HTTP status.
 - Start the site locally with `npm run dev` and load the homepage in a browser
   without console or render errors.
 - Review new homepage and product copy with the user before merge.

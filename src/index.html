@@ -53,7 +53,7 @@
           {% set primaryCta = featuredProduct.ctas[0] %}
           <a class="btn btn-primary" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}>{% if primaryCta.appStoreIcon %}
             <img src="app-store.svg" alt="App Store" class="btn-icon">{% endif %}{{ primaryCta.label }}</a>
-          <a class="btn btn-secondary" href="/products/{{ featuredProduct.slug }}.html">Read more &rarr;</a>
+          <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Read more &rarr;</a>
         </div>
       </div>
     </section>
@@ -66,7 +66,7 @@
         {% for product in products %}
           {% if product.slug != featuredProductSlug %}
             <article class="product-card">
-              <a href="/products/{{ product.slug }}.html" class="product-link">
+              <a href="/{{ product.slug }}/" class="product-link">
                 <img class="product-icon" src="{{ product.icon }}" alt="{{ product.iconAlt }}" />
                 <span class="product-name">{{ product.name }}</span>
                 <span class="product-desc">{{ product.homepagePitch or product.tagline }}</span>
@@ -90,7 +90,7 @@
     </div>
     <div class="footer-links" aria-label="Product links">
       {% for product in products %}
-        <a href="/products/{{ product.slug }}.html">{{ product.name }}</a>
+        <a href="/{{ product.slug }}/">{{ product.name }}</a>
       {% endfor %}
     </div>
     <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a>

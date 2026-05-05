@@ -1,9 +1,9 @@
 ---
 pagination:
-  data: products
+  data: productPages
   size: 1
   alias: product
-permalink: "products/{{ product.slug }}.html"
+permalink: "{{ product.slug }}/index.html"
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,16 @@ permalink: "products/{{ product.slug }}.html"
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ product.title }}</title>
   <meta name="description" content="{{ product.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Riddim Software">
+  <meta property="og:title" content="{{ product.title }}">
+  <meta property="og:description" content="{{ product.description }}">
+  <meta property="og:url" content="{{ product.canonical }}">
+  <meta property="og:image" content="https://riddimsoftware.com/{{ product.icon }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ product.title }}">
+  <meta name="twitter:description" content="{{ product.description }}">
+  <meta name="twitter:image" content="https://riddimsoftware.com/{{ product.icon }}">
   <link rel="stylesheet" href="../default.css">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="canonical" href="{{ product.canonical }}">
