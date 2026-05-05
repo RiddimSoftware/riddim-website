@@ -479,7 +479,8 @@ img.wordmark {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  padding: 40px 20px;
+  padding: clamp(48px, 8vw, 88px) 20px;
+  text-align: center;
 }
 .product-hero img.product-icon {
   width: 120px;
@@ -488,14 +489,15 @@ img.wordmark {
 }
 .product-hero h1 {
   margin: 0;
-  font-size: 2rem;
-  line-height: 1.1;
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
+  line-height: 1;
 }
 .product-tagline {
-  font-size: 1.1rem;
-  max-width: 480px;
+  font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+  max-width: 640px;
   margin: 0;
   line-height: 1.5;
+  color: var(--color-fg-muted);
 }
 .cta-group {
   display: flex;
@@ -503,6 +505,7 @@ img.wordmark {
   justify-content: center;
   gap: 12px;
   margin-top: 8px;
+  max-width: 100%;
 }
 .btn {
   display: inline-flex;
@@ -518,7 +521,11 @@ img.wordmark {
   text-decoration: none;
   cursor: pointer;
   line-height: 1.25;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .btn-primary {
   background-color: var(--color-accent);
@@ -590,6 +597,36 @@ img.wordmark {
   object-fit: cover;
   border-radius: 18%;
 }
+
+.screenshot-strip.phone-screenshots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  overflow: visible;
+}
+
+.screenshot-strip.phone-screenshots figure {
+  flex: initial;
+  padding: 0;
+  overflow: hidden;
+}
+
+.screenshot-strip.phone-screenshots img {
+  display: block;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.feature-list strong,
+.feature-list span {
+  display: block;
+}
+
+.feature-list span {
+  margin-top: 8px;
+  color: var(--color-fg-muted);
+}
 .screenshot-strip figcaption {
   margin-top: 10px;
   font-size: 0.85rem;
@@ -616,10 +653,122 @@ img.wordmark {
   height: 1em;
 }
 
+.app-store-badge {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+.app-store-badge-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.app-store-badge-link:hover,
+.app-store-badge-link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.product-detail {
+  background: var(--color-bg);
+}
+
+.product-story,
+.product-features,
+.product-screenshots {
+  width: min(var(--content-wide), calc(100% - (2 * var(--space-page))));
+  margin: 0 auto;
+  padding: clamp(56px, 9vw, 96px) 0;
+}
+
+.product-story {
+  border-top: 1px solid var(--color-border);
+}
+
+.product-story h2,
+.product-screenshots h2 {
+  max-width: 820px;
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3.3rem);
+  line-height: 1.08;
+}
+
+.product-story p:not(.eyebrow),
+.product-screenshots p:not(.eyebrow),
+.product-section-heading p {
+  max-width: 720px;
+  color: var(--color-fg-muted);
+  font-size: 1.08rem;
+}
+
+.product-section-heading {
+  align-items: start;
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-list li {
+  min-width: 0;
+  padding: 22px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.feature-list h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.feature-list p {
+  margin: 10px 0 0;
+  color: var(--color-fg-muted);
+}
+
+.product-screenshots {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1.35fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  border-top: 1px solid var(--color-border);
+}
+
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 22px);
+  align-items: start;
+}
+
+.screenshot-frame {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.screenshot-frame img {
+  display: block;
+  width: 100%;
+}
+
 @media (max-width: 820px) {
   .featured-product,
   .section-heading,
-  .site-footer {
+  .site-footer,
+  .product-screenshots {
     grid-template-columns: 1fr;
   }
 
@@ -627,7 +776,8 @@ img.wordmark {
     gap: 8px;
   }
 
-  .product-grid {
+  .product-grid,
+  .feature-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -668,6 +818,21 @@ img.wordmark {
   .cta-group {
     align-items: stretch;
     flex-direction: column;
+    width: min(100%, calc(100vw - 48px), 340px);
+  }
+
+  .cta-group .btn {
+    width: 100%;
+  }
+
+  .feature-list,
+  .screenshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .screenshot-grid {
+    width: min(320px, 100%);
+    margin-inline: auto;
   }
 
   .product-page section {
@@ -676,6 +841,11 @@ img.wordmark {
 
   .screenshot-strip {
     justify-content: flex-start;
+  }
+
+  .screenshot-strip.phone-screenshots {
+    grid-template-columns: 1fr;
+    width: min(320px, 100%);
   }
 
   .screenshot-strip figure {
