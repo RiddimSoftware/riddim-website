@@ -65,12 +65,30 @@ As of **2026-05-05**, the production CloudFront distribution
 This log bucket is currently managed outside the static-site CloudFormation
 stack because CloudFront standard logging still requires S3 ACL support.
 
-To fetch a recent batch of logs locally:
+To fetch a recent batch of logs locally (replace the profile name with any
+AWS profile that has read access to the log bucket):
 
 ```bash
-AWS_PROFILE=riddim-agent aws s3 sync \
+AWS_PROFILE=<profile-with-s3-access> aws s3 sync \
   "s3://riddim-website-cloudfront-logs-227530433709/cloudfront/production/" \
   ./tmp/cloudfront-logs
+```
+
+If you need to force a controlled smoke test before the public
+`riddimsoftware.com` DNS cutover, hit the current static-site production
+CloudFront hostname directly and then look for a fresh object under the log
+prefix:
+
+```bash
+for _ in 1 2 3 4 5; do
+  curl -I https://d2qjhrs4yekq6x.cloudfront.net/ >/dev/null
+  sleep 1
+done
+
+AWS_PROFILE=<profile-with-s3-access> aws s3api list-objects-v2 \
+  --bucket riddim-website-cloudfront-logs-227530433709 \
+  --prefix cloudfront/production/ \
+  --max-items 10
 ```
 
 Useful one-liners once the `.gz` files are downloaded:
