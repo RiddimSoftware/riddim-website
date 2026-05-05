@@ -92,6 +92,14 @@ Validate generated output:
 npm run validate
 ```
 
+## Validation and Health Checks
+
+Run `npm run validate` before deployment for local HTML and sitemap checks. Run
+`python3 scripts/health_check.py` when checking live product-route health.
+
+Use `docs/deploy-checklist.md` for the complete pre/post-deploy launch checklist
+and screenshot baseline requirements.
+
 ## Deploy Workflow
 
 Deployment follows `docs/release-process.md`.

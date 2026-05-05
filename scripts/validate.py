@@ -4,11 +4,14 @@ Local HTML validation and live site health checks for riddimsoftware.com.
 
 Usage:
   python3 scripts/validate.py            # local HTML checks only
-  python3 scripts/validate.py --live     # local + live site checks
+  VALIDATE_SITE_ROOT=_site python3 scripts/validate.py --live
+                                        # generated output + live site checks
 
 Exit code 0 = all checks passed. Exit code 1 = one or more failures.
 
 Run before deploy (local only) and after deploy (--live) to verify the site.
+See docs/deploy-checklist.md for the full launch checklist and screenshot
+evidence expectations.
 """
 
 import sys
