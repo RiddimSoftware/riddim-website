@@ -1,0 +1,80 @@
+{% set aboutDescription = "Riddim Software is Sunny Purewal's one-person indie product company in Hamilton, ON, Canada." %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ aboutDescription }}">
+  <link rel="canonical" href="https://riddimsoftware.com/about/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Riddim Software">
+  <meta property="og:title" content="About Riddim Software">
+  <meta property="og:description" content="{{ aboutDescription }}">
+  <meta property="og:url" content="https://riddimsoftware.com/about/">
+  <meta property="og:image" content="https://riddimsoftware.com/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Riddim Software">
+  <meta name="twitter:description" content="{{ aboutDescription }}">
+  <meta name="twitter:image" content="https://riddimsoftware.com/logo.png">
+  <title>About Riddim Software</title>
+  <link rel="stylesheet" href="/default.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <header class="site-header">
+    <h1><a class="wordmark-link" href="/" aria-label="Riddim Software home"><img class="wordmark" src="/wordmark.png" alt="Riddim Software" /></a></h1>
+  </header>
+  <main class="about-page">
+    <section class="about-hero" aria-labelledby="about-title">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title">Riddim is a small product company with one person behind it.</h2>
+      <p>I'm Sunny Purewal, the founder of Riddim Software, a one-person indie product company in Hamilton, ON, Canada.</p>
+      <p>Riddim builds apps, web tools, and small things that are useful enough to ship. The work usually starts with a practical itch, gets pared down to the simplest version that can help someone, and then improves in public one careful release at a time.</p>
+    </section>
+
+    <section class="around-web" aria-labelledby="around-web-title">
+      <div class="section-heading compact">
+        <p class="eyebrow">Past work / around the web</p>
+        <h2 id="around-web-title">A few relevant places outside this site.</h2>
+      </div>
+      <div class="work-link-list">
+        <a class="work-link" href="https://github.com/sunnypurewal" target="_blank" rel="noopener">
+          <img src="/github.svg" alt="" aria-hidden="true">
+          <span>
+            <strong>GitHub</strong>
+            <span>Public projects, prototypes, and engineering work from Sunny Purewal.</span>
+          </span>
+        </a>
+        <a class="work-link" href="https://apps.apple.com/app/koneksa-health/id1636936813" target="_blank" rel="noopener">
+          <img src="/koneksa.webp" alt="" aria-hidden="true">
+          <span>
+            <strong>Koneksa Health</strong>
+            <span>An App Store example from Sunny Purewal's product work history.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact-line" aria-label="Contact">
+      <p>Contact: <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div>
+      <img src="/wordmark.png" alt="Riddim Software" class="footer-wordmark">
+      <p>Independent apps, games, and web products.</p>
+    </div>
+    <div class="footer-links" aria-label="Site links">
+      <a href="/about/">About</a>
+      {% for product in products %}
+        <a href="/{{ product.slug }}/">{{ product.name }}</a>
+      {% endfor %}
+    </div>
+    <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a>
+    <p>&copy; Riddim Software</p>
+  </footer>
+</body>
+
+</html>
