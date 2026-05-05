@@ -6,9 +6,12 @@
   "scripts": {
     "build": "rm -rf _site && eleventy",
     "dev": "eleventy --serve --watch",
-    "validate": "npm run build && VALIDATE_SITE_ROOT=_site python3 scripts/validate.py"
+    "lint:css": "stylelint default.css",
+    "validate": "npm run lint:css && npm run build && VALIDATE_SITE_ROOT=_site python3 scripts/validate.py"
   },
   "devDependencies": {
-    "@11ty/eleventy": "3.1.5"
+    "@11ty/eleventy": "3.1.5",
+    "stylelint": "^17.11.0",
+    "stylelint-config-standard": "^40.0.0"
   }
 }
