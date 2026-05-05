@@ -215,6 +215,30 @@ def run_local_product_metadata_checks():
         ok(f"checked metadata for {len(CONSOLIDATED_PRODUCT_PATHS)} consolidated product route(s)")
 
 
+def run_local_homepage_tile_css_checks():
+    print("\n── Local homepage tile CSS checks ──")
+    css_path = os.path.join(SITE_ROOT, "default.css")
+
+    if not os.path.exists(css_path):
+        fail("default.css missing")
+        return
+
+    with open(css_path, encoding="utf-8") as handle:
+        css = handle.read()
+
+    desktop_blocks = re.findall(
+        r"@media[^{]*min-width\s*:\s*1280px[^{]*\{(?P<body>.*?)\n\}",
+        css,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    for block in desktop_blocks:
+        if "grayscale(" in block and re.search(r"opacity\s*:\s*0\.5\b", block):
+            fail("default.css must not desaturate or dim homepage product tiles at desktop widths")
+            return
+
+    ok("default.css has no desktop grayscale/opacity product tile fallback")
+
+
 def public_html_locs():
     locs = set()
 
@@ -311,6 +335,7 @@ def main():
     run_local_checks()
     run_local_sitemap_checks()
     run_local_product_metadata_checks()
+    run_local_homepage_tile_css_checks()
     if live:
         run_live_checks()
 
