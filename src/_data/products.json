@@ -86,19 +86,21 @@
       "label": "Download on the App Store",
       "href": "https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786",
       "external": true,
-      "appStoreIcon": true
+      "appStoreBadge": true
     },
-    "story": "Double Dozen turns a tiny reflex challenge into a quick replayable race against your own speed.",
+    "story": "Double Dozen is a quick tap-speed game built around one simple race: clear 24 taps as fast as you can, then link Game Center to put your time on the leaderboard and see how close you are to the world's best run.",
     "screenshots": [
       {
-        "src": "double-dozen.png",
-        "alt": "Double Dozen product preview"
+        "src": "double-dozen-screenshot-1.webp",
+        "alt": "Double Dozen App Store screenshot showing the tap grid and current timer.",
+        "width": 300,
+        "height": 649
       }
     ],
     "features": [
-      "Fast 24-tap challenge",
-      "Reflex-focused play",
-      "Available on the App Store"
+      "Race through 24 taps in fast, focused sessions.",
+      "Compete for leaderboard times through Game Center.",
+      "Replay instantly when you know your next run can be faster."
     ],
     "secondaryLinks": []
   },
