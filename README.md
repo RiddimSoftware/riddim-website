@@ -24,6 +24,7 @@ npm run validate
 
 ## Deploys
 
+- Brand usage: `docs/brand.md`
 - Release process: `docs/release-process.md`
 - Static site notes: `docs/static-site.md`
 - Pre/post-deploy launch checklist and screenshot baseline:
