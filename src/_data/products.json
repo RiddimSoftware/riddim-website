@@ -122,38 +122,68 @@
     "name": "epac",
     "seo": {
       "title": "epac - Riddim Software",
-      "description": "Verified Canadian government data in your pocket. Free iOS app. All data from official government sources.",
+      "description": "Search Canadian Hansard debates, track MPs, and browse lobbying records with epac for iPhone. All data comes from official government sources.",
       "canonical": "https://riddimsoftware.com/epac/",
       "ogImage": "https://riddimsoftware.com/epac.png"
     },
     "icon": "epac.png",
     "iconAlt": "epac app icon",
-    "tagline": "Verified Canadian government data in your pocket - search Hansard, track your MP, and explore lobbying records.",
+    "tagline": "Search Hansard, track MPs, and browse lobbying records from one iPhone app built on official Canadian government data.",
     "featuredPitch": "epac puts verified Canadian government data in your pocket, giving researchers, journalists, civic watchers, and curious citizens a focused way to search Hansard, track MPs, and explore lobbying records without chasing scattered sources. It is built around official datasets, clear paths, and fast answers for public-interest work.",
     "homepagePitch": "Verified Canadian government data for faster public-interest research.",
     "primaryCta": {
-      "label": "Open web app",
-      "href": "https://epac.riddimsoftware.com",
-      "external": true
+      "label": "Download on the App Store",
+      "href": "https://apps.apple.com/us/app/epac/id1224459142",
+      "external": true,
+      "appStoreBadge": true
     },
-    "story": "epac makes official Canadian public data easier to search, follow, and understand from one focused product surface.",
+    "storyEyebrow": "Built by Riddim",
+    "storyTitle": "Canadian public records, without the tab sprawl.",
+    "story": "epac is an iPhone app for following the Canadian public record more directly. It brings Hansard debates, MP profiles, and federal lobbying records into one focused search experience so journalists, researchers, civic watchers, and curious citizens can get to official source material faster without bouncing across scattered government sites.",
+    "screenshotsEyebrow": "App preview",
+    "screenshotsTitle": "See epac in motion",
+    "screenshotsIntro": "A recompressed preview from the live product site keeps the canonical page lightweight while still showing the app experience.",
+    "screenshotLayout": "single-demo",
     "screenshots": [
       {
-        "src": "epac.png",
-        "alt": "epac product preview"
+        "src": "assets/epac/clip.webp",
+        "alt": "Animated preview of epac browsing Canadian parliamentary and lobbying records on iPhone",
+        "width": 295,
+        "height": 640
       }
     ],
+    "featuresTitle": "What epac helps you find",
     "features": [
-      "Search official government sources",
-      "Track representatives and records",
-      "Built around verified public data"
+      {
+        "title": "Hansard search",
+        "description": "Search the official parliamentary debate transcript archive by keyword, date, or speaker."
+      },
+      {
+        "title": "MP tracking",
+        "description": "Look up Members of Parliament, their ridings, and recent debate activity from one place."
+      },
+      {
+        "title": "Lobbying records",
+        "description": "Browse federal lobbying registrations and filings without stitching together multiple sources."
+      },
+      {
+        "title": "Official-source data",
+        "description": "epac is built on official Canadian government datasets, not user-generated records or unofficial summaries."
+      }
     ],
     "secondaryLinks": [
       {
-        "label": "Contact us",
+        "label": "epac.riddimsoftware.com",
+        "href": "https://epac.riddimsoftware.com",
+        "external": true
+      },
+      {
+        "label": "support",
         "href": "mailto:info@riddimsoftware.com"
       }
-    ]
+    ],
+    "secondaryLinksStyle": "text-list",
+    "secondaryLinksIntro": "Also available at"
   },
   {
     "slug": "portal-door",

@@ -103,11 +103,21 @@
     </section>
     {%- if product.secondaryLinks and product.secondaryLinks.length and not product.secondaryLinksInHero %}
     <section class="product-secondary-links light_background">
+      {%- if product.secondaryLinksStyle == "text-list" %}
+      <div class="product-section-inner product-secondary-links-copy">
+        <p>{{ product.secondaryLinksIntro or "More links:" }}
+          {%- for link in product.secondaryLinks %}
+          <a href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>{% if not loop.last %} <span aria-hidden="true">&middot;</span> {% endif %}
+          {%- endfor %}
+        </p>
+      </div>
+      {%- else %}
       <div class="cta-group">
         {%- for link in product.secondaryLinks %}
         <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
         {%- endfor %}
       </div>
+      {%- endif %}
     </section>
     {%- endif %}
   </main>

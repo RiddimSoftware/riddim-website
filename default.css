@@ -697,6 +697,24 @@ img.wordmark {
   border-radius: 0;
 }
 
+.screenshot-strip.single-demo {
+  max-width: 360px;
+  overflow: visible;
+}
+
+.screenshot-strip.single-demo figure {
+  flex: 0 1 320px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.screenshot-strip.single-demo img {
+  display: block;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: 28px;
+}
+
 .feature-list strong,
 .feature-list span {
   display: block;
@@ -721,6 +739,29 @@ img.wordmark {
 .product-secondary-links {
   padding-top: 0;
 }
+
+.product-secondary-links-copy {
+  text-align: center;
+}
+
+.product-secondary-links-copy p {
+  margin: 0;
+  color: var(--color-fg-muted);
+}
+
+.product-secondary-links-copy a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.product-secondary-links-copy a:visited {
+  color: var(--color-accent);
+}
+
+.product-secondary-links-copy a:hover {
+  color: color-mix(in srgb, var(--color-accent), var(--color-fg) 16%);
+}
+
 .button-icon {
   height: 1em;
   margin-right: 6px;
