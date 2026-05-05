@@ -24,6 +24,7 @@ module.exports = function (eleventyConfig) {
     "github.svg": "github.svg",
     "koneksa.webp": "koneksa.webp",
     "logo.png": "logo.png",
+    "mac-app-store.svg": "mac-app-store.svg",
     "nether.jpeg": "nether.jpeg",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",
