@@ -54,7 +54,7 @@ AWS access keys.
 As of **2026-05-05**, the production CloudFront distribution
 `E3RTZ0JDZLBX2I` writes standard access logs to:
 
-- bucket: `riddim-website-cloudfront-logs-227530433709`
+- bucket: `riddim-website-cloudfront-accesslogs227530433709`
 - prefix: `cloudfront/production/`
 
 - Current retention target: **90 days**
@@ -73,7 +73,7 @@ AWS profile that has read access to the log bucket):
 
 ```bash
 AWS_PROFILE=<profile-with-s3-access> aws s3 sync \
-  "s3://riddim-website-cloudfront-logs-227530433709/cloudfront/production/" \
+  "s3://riddim-website-cloudfront-accesslogs227530433709/cloudfront/production/" \
   ./tmp/cloudfront-logs
 ```
 
@@ -91,7 +91,7 @@ for _ in 1 2 3 4 5; do
 done
 
 AWS_PROFILE=<profile-with-s3-access> aws s3api list-objects-v2 \
-  --bucket riddim-website-cloudfront-logs-227530433709 \
+  --bucket riddim-website-cloudfront-accesslogs227530433709 \
   --prefix cloudfront/production/ \
   --query 'reverse(sort_by(Contents,&LastModified))[:10].[Key,LastModified,Size]' \
   --output table
