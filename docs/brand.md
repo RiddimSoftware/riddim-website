@@ -18,7 +18,30 @@ Keep the wordmark at least 140 px wide on screens and the monogram at least 32 p
 
 ## Type
 
-Canonical Riddim pages use the system stack already in `default.css`: `Arial, Helvetica, sans-serif` for headings and body copy. Keep headings confident and compact, with normal letter spacing. Body copy should stay readable before it tries to be expressive. Use the browser's default monospace stack for code, tokens, paths, and command snippets. Do not import Sonnio's Outfit, Portal Door's Space Grotesk, or another product's type direction into canonical Riddim pages.
+Canonical Riddim pages use Inter for headings and body copy, and JetBrains Mono for code and tokens. Inter is loaded via Google Fonts (`font-display: swap`) with `preconnect` hints so the page renders quickly under font-loading failure. Keep headings confident and compact, with normal letter spacing. Body copy should stay readable before it tries to be expressive. Do not import Sonnio's Outfit, Portal Door's Space Grotesk, or another product's type direction into canonical Riddim pages.
+
+Three font-role variables and a type scale are defined in `default.css`. Use these instead of hard-coded values.
+
+| Variable | Value |
+| --- | --- |
+| `--font-heading` | `"Inter"`, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif |
+| `--font-body` | `"Inter"`, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif |
+| `--font-mono` | `"JetBrains Mono"`, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace |
+
+Type scale (modular, ~1.25 ratio):
+
+| Variable | Value |
+| --- | --- |
+| `--text-xs` | 0.8 rem |
+| `--text-sm` | 0.875 rem |
+| `--text-base` | 1 rem |
+| `--text-lg` | 1.125 rem |
+| `--text-xl` | 1.25 rem |
+| `--text-2xl` | 1.5625 rem |
+| `--text-3xl` | 1.953 rem |
+| `--text-4xl` | 2.441 rem |
+
+Line-height tokens (`--leading-tight` through `--leading-relaxed`) are also available; see `:root` in `default.css`.
 
 ## Color
 
