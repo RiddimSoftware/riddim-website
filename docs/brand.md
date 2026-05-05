@@ -8,17 +8,40 @@ Riddim Software is Sunny Purewal's one-person indie product company: a quiet hom
 
 Use the wordmark for the site header, footer, press references, and any surface where the company name needs to be read.
 
-![Riddim Software wordmark](../wordmark.png)
+![Riddim Software wordmark](../wordmark.svg)
 
 Use the monogram only where space is tight, such as favicons, social avatars, or square previews.
 
-![Riddim monogram](../logo.png)
+![Riddim monogram](../monogram.svg)
 
 Keep the wordmark at least 140 px wide on screens and the monogram at least 32 px square. Leave clear space around either mark equal to the height of the lowercase letters in the wordmark. Do use the marks on quiet, high-contrast backgrounds. Do not stretch, recolor, outline, rotate, crop, add shadows, or place them on busy product art.
 
 ## Type
 
-Canonical Riddim pages use the system stack already in `default.css`: `Arial, Helvetica, sans-serif` for headings and body copy. Keep headings confident and compact, with normal letter spacing. Body copy should stay readable before it tries to be expressive. Use the browser's default monospace stack for code, tokens, paths, and command snippets. Do not import Sonnio's Outfit, Portal Door's Space Grotesk, or another product's type direction into canonical Riddim pages.
+Canonical Riddim pages use Inter for headings and body copy, and JetBrains Mono for code and tokens. Inter is loaded via Google Fonts (`font-display: swap`) with `preconnect` hints so the page renders quickly under font-loading failure. Keep headings confident and compact, with normal letter spacing. Body copy should stay readable before it tries to be expressive. Do not import Sonnio's Outfit, Portal Door's Space Grotesk, or another product's type direction into canonical Riddim pages.
+
+Three font-role variables and a type scale are defined in `default.css`. Use these instead of hard-coded values.
+
+| Variable | Value |
+| --- | --- |
+| `--font-heading` | `"Inter"`, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif |
+| `--font-body` | `"Inter"`, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif |
+| `--font-mono` | `"JetBrains Mono"`, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace |
+
+Type scale (modular, ~1.25 ratio):
+
+| Variable | Value |
+| --- | --- |
+| `--text-xs` | 0.8 rem |
+| `--text-sm` | 0.875 rem |
+| `--text-base` | 1 rem |
+| `--text-lg` | 1.125 rem |
+| `--text-xl` | 1.25 rem |
+| `--text-2xl` | 1.5625 rem |
+| `--text-3xl` | 1.953 rem |
+| `--text-4xl` | 2.441 rem |
+
+Line-height tokens (`--leading-tight` through `--leading-relaxed`) are also available; see `:root` in `default.css`.
 
 ## Color
 
@@ -47,3 +70,25 @@ Use plain language. Prefer concrete nouns and short sentences. Avoid superlative
 ## Out of Brand Scope
 
 Per-product experiences keep their own brands. Sonnio, Portal Door, Blindfold, Reach, Bubble Bop, Double Dozen, and future product subsites may use their own type, color, illustration, screenshots, and voice when those choices serve the product. This guide covers canonical Riddim company pages, shared company marks, and repo-level documentation only.
+
+## App Store Badges
+
+Use the shared App Store badge treatment for product CTAs that link to Apple App Store listings:
+
+```json
+{
+  "label": "Download on the App Store",
+  "href": "https://apps.apple.com/us/app/example/id1234567890",
+  "external": true,
+  "appStoreBadge": true
+}
+```
+
+The rendered CTA uses Apple's official badge artwork inside a plain link. Do not wrap the badge in `.btn`, add extra text, add borders, recolor it, change its proportions, or shrink it below 40 px tall. Keep at least 10 px of clear space around the 40 px badge.
+
+Badge asset sources:
+
+- App Store badge: `https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg`
+- Mac App Store badge: `https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-mac-app-store.svg`
+
+Apple's current App Store Marketing Guidelines live at `https://developer.apple.com/app-store/marketing/guidelines/`.

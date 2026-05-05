@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ product.seo.title }}</title>
   <meta name="description" content="{{ product.seo.description }}">
+  {% include "font-links.njk" %}
   <link rel="stylesheet" href="/default.css">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -30,7 +31,7 @@
 <body>
   <header>
     <a class="wordmark-link" href="/" aria-label="Riddim Software home">
-      <img class="wordmark product-wordmark" src="/wordmark-product.png" alt="Riddim Software" width="360" height="155" fetchpriority="high" />
+      <img class="wordmark product-wordmark" src="/wordmark.svg" alt="Riddim Software" width="763" height="76" fetchpriority="high" />
     </a>
   </header>
   <main class="product-page">
@@ -48,6 +49,9 @@
           {%- for link in product.secondaryLinks %}
           <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
           {%- endfor %}
+          {%- endif %}
+          {%- if product.heroSecondaryCta %}
+          <a class="btn btn-secondary" href="{{ product.heroSecondaryCta.href }}"{% if product.heroSecondaryCta.external %} target="_blank" rel="noopener"{% endif %}>{{ product.heroSecondaryCta.label }}</a>
           {%- endif %}
         </div>
       </div>
@@ -76,7 +80,7 @@
       <div class="screenshot-strip{% if product.screenshotLayout %} {{ product.screenshotLayout }}{% endif %}">
         {%- for screenshot in product.screenshots %}
         <figure>
-          <img src="{{ screenshot.src | assetUrl }}" alt="{{ screenshot.alt }}"{% if screenshot.width %} width="{{ screenshot.width }}"{% endif %}{% if screenshot.height %} height="{{ screenshot.height }}"{% endif %} loading="lazy">
+          <img src="{{ screenshot.src | assetUrl }}" alt="{{ screenshot.alt }}"{% if screenshot.width %} width="{{ screenshot.width }}"{% endif %}{% if screenshot.height %} height="{{ screenshot.height }}"{% endif %} loading="lazy" decoding="async">
           {%- if screenshot.caption %}
           <figcaption>{{ screenshot.caption }}</figcaption>
           {%- endif %}
@@ -107,9 +111,7 @@
     </section>
     {%- endif %}
   </main>
-  <footer class="light_background">
-    <p>&copy; Riddim Software</p>
-  </footer>
+  {% include "site-footer.njk" %}
 </body>
 
 </html>

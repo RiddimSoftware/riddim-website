@@ -1,0 +1,35 @@
+<footer class="site-footer" aria-labelledby="footer-title">
+  <section class="footer-section footer-contact" aria-labelledby="footer-contact-title">
+    <h2 id="footer-title" class="footer-brand">Riddim Software</h2>
+    <h3 id="footer-contact-title">Contact</h3>
+    <p>Independent apps, games, and web products.</p>
+    <address>
+      <a href="mailto:info@riddimsoftware.com">info@riddimsoftware.com</a>
+    </address>
+  </section>
+
+  <nav class="footer-section" aria-labelledby="footer-github-title">
+    <h3 id="footer-github-title">GitHub</h3>
+    <ul>
+      <li><a href="https://github.com/RiddimSoftware" rel="me noopener">RiddimSoftware</a></li>
+      <li><a href="https://github.com/sunnypurewal" rel="me noopener">sunnypurewal</a></li>
+    </ul>
+  </nav>
+
+  <nav class="footer-section" aria-labelledby="footer-products-title">
+    <h3 id="footer-products-title">Products</h3>
+    <ul>
+      {% for product in products %}
+        <li><a href="/{{ product.slug }}/">{{ product.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <nav class="footer-section" aria-labelledby="footer-legal-title">
+    <h3 id="footer-legal-title">Legal</h3>
+    <ul>
+      <li><a href="/reach-privacy.html">Reach Privacy</a></li>
+    </ul>
+    <p class="footer-copyright">&copy; Riddim Software</p>
+  </nav>
+</footer>
