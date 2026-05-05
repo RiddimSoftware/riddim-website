@@ -107,6 +107,7 @@
 html {
   background: var(--color-bg);
   color: var(--color-fg);
+  width: 100%;
 }
 
 body {
@@ -117,6 +118,7 @@ body {
   color: var(--color-fg);
   line-height: var(--leading-normal);
   overflow-x: hidden;
+  width: 100%;
 }
 
 a {
@@ -1129,6 +1131,19 @@ html[data-theme-ui="ready"] .theme-toggle {
     padding-top: 22px;
   }
 
+  .home-hero {
+    padding: 40px 0 36px;
+  }
+
+  .home-hero h1,
+  .about-hero h2,
+  .about-block h2,
+  .featured-copy h2,
+  .product-story h2,
+  .product-screenshots h2 {
+    line-height: 1.1;
+  }
+
   .theme-toggle {
     width: 100%;
     justify-items: start;
@@ -1181,7 +1196,8 @@ html[data-theme-ui="ready"] .theme-toggle {
   .cta-group {
     align-items: stretch;
     flex-direction: column;
-    width: min(100%, calc(100vw - 48px), 340px);
+    width: min(100%, 340px);
+    margin-inline: auto;
   }
 
   .cta-group .btn {
