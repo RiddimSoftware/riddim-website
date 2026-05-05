@@ -41,7 +41,13 @@
             <img class="button-icon" src="/app-store.svg" alt="" aria-hidden="true">{% endif %}{% if not product.primaryCta.appStoreBadge %}{{ product.primaryCta.label }}{% endif %}</a>
           {%- if product.secondaryLinksInHero and product.secondaryLinks and product.secondaryLinks.length %}
           {%- for link in product.secondaryLinks %}
+          {%- if link.appStoreBadge %}
+          <a class="app-store-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="app-store-badge" src="/app-store.svg" alt="{{ link.label }}"></a>
+          {%- elif link.googlePlayBadge %}
+          <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}"></a>
+          {%- else %}
           <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+          {%- endif %}
           {%- endfor %}
           {%- endif %}
           {%- if product.heroSecondaryCta %}
@@ -99,7 +105,13 @@
     <section class="product-secondary-links light_background">
       <div class="cta-group">
         {%- for link in product.secondaryLinks %}
+        {%- if link.appStoreBadge %}
+        <a class="app-store-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="app-store-badge" src="/app-store.svg" alt="{{ link.label }}"></a>
+        {%- elif link.googlePlayBadge %}
+        <a class="google-play-badge-link" href="{{ link.href }}" target="_blank" rel="noopener" aria-label="{{ link.label }}"><img class="google-play-badge" src="/google-play.png" alt="{{ link.label }}"></a>
+        {%- else %}
         <a class="btn btn-secondary" href="{{ link.href }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        {%- endif %}
         {%- endfor %}
       </div>
     </section>

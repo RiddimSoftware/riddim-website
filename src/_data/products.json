@@ -4,35 +4,69 @@
     "name": "Blindfold",
     "seo": {
       "title": "Blindfold - Riddim Software",
-      "description": "Blindfold is an NFC-powered cannabis game for retail dispensaries.",
+      "description": "A self-administered blind cannabis trial using NFC-enabled tubes and a companion app. Available on iOS and Android. For adults 19+ where cannabis is legal.",
       "canonical": "https://riddimsoftware.com/blindfold/",
       "ogImage": "https://riddimsoftware.com/blindfold.png"
     },
     "icon": "blindfold.png",
     "iconAlt": "Blindfold app icon",
-    "tagline": "An NFC-powered cannabis game that turns product discovery into a memorable retail experience.",
-    "homepagePitch": "NFC-powered product discovery built for memorable cannabis retail moments.",
+    "tagline": "Two tubes. One guess. A self-administered blind cannabis trial.",
+    "homepagePitch": "NFC-powered blind cannabis trial — two identical tubes, one question, one answer you can't see coming.",
     "primaryCta": {
       "label": "Visit blindfold.lol",
       "href": "https://blindfold.lol",
       "external": true
     },
-    "story": "Blindfold helps dispensary teams turn product education into a tactile in-store moment.",
-    "screenshots": [
+    "storyEyebrow": "Built by Riddim",
+    "storyTitle": "A blind trial you run on yourself.",
+    "story": "Blindfold is a self-administered cannabis experiment. Two identical NFC-enabled tubes, one indica and one sativa. The app records which is which before you shuffle — you don't. Consume one, make your guess, then get the reveal. Single-player or party mode, results build across sessions. For adults 19+ in jurisdictions where cannabis is legal.",
+    "featuresTitle": "How the trial works",
+    "featuresIntro": "Three steps cover the full methodology.",
+    "features": [
       {
-        "src": "blindfold.png",
-        "alt": "Blindfold product preview"
+        "title": "Set up the trial",
+        "description": "Load a supported indica/sativa pair into two identical NFC tubes. Scan each with the app so it records which is which before the shuffle."
+      },
+      {
+        "title": "Run the blind",
+        "description": "Place both tubes in the shuffle pouch and mix until they're indistinguishable. Pick one, scan it, and consume without knowing the strain."
+      },
+      {
+        "title": "Get the result",
+        "description": "Guess before the reveal. The app logs your answer — single player or party mode, the record builds across sessions."
       }
     ],
-    "features": [
-      "NFC-powered retail interaction",
-      "Built for dispensary product discovery",
-      "Designed as a memorable in-store game"
+    "screenshotLayout": "phone-screenshots",
+    "screenshotsEyebrow": "App preview",
+    "screenshotsTitle": "The trial in the app",
+    "screenshotsIntro": "Two screens from the Blindfold app: the guess moment and the reveal.",
+    "screenshots": [
+      {
+        "src": "screenshots/blindfold/1.png",
+        "alt": "Blindfold app — guess screen showing the cannabis trial in progress",
+        "width": 546,
+        "height": 1042
+      },
+      {
+        "src": "screenshots/blindfold/2.png",
+        "alt": "Blindfold app — reveal screen showing the trial result",
+        "width": 546,
+        "height": 1042
+      }
     ],
+    "secondaryLinksInHero": true,
     "secondaryLinks": [
       {
-        "label": "Get in touch",
-        "href": "mailto:info@riddimsoftware.com"
+        "label": "Download on the App Store",
+        "href": "https://apps.apple.com/ca/app/blindfold/id6748466865",
+        "external": true,
+        "appStoreBadge": true
+      },
+      {
+        "label": "Get it on Google Play",
+        "href": "https://play.google.com/store/apps/details?id=com.riddimsoftware.blindfold",
+        "external": true,
+        "googlePlayBadge": true
       }
     ]
   },

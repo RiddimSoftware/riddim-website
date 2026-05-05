@@ -631,8 +631,8 @@ img.wordmark {
   display: inline-block;
 }
 .product-wordmark {
-  max-height: 128px;
-  height: 10svh;
+  width: min(240px, 60vw);
+  height: auto;
 }
 .product-page section {
   padding: 32px 24px;
@@ -754,6 +754,26 @@ img.wordmark {
 
 .app-store-badge-link:hover,
 .app-store-badge-link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.google-play-badge {
+  display: block;
+  width: 203px;
+  height: auto;
+}
+
+.google-play-badge-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.google-play-badge-link:hover,
+.google-play-badge-link:focus-visible {
   transform: translateY(-1px);
 }
 

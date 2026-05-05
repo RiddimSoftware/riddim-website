@@ -24,6 +24,7 @@ module.exports = function (eleventyConfig) {
     "epac.png": "epac.png",
     "favicon.ico": "favicon.ico",
     "github.svg": "github.svg",
+    "google-play.png": "google-play.png",
     "koneksa.webp": "koneksa.webp",
     "mac-app-store.svg": "mac-app-store.svg",
     "monogram.svg": "monogram.svg",
