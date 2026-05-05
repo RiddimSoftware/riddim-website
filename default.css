@@ -382,6 +382,7 @@ img.wordmark {
 .product-hero h1 {
   margin: 0;
   font-size: 2rem;
+  line-height: 1.1;
 }
 .product-tagline {
   font-size: 1.1rem;
@@ -401,12 +402,16 @@ img.wordmark {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-sizing: border-box;
+  max-width: 100%;
   padding: 12px 24px;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 .btn-primary {
   background-color: var(--color-accent);
@@ -428,6 +433,75 @@ img.wordmark {
 }
 .btn-secondary:hover {
   background-color: var(--color-surface-alt);
+}
+.wordmark-link {
+  display: inline-block;
+}
+.product-wordmark {
+  max-height: 128px;
+  height: 10svh;
+}
+.product-page section {
+  padding: 32px 24px;
+}
+.product-section-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+}
+.product-section-inner h2 {
+  margin-top: 0;
+  text-align: center;
+}
+.product-section-inner p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.product-screenshots {
+  overflow: hidden;
+}
+.screenshot-strip {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.screenshot-strip figure {
+  flex: 0 0 180px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: #fff;
+}
+.screenshot-strip img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 18%;
+}
+.screenshot-strip figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.feature-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 1.2rem;
+  line-height: 1.5;
+}
+.product-secondary-links {
+  padding-top: 0;
+}
+.button-icon {
+  height: 1em;
+  margin-right: 6px;
+  vertical-align: middle;
 }
 
 .btn-icon {
@@ -472,5 +546,21 @@ img.wordmark {
   .cta-group {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .product-page section {
+    padding: 28px 18px;
+  }
+
+  .screenshot-strip {
+    justify-content: flex-start;
+  }
+
+  .screenshot-strip figure {
+    flex-basis: 150px;
+  }
+
+  .btn {
+    padding: 11px 16px;
   }
 }

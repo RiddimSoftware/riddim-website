@@ -32,7 +32,8 @@ Astro is a strong static-site framework, but it adds more conventions and framew
 - `src/bubble-bop/index.html` is the Bubble Bop App Clip landing page.
 - `src/reach-privacy.html` is the Reach privacy page.
 - `src/_data/products.json` is the product-page content source.
-- `src/products.njk` generates consolidated `<slug>/index.html` product pages, except Bubble Bop, which keeps its hand-authored App Clip landing page at `src/bubble-bop/index.html`.
+- `src/products.njk` paginates over product records and generates consolidated `<slug>/index.html` product pages, except Bubble Bop, which keeps its hand-authored App Clip landing page at `src/bubble-bop/index.html`.
+- `src/_includes/product-page.njk` is the shared product-page template.
 - Shared static assets remain at the repository root and are copied through by `.eleventy.js`.
 - Generated deploy output lives in `_site/`.
 
@@ -44,19 +45,7 @@ Use root-relative asset paths when a page is meant to live at a route directory,
 
 ## Add a Product
 
-Add an object to `src/_data/products.json` with:
-
-- `slug`
-- `name`
-- `title`
-- `description`
-- `canonical`
-- `icon`
-- `iconAlt`
-- `tagline`
-- `ctas`
-
-Then run `npm run build` and confirm `_site/<slug>/index.html` renders as expected. Product pages should use stable, lowercase, trailing-slash routes such as `https://riddimsoftware.com/epac/`.
+Follow `docs/adding-a-product.md`. In short, add assets at the repository root, add one object to `src/_data/products.json`, then run `npm run build` and confirm `_site/<slug>/index.html` renders as expected. Product pages should use stable, lowercase, trailing-slash routes such as `https://riddimsoftware.com/epac/`.
 
 Product pages are added to `_site/sitemap.xml` automatically from `src/_data/products.json`. No hand edit is needed for the sitemap after adding a product; run `npm run build` or `npm run validate` to regenerate it.
 

@@ -2,162 +2,253 @@
   {
     "slug": "blindfold",
     "name": "Blindfold",
-    "title": "Blindfold — Riddim Software",
-    "description": "Blindfold — an NFC-powered cannabis game for retail dispensaries.",
-    "canonical": "https://riddimsoftware.com/blindfold/",
+    "seo": {
+      "title": "Blindfold - Riddim Software",
+      "description": "Blindfold is an NFC-powered cannabis game for retail dispensaries.",
+      "canonical": "https://riddimsoftware.com/blindfold/",
+      "ogImage": "https://riddimsoftware.com/blindfold.png"
+    },
     "icon": "blindfold.png",
     "iconAlt": "Blindfold app icon",
     "tagline": "An NFC-powered cannabis game that turns product discovery into a memorable retail experience.",
     "homepagePitch": "NFC-powered product discovery built for memorable cannabis retail moments.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Visit blindfold.lol",
+      "href": "https://blindfold.lol",
+      "external": true
+    },
+    "story": "Blindfold helps dispensary teams turn product education into a tactile in-store moment.",
+    "screenshots": [
       {
-        "label": "Visit blindfold.lol",
-        "href": "https://blindfold.lol",
-        "className": "btn btn-primary",
-        "external": true
-      },
+        "src": "blindfold.png",
+        "alt": "Blindfold product preview"
+      }
+    ],
+    "features": [
+      "NFC-powered retail interaction",
+      "Built for dispensary product discovery",
+      "Designed as a memorable in-store game"
+    ],
+    "secondaryLinks": [
       {
         "label": "Get in touch",
-        "href": "mailto:info@riddimsoftware.com",
-        "className": "btn btn-secondary"
+        "href": "mailto:info@riddimsoftware.com"
       }
     ]
   },
   {
     "slug": "bubble-bop",
     "name": "Bubble Bop",
-    "title": "Bubble Bop — Riddim Software",
-    "description": "Bubble Bop — a colourful kids balloon game for iPhone and iPad. Available on the App Store.",
-    "canonical": "https://riddimsoftware.com/bubble-bop/",
+    "seo": {
+      "title": "Bubble Bop - Riddim Software",
+      "description": "Bubble Bop is a colourful kids balloon game for iPhone and iPad, available on the App Store.",
+      "canonical": "https://riddimsoftware.com/bubble-bop/",
+      "ogImage": "https://riddimsoftware.com/bubble-bop.png"
+    },
     "icon": "bubble-bop.png",
     "iconAlt": "Bubble Bop app icon",
-    "tagline": "A colourful kids balloon game — tap to pop, giggle, and go. Free on iPhone and iPad.",
+    "tagline": "A colourful kids balloon game - tap to pop, giggle, and go. Free on iPhone and iPad.",
     "homepagePitch": "A bright balloon-popping game for playful iPhone and iPad breaks.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Download on the App Store",
+      "href": "https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847",
+      "external": true,
+      "appStoreIcon": true
+    },
+    "story": "Bubble Bop keeps the experience simple: bright balloons, quick taps, and a playful rhythm for young players.",
+    "screenshots": [
       {
-        "label": "Download on the App Store",
-        "href": "https://apps.apple.com/us/app/bubble-bop-kids-balloon-game/id1469251847",
-        "className": "btn btn-primary",
-        "external": true,
-        "appStoreIcon": true
+        "src": "bubble-bop.png",
+        "alt": "Bubble Bop product preview"
       }
-    ]
+    ],
+    "features": [
+      "Kid-friendly balloon popping",
+      "Free on iPhone and iPad",
+      "Simple tap-first play"
+    ],
+    "secondaryLinks": []
   },
   {
     "slug": "double-dozen",
     "name": "Double Dozen",
-    "title": "Double Dozen — Riddim Software",
-    "description": "Double Dozen — a tap speed game that tests your reflexes. Available on the App Store.",
-    "canonical": "https://riddimsoftware.com/double-dozen/",
+    "seo": {
+      "title": "Double Dozen - Riddim Software",
+      "description": "Double Dozen is a tap speed game that tests your reflexes, available on the App Store.",
+      "canonical": "https://riddimsoftware.com/double-dozen/",
+      "ogImage": "https://riddimsoftware.com/double-dozen.png"
+    },
     "icon": "double-dozen.png",
     "iconAlt": "Double Dozen app icon",
-    "tagline": "A tap speed game that tests your reflexes — race to 24 taps and prove you're the fastest.",
+    "tagline": "A tap speed game that tests your reflexes - race to 24 taps and prove you're the fastest.",
     "homepagePitch": "A fast reflex challenge for quick, competitive tap-speed sessions.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Download on the App Store",
+      "href": "https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786",
+      "external": true,
+      "appStoreIcon": true
+    },
+    "story": "Double Dozen turns a tiny reflex challenge into a quick replayable race against your own speed.",
+    "screenshots": [
       {
-        "label": "Download on the App Store",
-        "href": "https://apps.apple.com/us/app/double-dozen-tap-speed-game/id1614154786",
-        "className": "btn btn-primary",
-        "external": true,
-        "appStoreIcon": true
+        "src": "double-dozen.png",
+        "alt": "Double Dozen product preview"
       }
-    ]
+    ],
+    "features": [
+      "Fast 24-tap challenge",
+      "Reflex-focused play",
+      "Available on the App Store"
+    ],
+    "secondaryLinks": []
   },
   {
     "slug": "epac",
     "name": "epac",
-    "title": "epac — Riddim Software",
-    "description": "Verified Canadian government data in your pocket. Free iOS app. All data from official government sources.",
-    "canonical": "https://riddimsoftware.com/epac/",
+    "seo": {
+      "title": "epac - Riddim Software",
+      "description": "Verified Canadian government data in your pocket. Free iOS app. All data from official government sources.",
+      "canonical": "https://riddimsoftware.com/epac/",
+      "ogImage": "https://riddimsoftware.com/epac.png"
+    },
     "icon": "epac.png",
     "iconAlt": "epac app icon",
-    "tagline": "Verified Canadian government data in your pocket — search Hansard, track your MP, and explore lobbying records. All data from official government sources.",
+    "tagline": "Verified Canadian government data in your pocket - search Hansard, track your MP, and explore lobbying records.",
     "featuredPitch": "epac puts verified Canadian government data in your pocket, giving researchers, journalists, civic watchers, and curious citizens a focused way to search Hansard, track MPs, and explore lobbying records without chasing scattered sources. It is built around official datasets, clear paths, and fast answers for public-interest work.",
     "homepagePitch": "Verified Canadian government data for faster public-interest research.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Open web app",
+      "href": "https://epac.riddimsoftware.com",
+      "external": true
+    },
+    "story": "epac makes official Canadian public data easier to search, follow, and understand from one focused product surface.",
+    "screenshots": [
       {
-        "label": "Open web app",
-        "href": "https://epac.riddimsoftware.com",
-        "className": "btn btn-primary",
-        "external": true
-      },
+        "src": "epac.png",
+        "alt": "epac product preview"
+      }
+    ],
+    "features": [
+      "Search official government sources",
+      "Track representatives and records",
+      "Built around verified public data"
+    ],
+    "secondaryLinks": [
       {
         "label": "Contact us",
-        "href": "mailto:info@riddimsoftware.com",
-        "className": "btn btn-secondary"
+        "href": "mailto:info@riddimsoftware.com"
       }
     ]
   },
   {
     "slug": "portal-door",
     "name": "Portal Door",
-    "title": "Portal Door — Riddim Software",
-    "description": "Portal Door — step through to something new. A generative experience by Riddim Software.",
-    "canonical": "https://riddimsoftware.com/portal-door/",
+    "seo": {
+      "title": "Portal Door - Riddim Software",
+      "description": "Portal Door is a generative web experience by Riddim Software.",
+      "canonical": "https://riddimsoftware.com/portal-door/",
+      "ogImage": "https://riddimsoftware.com/nether.jpeg"
+    },
     "icon": "nether.jpeg",
     "iconAlt": "Portal Door app icon",
-    "tagline": "Step through to something new — a generative web experience that opens wherever you are.",
+    "tagline": "Step through to something new - a generative web experience that opens wherever you are.",
     "homepagePitch": "A generative web experience that opens into unexpected digital spaces.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Open Portal Door",
+      "href": "https://nether.riddimsoftware.com",
+      "external": true
+    },
+    "story": "Portal Door is a small web experiment about arrival, chance, and the feeling of crossing into a new scene.",
+    "screenshots": [
       {
-        "label": "Open Portal Door",
-        "href": "https://nether.riddimsoftware.com",
-        "className": "btn btn-primary",
-        "external": true
-      },
+        "src": "nether.jpeg",
+        "alt": "Portal Door product preview"
+      }
+    ],
+    "features": [
+      "Generative web experience",
+      "Launches directly in the browser",
+      "Built as an exploratory Riddim Software project"
+    ],
+    "secondaryLinks": [
       {
         "label": "Contact us",
-        "href": "mailto:info@riddimsoftware.com",
-        "className": "btn btn-secondary"
+        "href": "mailto:info@riddimsoftware.com"
       }
     ]
   },
   {
     "slug": "reach",
     "name": "Reach",
-    "title": "Reach — Riddim Software",
-    "description": "Reach — stay connected with the people who matter most. Available on the App Store.",
-    "canonical": "https://riddimsoftware.com/reach/",
+    "seo": {
+      "title": "Reach - Riddim Software",
+      "description": "Reach helps you stay connected with the people who matter most. Available on the App Store.",
+      "canonical": "https://riddimsoftware.com/reach/",
+      "ogImage": "https://riddimsoftware.com/reach.png"
+    },
     "icon": "reach.png",
     "iconAlt": "Reach app icon",
-    "tagline": "Stay connected with the people who matter most — simple, distraction-free communication for iPhone.",
+    "tagline": "Stay connected with the people who matter most - simple, distraction-free communication for iPhone.",
     "homepagePitch": "Simple, distraction-free communication for staying close to important people.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Download on the App Store",
+      "href": "https://apps.apple.com/us/app/reach/id1024071726",
+      "external": true,
+      "appStoreIcon": true
+    },
+    "story": "Reach focuses on keeping important personal connections close without adding unnecessary noise.",
+    "screenshots": [
       {
-        "label": "Download on the App Store",
-        "href": "https://apps.apple.com/us/app/reach/id1024071726",
-        "className": "btn btn-primary",
-        "external": true,
-        "appStoreIcon": true
-      },
+        "src": "reach.png",
+        "alt": "Reach product preview"
+      }
+    ],
+    "features": [
+      "Designed for important personal connections",
+      "Simple iPhone-first experience",
+      "Privacy policy available from the product page"
+    ],
+    "secondaryLinks": [
       {
         "label": "Privacy Policy",
-        "href": "../reach-privacy.html",
-        "className": "btn btn-secondary"
+        "href": "/reach-privacy.html"
       }
     ]
   },
   {
     "slug": "sonnio",
     "name": "Sonnio",
-    "title": "Sonnio — Riddim Software",
-    "description": "Sonnio — a music experience app by Riddim Software.",
-    "canonical": "https://riddimsoftware.com/sonnio/",
+    "seo": {
+      "title": "Sonnio - Riddim Software",
+      "description": "Sonnio is a music experience app by Riddim Software.",
+      "canonical": "https://riddimsoftware.com/sonnio/",
+      "ogImage": "https://riddimsoftware.com/sonnio-logo.jpg"
+    },
     "icon": "sonnio-logo.jpg",
     "iconAlt": "Sonnio app icon",
-    "tagline": "A music experience app — find, play, and share the music you love.",
+    "tagline": "A music experience app - find, play, and share the music you love.",
     "homepagePitch": "A music experience for finding, playing, and sharing what you love.",
-    "ctas": [
+    "primaryCta": {
+      "label": "Open Sonnio",
+      "href": "https://sonnio.riddimsoftware.com",
+      "external": true
+    },
+    "story": "Sonnio gives Riddim Software a dedicated home for music discovery and listening experiments.",
+    "screenshots": [
       {
-        "label": "Open Sonnio",
-        "href": "https://sonnio.riddimsoftware.com",
-        "className": "btn btn-primary",
-        "external": true
-      },
+        "src": "sonnio-logo.jpg",
+        "alt": "Sonnio product preview"
+      }
+    ],
+    "features": [
+      "Music experience app",
+      "Web launch path",
+      "Built for finding and sharing music"
+    ],
+    "secondaryLinks": [
       {
         "label": "Contact us",
-        "href": "mailto:info@riddimsoftware.com",
-        "className": "btn btn-secondary"
+        "href": "mailto:info@riddimsoftware.com"
       }
     ]
   }
