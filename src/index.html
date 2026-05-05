@@ -40,15 +40,17 @@
     {% endif %}
   {% endfor %}
   <header class="site-header">
-    <h1><img class="wordmark" src="wordmark.svg" alt="Riddim Software" /></h1>
+    <a class="wordmark-link" href="/" aria-label="Riddim Software home">
+      <img class="wordmark" src="wordmark.svg" alt="Riddim Software" />
+    </a>
   </header>
-  <main class="home">
-    <section class="home-hero" aria-labelledby="hero-title">
+  <main id="main-content" class="home">
+    <section id="home-intro" class="home-hero" aria-labelledby="page-title">
       <p class="eyebrow">Independent product studio</p>
-      <h2 id="hero-title">{{ heroPositioningLine }}</h2>
+      <h1 id="page-title">{{ heroPositioningLine }}</h1>
       <p class="hero-copy">{{ heroSecondSentence }}</p>
     </section>
-    <section class="featured-product" aria-labelledby="featured-title">
+    <section id="featured-product" class="featured-product" aria-labelledby="featured-title">
       <div class="featured-media">
         <img src="{{ featuredProduct.icon }}" alt="{{ featuredProduct.iconAlt }}" />
       </div>
@@ -61,15 +63,15 @@
           <a class="{% if primaryCta.appStoreBadge %}app-store-badge-link{% else %}btn btn-primary{% endif %}" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}{% if primaryCta.appStoreBadge %} aria-label="{{ primaryCta.label }}"{% endif %}>{% if primaryCta.appStoreBadge %}
             <img class="app-store-badge" src="/app-store.svg" alt="{{ primaryCta.label }}">{% elif primaryCta.appStoreIcon %}
             <img src="app-store.svg" alt="" aria-hidden="true" class="button-icon">{% endif %}{% if not primaryCta.appStoreBadge %}{{ primaryCta.label }}{% endif %}</a>
-          <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Read more &rarr;</a>
+          <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Learn more about {{ featuredProduct.name }} &rarr;</a>
         </div>
       </div>
     </section>
-    <section class="all-products" aria-labelledby="products-title">
-      <div class="section-heading">
+    <section id="products" class="all-products" aria-labelledby="products-title">
+      <header class="section-heading">
         <p class="eyebrow">All products</p>
         <h2 id="products-title">Small, focused products from the studio.</h2>
-      </div>
+      </header>
       <div class="product-grid">
         {% for product in products %}
           {% if product.slug != featuredProductSlug %}
@@ -85,7 +87,7 @@
         {% endfor %}
       </div>
     </section>
-    <section class="about-block" aria-labelledby="about-title">
+    <section id="about" class="about-block" aria-labelledby="about-title">
       <p class="eyebrow">About</p>
       <h2 id="about-title">Riddim Software is an independent product company led by Sunny Purewal.</h2>
       <p>The studio ships its own apps, games, civic tools, and web experiments with a bias toward useful interfaces, plain language, and durable craft. Read more on the <a href="/about/">about page</a>.</p>
