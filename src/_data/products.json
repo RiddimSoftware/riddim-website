@@ -131,11 +131,6 @@
     "tagline": "Verified Canadian government data in your pocket - search Hansard, track your MP, and explore lobbying records.",
     "featuredPitch": "epac puts verified Canadian government data in your pocket, giving researchers, journalists, civic watchers, and curious citizens a focused way to search Hansard, track MPs, and explore lobbying records without chasing scattered sources. It is built around official datasets, clear paths, and fast answers for public-interest work.",
     "homepagePitch": "Verified Canadian government data for faster public-interest research.",
-    "primaryCta": {
-      "label": "Open web app",
-      "href": "https://epac.riddimsoftware.com",
-      "external": true
-    },
     "story": "epac makes official Canadian public data easier to search, follow, and understand from one focused product surface.",
     "screenshots": [
       {
