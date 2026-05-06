@@ -1,0 +1,44 @@
+---
+permalink: 404.html
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found · Riddim Software</title>
+  <meta name="description" content="The page you requested could not be found on riddimsoftware.com.">
+  <meta name="robots" content="noindex">
+  {% include "font-links.njk" %}
+  <link rel="stylesheet" href="/default.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1c2d42">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#fbfaf7">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="wordmark-link" href="/" aria-label="Riddim Software home">
+      <img class="wordmark" src="/wordmark.svg" alt="Riddim Software" />
+    </a>
+  </header>
+  <main class="home">
+    <section class="home-hero" aria-labelledby="page-title">
+      <p class="eyebrow">404</p>
+      <h1 id="page-title">That page doesn’t exist.</h1>
+      <p class="hero-copy">Try the product catalog or head back to the Riddim homepage.</p>
+      <div class="cta-group align-start">
+        <a class="btn btn-primary" href="/">Go to homepage</a>
+        <a class="btn btn-secondary" href="/#products">Browse products</a>
+      </div>
+    </section>
+  </main>
+  {% include "site-footer.njk" %}
+</body>
+
+</html>

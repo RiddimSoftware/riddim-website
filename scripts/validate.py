@@ -26,6 +26,12 @@ DEFAULT_SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.environ.get("VALIDATE_SITE_ROOT", DEFAULT_SITE_ROOT)
 if not os.path.isabs(SITE_ROOT):
     SITE_ROOT = os.path.join(DEFAULT_SITE_ROOT, SITE_ROOT)
+TEMPLATE_PATH = os.path.join(
+    DEFAULT_SITE_ROOT,
+    "infrastructure",
+    "cloudformation",
+    "riddim-website-static-site.yml",
+)
 LIVE_BASE = "https://riddimsoftware.com"
 
 LIVE_PATHS = [
@@ -35,15 +41,16 @@ LIVE_PATHS = [
     "/sitemap.xml",
     "/.well-known/apple-app-site-association",
 ]
+LIVE_MISSING_PATH = "/__riddim_validate_missing_route__"
 
 CONSOLIDATED_PRODUCT_PATHS = [
-    ("Blindfold", "/blindfold/"),
-    ("epac", "/epac/"),
-    ("Bubble Bop", "/bubble-bop/"),
-    ("Reach", "/reach/"),
-    ("Portal Door", "/portal-door/"),
-    ("Sonnio", "/sonnio/"),
-    ("Double Dozen", "/double-dozen/"),
+    ("Blindfold", "/blindfold/", "Blindfold - Riddim Software"),
+    ("epac", "/epac/", "epac - Riddim Software"),
+    ("Bubble Bop", "/bubble-bop/", "Bubble Bop — Riddim Software"),
+    ("Reach", "/reach/", "Reach - Riddim Software"),
+    ("Portal Door", "/portal-door/", "Portal Door - Riddim Software"),
+    ("Sonnio", "/sonnio/", "Sonnio - Riddim Software"),
+    ("Double Dozen", "/double-dozen/", "Double Dozen - Riddim Software"),
 ]
 
 LEGACY_SUBDOMAINS = [
@@ -183,7 +190,7 @@ def run_local_product_metadata_checks():
     print("\n── Local product metadata checks ──")
     missing = []
 
-    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+    for name, path, expected_title in CONSOLIDATED_PRODUCT_PATHS:
         rel_file = path.strip("/") + "/index.html"
         html_path = os.path.join(SITE_ROOT, rel_file)
         canonical = LIVE_BASE + path
@@ -197,6 +204,7 @@ def run_local_product_metadata_checks():
             content = handle.read()
 
         expected_tags = [
+            (f"<title>{expected_title}</title>", "HTML title"),
             (f'<link rel="canonical" href="{canonical}">', "canonical URL"),
             (f'<meta property="og:url" content="{canonical}">', "Open Graph URL"),
             ('<meta property="og:title"', "Open Graph title"),
@@ -214,7 +222,6 @@ def run_local_product_metadata_checks():
 
     if not missing and not failures:
         ok(f"checked metadata for {len(CONSOLIDATED_PRODUCT_PATHS)} consolidated product route(s)")
-
 
 def run_local_theme_checks():
     print("\n── Local theme checks ──")
@@ -310,48 +317,77 @@ def run_local_theme_checks():
             if snippet not in theme_toggle_template:
                 fail(f"src/_includes/theme-toggle.njk missing control snippet: {snippet}")
 
+def run_local_asset_path_checks():
+    print("\n── Local asset path checks ──")
     html_files = []
     for root, _, files in os.walk(SITE_ROOT):
         rel_root = os.path.relpath(root, SITE_ROOT)
         parts = rel_root.replace("\\", "/").split("/")
         if any(p in parts for p in [".git", "node_modules"]):
             continue
-        for filename in files:
-            if filename.endswith(".html"):
-                html_files.append(os.path.join(root, filename))
+        for f in files:
+            if f.endswith(".html"):
+                html_files.append(os.path.join(root, f))
 
-    required_html_snippets = [
-        '<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" data-theme-color="light">',
-        '<meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)" data-theme-color="dark">',
-        '<link rel="manifest" href="/manifest.json" data-manifest-light="/manifest.json" data-manifest-dark="/manifest-dark.json">',
-        '<script src="/assets/theme.js" defer></script>',
-        'data-theme-select',
-        'data-theme-status',
-        'role="status"',
+    forbidden_refs = [
+        ('href="default.css"', 'href="/default.css"'),
+        ('src="wordmark.svg"', 'src="/wordmark.svg"'),
+        ('src="app-store.svg"', 'src="/app-store.svg"'),
     ]
 
+    checked_files = 0
+    found_issues = False
     for path in sorted(html_files):
         rel = os.path.relpath(path, SITE_ROOT)
         with open(path, encoding="utf-8") as handle:
             content = handle.read()
+        checked_files += 1
 
-        for snippet in required_html_snippets:
-            if snippet not in content:
-                fail(f"{rel}: missing theme markup snippet: {snippet}")
+        for forbidden, expected in forbidden_refs:
+            if forbidden in content:
+                fail(f'{rel}: found {forbidden}; use {expected} so nested routes keep working')
+                found_issues = True
 
-        inline_script_marker = "<script>\n  (() => {"
-        stylesheet_marker = '<link rel="stylesheet" href="/default.css">'
-        inline_script_index = content.find(inline_script_marker)
-        stylesheet_index = content.find(stylesheet_marker)
-        if inline_script_index == -1:
-            fail(f"{rel}: missing inline theme bootstrap script")
-        elif stylesheet_index == -1:
-            fail(f"{rel}: missing default.css stylesheet link")
-        elif inline_script_index > stylesheet_index:
-            fail(f"{rel}: inline theme bootstrap must appear before default.css to avoid flash")
+    if not found_issues:
+        ok(f"checked {checked_files} HTML file(s): shared assets use root-relative paths")
+
+
+def run_local_routing_infra_checks():
+    print("\n── Local routing infrastructure checks ──")
+
+    if not os.path.exists(TEMPLATE_PATH):
+        fail("static-site CloudFormation template missing")
+        return
+
+    with open(TEMPLATE_PATH, encoding="utf-8") as handle:
+        template = handle.read()
+
+    required_snippets = [
+        ("DirectoryIndexRewriteFunction:", "CloudFront directory-index rewrite function resource"),
+        ('request.uri = uri + "index.html";', "trailing-slash directory rewrite"),
+        ('request.uri = uri + "/index.html";', "extensionless route rewrite"),
+        ("FunctionAssociations:", "viewer-request function association"),
+        ("EventType: viewer-request", "viewer-request function event"),
+        (
+            "FunctionARN: !GetAtt DirectoryIndexRewriteFunction.FunctionMetadata.FunctionARN",
+            "rewrite function ARN attachment",
+        ),
+    ]
+
+    for snippet, label in required_snippets:
+        if snippet not in template:
+            fail(f"CloudFormation template missing {label}")
+
+    response_404_count = template.count("ResponsePagePath: /404.html")
+    if response_404_count < 4:
+        fail("CloudFormation template must map 403/404 errors to /404.html on both distributions")
+
+    status_404_count = template.count("ResponseCode: 404")
+    if status_404_count < 4:
+        fail("CloudFormation template must preserve HTTP 404 status on both distributions")
 
     if not failures:
-        ok(f"checked theme assets and markup across {len(html_files)} HTML file(s)")
+        ok("CloudFront template includes directory-index rewrites and dedicated 404 responses")
 
 
 def run_local_homepage_tile_css_checks():
@@ -433,6 +469,14 @@ def curl_content_type(url):
     return result.stdout.strip()
 
 
+def curl_body(url):
+    result = subprocess.run(
+        ["curl", "-s", "--location", "--max-time", "10", url],
+        capture_output=True, text=True
+    )
+    return result.stdout
+
+
 def run_live_checks():
     print("\n── Live site checks ──")
     for path in LIVE_PATHS:
@@ -443,7 +487,7 @@ def run_live_checks():
         else:
             ok(f"{url} → {status}")
 
-    for name, path in CONSOLIDATED_PRODUCT_PATHS:
+    for name, path, _expected_title in CONSOLIDATED_PRODUCT_PATHS:
         url = LIVE_BASE + path
         status = curl_status(url)
         if not status.startswith("2"):
@@ -466,6 +510,38 @@ def run_live_checks():
     else:
         ok(f"{aasa_url} content-type: {ct}")
 
+    missing_url = LIVE_BASE + LIVE_MISSING_PATH
+    missing_status = curl_status(missing_url)
+    if missing_status != "404":
+        fail(f"{missing_url} returned {missing_status} (expected 404)")
+    else:
+        ok(f"{missing_url} → {missing_status}")
+
+    missing_body = curl_body(missing_url)
+    if "That page doesn’t exist." not in missing_body:
+        fail(f"{missing_url} did not render the dedicated 404 page copy")
+    else:
+        ok(f"{missing_url} rendered the dedicated 404 page copy")
+
+    for name, path, expected_title in CONSOLIDATED_PRODUCT_PATHS:
+        url = LIVE_BASE + path
+        status = curl_status(url)
+        if status != "200":
+            fail(f"{url} returned {status} (expected 200)")
+            continue
+
+        body = curl_body(url)
+        if f"<title>{expected_title}</title>" not in body:
+            fail(f"{url} did not render the expected product page title")
+        else:
+            ok(f"{url} rendered the expected product page title")
+
+        canonical = f'<link rel="canonical" href="{url}">'
+        if canonical not in body:
+            fail(f"{url} did not render the expected canonical URL")
+        else:
+            ok(f"{url} rendered the expected canonical URL")
+
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
@@ -475,6 +551,8 @@ def main():
     run_local_sitemap_checks()
     run_local_product_metadata_checks()
     run_local_theme_checks()
+    run_local_asset_path_checks()
+    run_local_routing_infra_checks()
     run_local_homepage_tile_css_checks()
     if live:
         run_live_checks()
