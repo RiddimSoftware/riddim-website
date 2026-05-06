@@ -7,7 +7,8 @@ module.exports = {
       numberOfRuns: 1,
       url: [`${baseUrl}/`, `${baseUrl}/sonnio/`],
       settings: {
-        preset: "desktop"
+        preset: "desktop",
+        chromeFlags: "--no-sandbox"
       },
       ...(chromePath ? { chromePath } : {})
     },

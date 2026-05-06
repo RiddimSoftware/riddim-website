@@ -6,6 +6,9 @@ module.exports = {
     collect: {
       numberOfRuns: 1,
       url: [`${baseUrl}/`, `${baseUrl}/sonnio/`],
+      settings: {
+        chromeFlags: "--no-sandbox"
+      },
       ...(chromePath ? { chromePath } : {})
     },
     assert: {
