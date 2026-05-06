@@ -1085,6 +1085,11 @@ html[data-theme-ui="ready"] .theme-toggle {
   color: var(--color-fg);
 }
 
+.theme-toggle-option:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .theme-toggle-option[aria-pressed="true"] {
   background: var(--color-accent);
   color: var(--color-accent-fg);
