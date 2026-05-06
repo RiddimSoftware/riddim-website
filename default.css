@@ -107,7 +107,6 @@
 html {
   background: var(--color-bg);
   color: var(--color-fg);
-  width: 100%;
 }
 
 body {
@@ -118,7 +117,6 @@ body {
   color: var(--color-fg);
   line-height: var(--leading-normal);
   overflow-x: hidden;
-  width: 100%;
 }
 
 a {
@@ -1123,10 +1121,6 @@ html[data-theme-ui="ready"] .theme-toggle {
   .screenshot-strip.phone-screenshots {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .site-footer {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 560px) {
@@ -1161,10 +1155,6 @@ html[data-theme-ui="ready"] .theme-toggle {
 
   .theme-toggle-select {
     width: min(100%, 15rem);
-  }
-
-  .site-footer {
-    grid-template-columns: 1fr;
   }
 }
 
