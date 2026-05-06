@@ -59,9 +59,11 @@
         <p>{{ featuredProduct.featuredPitch or featuredProduct.tagline }}</p>
         <div class="cta-group align-start">
           {% set primaryCta = featuredProduct.primaryCta %}
+          {% if primaryCta %}
           <a class="{% if primaryCta.appStoreBadge %}app-store-badge-link{% else %}btn btn-primary{% endif %}" href="{{ primaryCta.href }}"{% if primaryCta.external %} target="_blank" rel="noopener"{% endif %}{% if primaryCta.appStoreBadge %} aria-label="{{ primaryCta.label }}"{% endif %}>{% if primaryCta.appStoreBadge %}
             <img class="app-store-badge" src="/app-store.svg" alt="{{ primaryCta.label }}">{% elif primaryCta.appStoreIcon %}
             <img src="/app-store.svg" alt="" aria-hidden="true" class="button-icon">{% endif %}{% if not primaryCta.appStoreBadge %}{{ primaryCta.label }}{% endif %}</a>
+          {% endif %}
           <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Learn more about {{ featuredProduct.name }} &rarr;</a>
         </div>
       </div>

@@ -244,7 +244,7 @@ Resources:
             OriginAccessControlId: !Ref ValidationOriginAccessControl
             S3OriginConfig:
               OriginAccessIdentity: ""
-        OrderedCacheBehaviors:
+        CacheBehaviors:
           - PathPattern: "*.html"
             AllowedMethods: [GET, HEAD, OPTIONS]
             CachedMethods: [GET, HEAD, OPTIONS]
@@ -309,7 +309,7 @@ Resources:
             OriginAccessControlId: !Ref ProductionOriginAccessControl
             S3OriginConfig:
               OriginAccessIdentity: ""
-        OrderedCacheBehaviors:
+        CacheBehaviors:
           - PathPattern: "*.html"
             AllowedMethods: [GET, HEAD, OPTIONS]
             CachedMethods: [GET, HEAD, OPTIONS]
