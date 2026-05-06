@@ -1129,6 +1129,10 @@ html[data-theme-ui="ready"] .theme-toggle {
     padding-top: 22px;
   }
 
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
+
   .home-hero {
     padding: 40px var(--space-page) 36px;
   }
