@@ -6,7 +6,8 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  pr-build:
+    name: pr-build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -26,13 +27,3 @@ jobs:
 
       - name: Check deploy scripts
         run: bash -n scripts/build_artifact.sh scripts/upload_artifact.sh scripts/deploy_artifact.sh scripts/smoke_check.sh
-
-  success:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - run: |
-          if [ "${{ needs.build.result }}" != "success" ]; then
-            exit 1
-          fi
