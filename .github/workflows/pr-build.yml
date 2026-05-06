@@ -9,7 +9,7 @@ jobs:
   pr-build:
     name: pr-build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,8 +22,24 @@ jobs:
       - name: Install dependencies
         run: npm install --package-lock=false
 
+      - name: Install Chromium for audits
+        run: npx playwright install --with-deps chromium
+
       - name: Validate generated site
         run: npm run validate
 
       - name: Check deploy scripts
         run: bash -n scripts/build_artifact.sh scripts/upload_artifact.sh scripts/deploy_artifact.sh scripts/smoke_check.sh
+
+      - name: Lighthouse and accessibility audits
+        run: npm run audit:ci
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-audit-artifacts
+          path: |
+            artifacts/**
+            .lighthouseci/**
+          if-no-files-found: warn
