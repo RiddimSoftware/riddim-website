@@ -244,6 +244,7 @@ def run_local_theme_checks():
         '@media (prefers-color-scheme: dark)',
         ':root[data-theme="dark"]',
         'html[data-theme-ui="ready"] .theme-toggle',
+        '.wordmark-lockup > *',
     ]
     for snippet in required_css_snippets:
         if snippet not in css:
