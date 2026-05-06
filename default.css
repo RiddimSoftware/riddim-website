@@ -1142,6 +1142,11 @@ html[data-theme-ui="ready"] .theme-toggle {
     line-height: 1.1;
   }
 
+  .home-hero h1,
+  .about-hero h2 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
   .theme-toggle {
     width: 100%;
     justify-items: start;
@@ -1175,6 +1180,11 @@ html[data-theme-ui="ready"] .theme-toggle {
   .hero-copy,
   .featured-copy p:not(.eyebrow) {
     font-size: 0.95rem;
+  }
+
+  .home-hero h1,
+  .about-hero h2 {
+    font-size: 1.9rem;
   }
 
   .cta-group .btn,
