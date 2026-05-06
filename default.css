@@ -1193,6 +1193,7 @@ html[data-theme-ui="ready"] .theme-toggle {
   .cta-group .btn,
   .app-store-badge-link {
     min-height: 42px;
+    width: 100%;
   }
 
   .app-store-badge {
