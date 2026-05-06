@@ -11,6 +11,8 @@ if [[ -z "$base_url" || -z "$expected_sha" || -z "$expected_env" ]]; then
 fi
 
 base_url="${base_url%/}"
+canonical_base_url="${SMOKE_CANONICAL_BASE_URL:-https://riddimsoftware.com}"
+canonical_base_url="${canonical_base_url%/}"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
@@ -41,8 +43,9 @@ for route_spec in "${product_routes[@]}"; do
     exit 1
   fi
 
-  if ! grep -q "<link rel=\"canonical\" href=\"${base_url}${route}\">" "$output_path"; then
-    echo "Expected ${base_url}${route} to render its canonical URL." >&2
+  expected_canonical_url="${canonical_base_url}${route}"
+  if ! grep -q "<link rel=\"canonical\" href=\"${expected_canonical_url}\">" "$output_path"; then
+    echo "Expected ${base_url}${route} to render canonical URL '${expected_canonical_url}'." >&2
     exit 1
   fi
 done
