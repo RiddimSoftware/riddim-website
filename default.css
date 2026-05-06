@@ -1208,7 +1208,10 @@ html[data-theme-ui="ready"] .theme-toggle {
     padding-top: 48px;
   }
 
-  .product-grid,
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
   .work-link-list,
   .work-link {
     grid-template-columns: 48px minmax(0, 1fr);
