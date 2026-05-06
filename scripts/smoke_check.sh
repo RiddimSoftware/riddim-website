@@ -11,6 +11,8 @@ if [[ -z "$base_url" || -z "$expected_sha" || -z "$expected_env" ]]; then
 fi
 
 base_url="${base_url%/}"
+canonical_base_url="${SMOKE_CANONICAL_BASE_URL:-https://riddimsoftware.com}"
+canonical_base_url="${canonical_base_url%/}"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
@@ -19,7 +21,42 @@ curl_flags=(--silent --show-error --fail --location --max-time 20)
 curl "${curl_flags[@]}" "${base_url}/" -o "$tmp_dir/index.html"
 curl "${curl_flags[@]}" "${base_url}/version.json" -o "$tmp_dir/version.json"
 curl "${curl_flags[@]}" "${base_url}/.well-known/apple-app-site-association" -o "$tmp_dir/aasa.json"
-curl "${curl_flags[@]}" "${base_url}/__riddim_smoke_missing_route_${expected_sha}" -o "$tmp_dir/fallback.html"
+
+product_routes=(
+  "/blindfold/|Blindfold - Riddim Software"
+  "/epac/|epac - Riddim Software"
+  "/bubble-bop/|Bubble Bop — Riddim Software"
+  "/reach/|Reach - Riddim Software"
+  "/portal-door/|Portal Door - Riddim Software"
+  "/sonnio/|Sonnio - Riddim Software"
+  "/double-dozen/|Double Dozen - Riddim Software"
+)
+
+for route_spec in "${product_routes[@]}"; do
+  route="${route_spec%%|*}"
+  expected_title="${route_spec#*|}"
+  output_path="$tmp_dir$(echo "${route}" | tr '/' '_').html"
+  curl "${curl_flags[@]}" "${base_url}${route}" -o "$output_path"
+
+  if ! grep -q "<title>${expected_title}</title>" "$output_path"; then
+    echo "Expected ${base_url}${route} to render title '${expected_title}'." >&2
+    exit 1
+  fi
+
+  expected_canonical_url="${canonical_base_url}${route}"
+  if ! grep -q "<link rel=\"canonical\" href=\"${expected_canonical_url}\">" "$output_path"; then
+    echo "Expected ${base_url}${route} to render canonical URL '${expected_canonical_url}'." >&2
+    exit 1
+  fi
+done
+
+missing_route="__riddim_smoke_missing_route_${expected_sha}"
+missing_status="$(curl --silent --show-error --location --output "$tmp_dir/fallback.html" \
+  --write-out "%{http_code}" --max-time 20 "${base_url}/${missing_route}")"
+if [[ "$missing_status" != "404" ]]; then
+  echo "Expected unknown routes to return HTTP 404, got ${missing_status}." >&2
+  exit 1
+fi
 
 python3 - "$tmp_dir/version.json" "$expected_sha" "$expected_env" <<'PY'
 import json
@@ -49,8 +86,8 @@ if [[ "${aasa_content_type,,}" != *"json"* ]]; then
   exit 1
 fi
 
-if ! grep -qi "<html" "$tmp_dir/fallback.html"; then
-  echo "Expected unknown routes to fall back to index.html content." >&2
+if ! grep -q "That page doesn’t exist." "$tmp_dir/fallback.html"; then
+  echo "Expected unknown routes to render the dedicated 404 page." >&2
   exit 1
 fi
 

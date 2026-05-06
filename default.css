@@ -601,8 +601,7 @@ img.theme-asset--dark {
   outline-offset: 3px;
 }
 
-.site-footer p,
-.site-footer address {
+.site-footer p {
   margin: 0;
   color: var(--color-footer-muted);
 }
@@ -627,10 +626,6 @@ img.theme-asset--dark {
 .footer-contact {
   display: grid;
   gap: 10px;
-}
-
-.footer-contact address {
-  font-style: normal;
 }
 
 .footer-copyright {
@@ -1163,7 +1158,7 @@ html[data-theme-ui="ready"] .theme-toggle {
   }
 
   .site-footer {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .product-grid,
@@ -1193,6 +1188,24 @@ html[data-theme-ui="ready"] .theme-toggle {
     padding-top: 22px;
   }
 
+  .home-hero {
+    padding: 40px var(--space-page) 36px;
+  }
+
+  .home-hero h1,
+  .about-hero h2,
+  .about-block h2,
+  .featured-copy h2,
+  .product-story h2,
+  .product-screenshots h2 {
+    line-height: 1.1;
+  }
+
+  .home-hero h1,
+  .about-hero h2 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
   .theme-toggle {
     width: 100%;
     justify-items: start;
@@ -1209,6 +1222,50 @@ html[data-theme-ui="ready"] .theme-toggle {
   }
 }
 
+@media (max-width: 360px) {
+  .home-hero,
+  .all-products,
+  .product-page section,
+  .about-block {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .home-hero,
+  .featured-copy {
+    margin-inline: auto;
+  }
+
+  .hero-copy,
+  .featured-copy p:not(.eyebrow) {
+    font-size: 0.95rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .home-hero h1,
+  .about-hero h2 {
+    font-size: 1.9rem;
+  }
+
+  .cta-group .btn,
+  .app-store-badge-link {
+    min-height: 42px;
+    width: 100%;
+  }
+
+  .app-store-badge {
+    height: 34px;
+  }
+
+  .product-link,
+  .work-link {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* Mobile (≤480px) */
 @media (max-width: 480px) {
   .site-header,
@@ -1220,12 +1277,11 @@ html[data-theme-ui="ready"] .theme-toggle {
     padding-top: 48px;
   }
 
-  .product-grid,
-  .work-link-list,
-  .site-footer {
+  .product-grid {
     grid-template-columns: 1fr;
   }
 
+  .work-link-list,
   .work-link {
     grid-template-columns: 48px minmax(0, 1fr);
     min-height: 44px;
@@ -1245,7 +1301,8 @@ html[data-theme-ui="ready"] .theme-toggle {
   .cta-group {
     align-items: stretch;
     flex-direction: column;
-    width: min(100%, calc(100vw - 48px), 340px);
+    width: min(100%, 340px);
+    margin-inline: auto;
   }
 
   .cta-group .btn {

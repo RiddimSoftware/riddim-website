@@ -185,6 +185,31 @@ Resources:
             Override: true
             Preload: false
 
+  DirectoryIndexRewriteFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub "${SiteName}-directory-index-rewrite"
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Rewrite extensionless routes to directory index objects.
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          var uri = request.uri || "/";
+
+          if (uri.endsWith("/")) {
+            request.uri = uri + "index.html";
+            return request;
+          }
+
+          if (uri.indexOf(".") === -1) {
+            request.uri = uri + "/index.html";
+          }
+
+          return request;
+        }
+
   ValidationDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -195,18 +220,21 @@ Resources:
           CachedMethods: [GET, HEAD, OPTIONS]
           CachePolicyId: !Ref StaticAssetCachePolicy
           Compress: true
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt DirectoryIndexRewriteFunction.FunctionMetadata.FunctionARN
           ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
           TargetOriginId: validation-s3
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         CustomErrorResponses:
           - ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+            ResponseCode: 404
+            ResponsePagePath: /404.html
             ErrorCachingMinTTL: 0
           - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+            ResponseCode: 404
+            ResponsePagePath: /404.html
             ErrorCachingMinTTL: 0
         Enabled: true
         HttpVersion: http2and3
@@ -257,18 +285,21 @@ Resources:
           CachedMethods: [GET, HEAD, OPTIONS]
           CachePolicyId: !Ref StaticAssetCachePolicy
           Compress: true
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt DirectoryIndexRewriteFunction.FunctionMetadata.FunctionARN
           ResponseHeadersPolicyId: !Ref ResponseHeadersPolicy
           TargetOriginId: production-s3
           ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         CustomErrorResponses:
           - ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+            ResponseCode: 404
+            ResponsePagePath: /404.html
             ErrorCachingMinTTL: 0
           - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+            ResponseCode: 404
+            ResponsePagePath: /404.html
             ErrorCachingMinTTL: 0
         Enabled: true
         HttpVersion: http2and3
