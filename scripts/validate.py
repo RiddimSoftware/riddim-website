@@ -251,6 +251,7 @@ def run_local_theme_checks():
         '@media (prefers-color-scheme: dark)',
         ':root[data-theme="dark"]',
         'html[data-theme-ui="ready"] .theme-toggle',
+        '.wordmark-lockup > *',
     ]
     for snippet in required_css_snippets:
         if snippet not in css:
@@ -306,11 +307,12 @@ def run_local_theme_checks():
             theme_toggle_template = handle.read()
 
         required_theme_toggle_snippets = [
-            '<option value="system">System</option>',
-            '<option value="light">Light</option>',
-            '<option value="dark">Dark</option>',
+            'data-theme-option="system"',
+            'data-theme-option="light"',
+            'data-theme-option="dark"',
+            'class="theme-toggle-group"',
+            'aria-pressed="false"',
             'aria-describedby="theme-status"',
-            'role="status"',
             'aria-live="polite"',
         ]
         for snippet in required_theme_toggle_snippets:
@@ -329,6 +331,17 @@ def run_local_asset_path_checks():
             if f.endswith(".html"):
                 html_files.append(os.path.join(root, f))
 
+    required_html_snippets = [
+        '<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" data-theme-color="light">',
+        '<meta name="theme-color" content="#101418" media="(prefers-color-scheme: dark)" data-theme-color="dark">',
+        '<link rel="manifest" href="/manifest.json" data-manifest-light="/manifest.json" data-manifest-dark="/manifest-dark.json">',
+        '<script src="/assets/theme.js" defer></script>',
+        'data-theme-option="system"',
+        'data-theme-option="light"',
+        'data-theme-option="dark"',
+        'data-theme-status',
+    ]
+
     forbidden_refs = [
         ('href="default.css"', 'href="/default.css"'),
         ('src="wordmark.svg"', 'src="/wordmark.svg"'),
@@ -343,13 +356,38 @@ def run_local_asset_path_checks():
             content = handle.read()
         checked_files += 1
 
+        is_noindex = re.search(
+            r'<meta\s+name=["\']robots["\']\s+content=["\'][^"\']*\bnoindex\b',
+            content,
+            re.IGNORECASE,
+        )
+        if not is_noindex:
+            for snippet in required_html_snippets:
+                if snippet not in content:
+                    fail(f"{rel}: missing theme markup snippet: {snippet}")
+                    found_issues = True
+
+            inline_script_marker = "<script>\n  (() => {"
+            stylesheet_marker = '<link rel="stylesheet" href="/default.css">'
+            inline_script_index = content.find(inline_script_marker)
+            stylesheet_index = content.find(stylesheet_marker)
+            if inline_script_index == -1:
+                fail(f"{rel}: missing inline theme bootstrap script")
+                found_issues = True
+            elif stylesheet_index == -1:
+                fail(f"{rel}: missing default.css stylesheet link")
+                found_issues = True
+            elif inline_script_index > stylesheet_index:
+                fail(f"{rel}: inline theme bootstrap must appear before default.css to avoid flash")
+                found_issues = True
+
         for forbidden, expected in forbidden_refs:
             if forbidden in content:
                 fail(f'{rel}: found {forbidden}; use {expected} so nested routes keep working')
                 found_issues = True
 
     if not found_issues:
-        ok(f"checked {checked_files} HTML file(s): shared assets use root-relative paths")
+        ok(f"checked {checked_files} HTML file(s): theme markup is present and shared assets use root-relative paths")
 
 
 def run_local_routing_infra_checks():

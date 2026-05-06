@@ -1,5 +1,5 @@
 (() => {
-  const storageKey = (window.__riddimTheme && window.__riddimTheme.storageKey) || "riddim-theme";
+  const storageKey = (window.__riddimTheme && window.__riddimTheme.storageKey) || 'riddim-theme';
   const root = document.documentElement;
   const themeColorMetas = {
     light: document.querySelector('meta[name="theme-color"][data-theme-color="light"]'),
@@ -58,13 +58,14 @@
   };
 
   const updateControls = (preference, theme) => {
-    document.querySelectorAll('[data-theme-select]').forEach((control) => {
-      control.value = preference;
+    document.querySelectorAll('[data-theme-option]').forEach((control) => {
+      const isActive = control.dataset.themeOption === preference;
+      control.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 
     const statusText = preference === 'system'
       ? `Following system (${theme})`
-      : `Locked to ${theme}`;
+      : `${theme.charAt(0).toUpperCase()}${theme.slice(1)} theme selected`;
 
     document.querySelectorAll('[data-theme-status]').forEach((status) => {
       status.textContent = statusText;
@@ -94,9 +95,9 @@
 
   const currentPreference = () => root.dataset.themePreference || readPreference();
 
-  document.querySelectorAll('[data-theme-select]').forEach((control) => {
-    control.addEventListener('change', (event) => {
-      applyTheme(event.target.value, { persist: true });
+  document.querySelectorAll('[data-theme-option]').forEach((control) => {
+    control.addEventListener('click', () => {
+      applyTheme(control.dataset.themeOption, { persist: true });
     });
   });
 
