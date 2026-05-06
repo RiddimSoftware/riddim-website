@@ -10,6 +10,7 @@ on:
     types: [submitted]
   workflow_dispatch:
 permissions:
+  checks: read
   contents: read
   pull-requests: write
   issues: write
