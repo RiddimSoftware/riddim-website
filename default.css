@@ -1158,6 +1158,35 @@ html[data-theme-ui="ready"] .theme-toggle {
   }
 }
 
+@media (max-width: 360px) {
+  .home-hero,
+  .all-products,
+  .product-page section,
+  .about-block {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .home-hero,
+  .featured-copy {
+    margin-inline: auto;
+  }
+
+  .hero-copy,
+  .featured-copy p:not(.eyebrow) {
+    font-size: 0.95rem;
+  }
+
+  .cta-group .btn,
+  .app-store-badge-link {
+    min-height: 42px;
+  }
+
+  .app-store-badge {
+    height: 34px;
+  }
+}
+
 /* Mobile (≤480px) */
 @media (max-width: 480px) {
   .site-header,
