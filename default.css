@@ -596,8 +596,7 @@ img.theme-asset--dark {
   outline-offset: 3px;
 }
 
-.site-footer p,
-.site-footer address {
+.site-footer p {
   margin: 0;
   color: var(--color-footer-muted);
 }
@@ -622,10 +621,6 @@ img.theme-asset--dark {
 .footer-contact {
   display: grid;
   gap: 10px;
-}
-
-.footer-contact address {
-  font-style: normal;
 }
 
 .footer-copyright {
