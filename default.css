@@ -1180,6 +1180,9 @@ html[data-theme-ui="ready"] .theme-toggle {
   .hero-copy,
   .featured-copy p:not(.eyebrow) {
     font-size: 0.95rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .home-hero h1,
@@ -1194,6 +1197,12 @@ html[data-theme-ui="ready"] .theme-toggle {
 
   .app-store-badge {
     height: 34px;
+  }
+
+  .product-link,
+  .work-link {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }
 
