@@ -63,6 +63,32 @@ Line-height tokens (`--leading-tight` through `--leading-relaxed`) are also avai
 
 Forbidden values: do not use `#004d97` royal blue, neon Minecraft green, or product-specific colors as company-page accents unless the wordmark itself has been deliberately updated to support them.
 
+### Dark mode
+
+When `prefers-color-scheme: dark` is active (or `data-theme="dark"` is set on `:root`), `default.css` overrides the tokens below. The light-mode tokens remain the canonical brand values; the dark-mode values are their governed dark-palette equivalents.
+
+| Token | Hex | Paired against | Contrast | Derivation / guarantee |
+| --- | --- | --- | --- | --- |
+| `--color-bg` | `#101418` | — | — | Near-black with a cool blue-grey cast; replaces warm paper `#fbfaf7`. Provides the dark canvas for all other tokens. |
+| `--color-bg-alt` | `#151b22` | `--color-fg` `#f5f1e8` | 16.0:1 (AAA) | Slightly lighter step above `--color-bg`; preserves the alternating-band rhythm of light-mode `#f2efe8`. |
+| `--color-fg` | `#f5f1e8` | `--color-bg` `#101418` | 17.0:1 (AAA) | Warm off-white that mirrors the warmth of light-mode `#171717`; avoids harsh pure white. |
+| `--color-fg-muted` | `#c4ccd5` | `--color-bg` `#101418` | 10.5:1 (AAA) | Blue-grey mid-tone; parallels light-mode `#5f646b`. Passes AAA against `--color-bg`. |
+| `--color-accent` | `#84d6bb` | `--color-bg` `#101418` | 11.3:1 (AAA) | Light mint; see **Accent endorsement** note below. |
+| `--color-accent-fg` | `#102019` | `--color-accent` `#84d6bb` | 10.2:1 (AAA) | Deep forest near-black for text rendered on `--color-accent` fills (e.g., `.btn-primary`). Provides AAA contrast on mint. |
+| `--color-border` | `#2a333f` | — | — | Dark blue-grey divider; parallels warm `#ddd8cf` in light mode; visible but not harsh on `--color-bg`. |
+| `--color-success` | `#86d39c` | `--color-bg` `#101418` | 9.8:1 (AAA) | Lightened green that preserves positive-status legibility in dark mode. |
+| `--color-warning` | `#f2c875` | `--color-bg` `#101418` | 10.4:1 (AAA) | Lightened amber; parallels light-mode `#8a6200`. |
+| `--color-danger` | `#ff938d` | `--color-bg` `#101418` | 6.8:1 (AA) | Lightened red; parallels light-mode `#b42318`. Passes WCAG AA; use at large size or bold weight for AAA equivalence. |
+| `--color-surface` | `#1b222b` | — | — | Elevated panel background, slightly lighter than `--color-bg-alt`. Mirrors `#ffffff` surface role. |
+| `--color-surface-alt` | `#222c37` | — | — | Subtle hover fill and media wells; parallels `#e8eee9`. |
+| `--color-footer-bg` | `#090d12` | — | — | Deeper than `--color-bg`; footer uses this instead of light-mode `#171717` to keep hierarchy. |
+| `--color-footer-fg` | `#f5f1e8` | `--color-footer-bg` `#090d12` | 18.5:1 (AAA) | Mirrors warm off-white; same value as `--color-fg`. |
+| `--color-footer-muted` | `#aeb8c5` | `--color-footer-bg` `#090d12` | 8.2:1 (AAA) | Secondary footer copy; parallels light-mode `#cfcac1`. |
+
+**Accent endorsement — `#84d6bb` light mint:** The deep-green light-mode accent `#2f6f5e` cannot be used in dark mode at accessible luminance — it would disappear against dark backgrounds. `#84d6bb` is the governed dark-palette equivalent: it shifts the feel toward "tech-startup pop" compared to the light-mode "calm, founder-led" green, and that shift is a deliberate and accepted tradeoff for dark-palette legibility. Any future re-evaluation of the dark accent should verify AAA contrast (≥ 7:1) against `--color-bg #101418` before adopting a replacement.
+
+**On-mint text:** When rendering text or icons directly on an `--color-accent` fill (e.g., `.btn-primary` in dark mode), use `--color-accent-fg` (`#102019`) — not `--color-fg` (`#f5f1e8`). `--color-fg` has only 1.7:1 contrast against `#84d6bb` and must not be used as foreground on mint fills. `--color-bg` (`#101418`) also provides AAA contrast (11.3:1) on mint and may be used as a text color on mint fills when the accent-fg token is unavailable. This ensures the solid-CTA pattern lands cleanly without a separate token override.
+
 ## Voice
 
 Use plain language. Prefer concrete nouns and short sentences. Avoid superlatives, hype, growth-deck phrasing, and "we" when the sentence is really about the founder's judgment. Let Sunny be visible when authorship matters, but keep the company pages focused on products and trust. A good Riddim sentence should sound like a careful maker explaining what exists, why it exists, and what someone can do next.
