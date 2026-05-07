@@ -38,6 +38,7 @@ module.exports = function (eleventyConfig) {
     "monogram.svg": "monogram.svg",
     "nether.jpeg": "nether.jpeg",
     "portal-door-demo.svg": "portal-door-demo.svg",
+    "portal-door-icon.webp": "portal-door-icon.webp",
     "portal-door.png": "portal-door.png",
     "reach.png": "reach.png",
     "robots.txt": "robots.txt",

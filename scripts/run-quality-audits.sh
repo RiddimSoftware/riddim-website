@@ -8,8 +8,17 @@ npm run build
 
 export LIGHTHOUSE_BASE_URL="${LIGHTHOUSE_BASE_URL:-http://127.0.0.1:8080}"
 export CHROME_PATH="${CHROME_PATH:-$(node scripts/resolve-chrome-path.mjs)}"
+export LIGHTHOUSE_SERVER_PORT="$(
+python3 - <<'PY'
+import os
+from urllib.parse import urlparse
 
-python3 -m http.server 8080 --directory _site >/tmp/riddim-website-quality-audits.log 2>&1 &
+parsed = urlparse(os.environ["LIGHTHOUSE_BASE_URL"])
+print(parsed.port or 8080)
+PY
+)"
+
+python3 -m http.server "$LIGHTHOUSE_SERVER_PORT" --directory _site >/tmp/riddim-website-quality-audits.log 2>&1 &
 server_pid=$!
 
 cleanup() {
@@ -21,7 +30,9 @@ python3 - <<'PY'
 import time
 import urllib.request
 
-url = "http://127.0.0.1:8080/"
+import os
+
+url = os.environ["LIGHTHOUSE_BASE_URL"].rstrip("/") + "/"
 deadline = time.time() + 15
 while time.time() < deadline:
     try:

@@ -51,7 +51,13 @@
     </section>
     <section id="featured-product" class="featured-product" aria-labelledby="featured-title">
       <div class="featured-media">
-        <img src="{{ featuredProduct.icon | assetUrl }}" alt="{{ featuredProduct.iconAlt }}" />
+        <img
+          src="{{ featuredProduct.icon | assetUrl }}"
+          alt="{{ featuredProduct.iconAlt }}"
+          width="{{ featuredProduct.iconWidth }}"
+          height="{{ featuredProduct.iconHeight }}"
+          decoding="async"
+          fetchpriority="high" />
       </div>
       <div class="featured-copy">
         <p class="eyebrow">Featured product</p>
@@ -78,7 +84,14 @@
           {% if product.slug != featuredProductSlug %}
             <article class="product-card">
               <a href="/{{ product.slug }}/" class="product-link">
-                <img class="product-icon" src="{{ product.icon | assetUrl }}" alt="{{ product.iconAlt }}" />
+                <img
+                  class="product-icon"
+                  src="{{ product.icon | assetUrl }}"
+                  alt="{{ product.iconAlt }}"
+                  width="{{ product.iconWidth }}"
+                  height="{{ product.iconHeight }}"
+                  loading="lazy"
+                  decoding="async" />
                 <span class="product-name">{{ product.name }}</span>
                 <span class="product-desc">{{ product.homepagePitch or product.tagline }}</span>
                 <span class="text-link">Read more &rarr;</span>
