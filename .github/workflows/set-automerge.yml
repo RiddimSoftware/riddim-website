@@ -1,13 +1,13 @@
-# Enable auto-merge (squash) on every newly opened PR.
-#
-# Self-contained inlined version. The same file is replicated across all
-# active RiddimSoftware repos so each repo enables auto-merge independently
-# without depending on a cross-repo reusable workflow_call.
+# GENERATED FILE — do not edit directly.
+# Source: RiddimSoftware/riddim-release templates/workflows/set-automerge.tpl.yml
+# Sync:   scripts/render_shims.py --repo riddim-website
+# Set Auto-Merge — consumer shim
+# Enables GitHub auto-merge (squash) on every newly opened PR.
+# Self-contained inlined version — no cross-repo workflow_call dependency.
 #
 # Required org secrets (visibility=all):
 #   DEV_BOT_APP_ID
 #   DEV_BOT_PRIVATE_KEY
-
 name: Set Auto-Merge
 
 on:
@@ -22,7 +22,7 @@ permissions:
 jobs:
   set-automerge:
     name: Set auto-merge
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     if: ${{ !github.event.pull_request.draft }}
     steps:

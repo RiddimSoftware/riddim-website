@@ -1,4 +1,7 @@
-# Agent Loop - riddim-website consumer shim
+# GENERATED FILE — do not edit directly.
+# Source: RiddimSoftware/riddim-release templates/workflows/agent-loop.tpl.yml
+# Sync:   scripts/render_shims.py --repo riddim-website
+# Agent Loop — consumer shim
 # All routing logic lives in RiddimSoftware/agent-loop/.github/workflows/main.yml
 name: Agent Loop
 on:
@@ -8,6 +11,12 @@ on:
     types: [closed]
   pull_request_review:
     types: [submitted]
+  workflow_run:
+    # Trigger after pr-build completes so the reviewer agent runs on
+    # the post-build commit status. Matches workflow 'name:' fields, not
+    # file names.  Override via repos.yaml workflow_run_workflows.
+    workflows: ["pr-build"]
+    types: [completed]
   workflow_dispatch:
 permissions:
   checks: read
