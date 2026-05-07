@@ -758,6 +758,21 @@ img.theme-asset--dark {
 .btn-secondary:hover {
   background-color: var(--color-surface-alt);
 }
+
+.featured-primary-cta {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: 2px solid transparent;
+}
+
+.featured-primary-cta:visited {
+  color: var(--color-bg);
+}
+
+.featured-primary-cta:hover {
+  background-color: color-mix(in srgb, var(--color-accent), var(--color-bg) 10%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 .product-wordmark {
   max-height: 128px;
   height: 10svh;
@@ -1253,6 +1268,10 @@ html[data-theme-ui="ready"] .theme-toggle {
   .app-store-badge-link {
     min-height: 42px;
     width: 100%;
+  }
+
+  .cta-group .btn.featured-primary-cta {
+    min-height: 44px;
   }
 
   .app-store-badge {
