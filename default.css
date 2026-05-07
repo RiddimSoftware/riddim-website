@@ -1160,6 +1160,34 @@ html[data-theme-ui="ready"] .theme-toggle {
   border: 0;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  padding: 12px 20px;
+  border-radius: 6px;
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  font-weight: 600;
+  font-size: var(--text-base);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 /* Tablet + Mobile (≤1024px) */
 @media (max-width: 1024px) {
   .featured-product,
