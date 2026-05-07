@@ -1270,6 +1270,10 @@ html[data-theme-ui="ready"] .theme-toggle {
     width: 100%;
   }
 
+  .cta-group .btn.featured-primary-cta {
+    min-height: 44px;
+  }
+
   .app-store-badge {
     height: 34px;
   }
