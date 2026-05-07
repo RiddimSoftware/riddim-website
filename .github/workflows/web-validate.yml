@@ -1,0 +1,36 @@
+# GENERATED FILE — do not edit directly.
+# Source: RiddimSoftware/riddim-release templates/workflows/web-validate.tpl.yml
+# Sync:   scripts/render_shims.py --repo riddim-website
+# Web Validate — consumer shim (website)
+# Runs HTML validation and optional project scripts on every PR to main.
+# Combine with success-gate: list "validate" in needs: of the success job,
+# and point branch protection at the "success" check.
+#
+# Optional variables: WEB_WORKDIR (default: ".")
+name: Web Validate
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    uses: RiddimSoftware/riddim-release/.github/workflows/web-validate.yml@v1
+    with:
+      working_directory: ${{ vars.WEB_WORKDIR || '.' }}
+
+  success:
+    name: success
+    needs: [validate]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Gate
+        run: |
+          if [[ '${{ needs.validate.result }}' != 'success' ]]; then
+            echo "validate failed: ${{ needs.validate.result }}"
+            exit 1
+          fi

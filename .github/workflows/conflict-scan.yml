@@ -1,6 +1,9 @@
+# GENERATED FILE — do not edit directly.
+# Source: RiddimSoftware/riddim-release templates/workflows/conflict-scan.tpl.yml
+# Sync:   scripts/render_shims.py --repo riddim-website
 # Conflict Scan — consumer shim
 # Fires on push to main. Finds conflicting autonomous PRs and resolves
-# them autonomously via single-turn Opus. Logic lives in agent-loop.
+# them autonomously when the shared agent-loop policy allows it.
 name: Conflict Scan
 on:
   push:

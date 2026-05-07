@@ -1,0 +1,44 @@
+# GENERATED FILE — do not edit directly.
+# Source: RiddimSoftware/riddim-release templates/workflows/success-gate.tpl.yml
+# Sync:   scripts/render_shims.py --repo riddim-website
+# CI / Success Gate — consumer shim
+# Universal CI + success gate workflow.
+# Branch protection should require the "success" status check from this workflow.
+# Add your CI jobs above the success job and list them in needs:.
+#
+# Usage: set branch protection to require the status check named "success".
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Replace this with your actual CI job(s).
+    # For iOS: uses: RiddimSoftware/riddim-release/.github/workflows/pr-build.yml@v1
+    # For website: uses: RiddimSoftware/riddim-release/.github/workflows/web-validate.yml@v1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build / validate
+        run: echo "Add your CI steps here"
+
+  success:
+    # Keep this job name as "success" — branch protection checks for it by name.
+    name: success
+    # List every CI job in needs: so this gate reflects the full required set.
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check all required jobs passed
+        run: |
+          if [[ '${{ needs.build.result }}' != 'success' ]]; then
+            echo "build failed: ${{ needs.build.result }}"
+            exit 1
+          fi
+          echo "All required jobs passed."
