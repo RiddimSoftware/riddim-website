@@ -70,7 +70,7 @@
             <img class="app-store-badge" src="/app-store.svg" alt="{{ primaryCta.label }}">{% elif primaryCta.appStoreIcon %}
             <img src="/app-store.svg" alt="" aria-hidden="true" class="button-icon">{% endif %}{% if not primaryCta.appStoreBadge %}{{ primaryCta.label }}{% endif %}</a>
           {% endif %}
-          <a class="btn btn-secondary" href="/{{ featuredProduct.slug }}/">Learn more about {{ featuredProduct.name }} &rarr;</a>
+          <a class="btn {% if primaryCta %}btn-secondary{% else %}featured-primary-cta{% endif %}" href="/{{ featuredProduct.slug }}/">Learn more about {{ featuredProduct.name }} &rarr;</a>
         </div>
       </div>
     </section>
