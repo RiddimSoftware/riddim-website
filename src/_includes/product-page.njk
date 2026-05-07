@@ -39,7 +39,14 @@
     <a class="back-link" href="/">&larr; All products</a>
     <section class="light_background">
       <div class="product-hero">
-        <img class="product-icon" src="{{ product.icon | assetUrl }}" alt="{{ product.iconAlt }}" />
+        <img
+          class="product-icon"
+          src="{{ product.icon | assetUrl }}"
+          alt="{{ product.iconAlt }}"
+          width="{{ product.iconWidth }}"
+          height="{{ product.iconHeight }}"
+          decoding="async"
+          fetchpriority="high" />
         <h1>{{ product.name }}</h1>
         <p class="product-tagline">{{ product.tagline }}</p>
         <div class="cta-group">

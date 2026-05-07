@@ -34,7 +34,9 @@
         "label": "Get in touch",
         "href": "mailto:info@riddimsoftware.com"
       }
-    ]
+    ],
+    "iconWidth": 224,
+    "iconHeight": 224
   },
   {
     "slug": "bubble-bop",
@@ -80,7 +82,9 @@
       "No ads, no tracking, no in-app purchases",
       "Works offline — no internet required"
     ],
-    "secondaryLinks": []
+    "secondaryLinks": [],
+    "iconWidth": 224,
+    "iconHeight": 224
   },
   {
     "slug": "double-dozen",
@@ -115,7 +119,9 @@
       "Compete for leaderboard times through Game Center.",
       "Replay instantly when you know your next run can be faster."
     ],
-    "secondaryLinks": []
+    "secondaryLinks": [],
+    "iconWidth": 224,
+    "iconHeight": 224
   },
   {
     "slug": "epac",
@@ -148,7 +154,9 @@
         "label": "Contact us",
         "href": "mailto:info@riddimsoftware.com"
       }
-    ]
+    ],
+    "iconWidth": 128,
+    "iconHeight": 128
   },
   {
     "slug": "portal-door",
@@ -159,7 +167,7 @@
       "canonical": "https://riddimsoftware.com/portal-door/",
       "ogImage": "https://riddimsoftware.com/portal-door.png"
     },
-    "icon": "portal-door.png",
+    "icon": "portal-door-icon.webp",
     "iconAlt": "Portal Door app icon",
     "tagline": "Turn a real doorway into a playful portal moment with your iPhone or iPad camera.",
     "homepagePitch": "A playful camera-powered doorway interaction for iPhone and iPad.",
@@ -196,7 +204,9 @@
         "href": "https://github.com/RiddimSoftware/nether",
         "external": true
       }
-    ]
+    ],
+    "iconWidth": 224,
+    "iconHeight": 224
   },
   {
     "slug": "reach",
@@ -244,7 +254,9 @@
         "label": "Privacy Policy",
         "href": "/reach-privacy.html"
       }
-    ]
+    ],
+    "iconWidth": 224,
+    "iconHeight": 224
   },
   {
     "slug": "sonnio",
@@ -323,6 +335,8 @@
         "label": "Support email",
         "href": "mailto:info@riddimsoftware.com"
       }
-    ]
+    ],
+    "iconWidth": 224,
+    "iconHeight": 224
   }
 ]
