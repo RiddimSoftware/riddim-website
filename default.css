@@ -107,6 +107,7 @@
 html {
   background: var(--color-bg);
   color: var(--color-fg);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -289,6 +290,10 @@ img.theme-asset--dark {
   margin: 24px 0 0;
   color: var(--color-fg-muted);
   font-size: var(--text-lg);
+}
+
+.hero-cta {
+  margin-top: 28px;
 }
 
 .eyebrow {
