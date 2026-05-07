@@ -10,7 +10,7 @@ Riddim Software builds focused apps, games, and web tools for everyday moments t
 
 **Elaboration**
 
-Riddim Software is an independent product studio led by Sunny Purewal. The studio works across civic research, retail experiences, communication, music, family games, and web experiments, with each product shaped around a specific use case. The homepage should introduce the catalog as practical software made by one studio, then let visitors choose the product that matches their task.
+Riddim Software is an independent product studio. The studio works across civic research, retail experiences, communication, music, family games, and web experiments, with each product shaped around a specific use case. The homepage should introduce the catalog as practical software made by one studio, then let visitors choose the product that matches their task.
 
 ## Homepage Product Context Lines
 
